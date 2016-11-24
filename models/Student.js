@@ -4,6 +4,11 @@ class Student {
     this.students.index('id');
     this.students.index('github_id');
   }
+  find(github_id) {
+    return this.students.findOne({
+        github_id
+      });
+  }
   findByIds(ids) {
     return this.students.find({
         github_id: {
