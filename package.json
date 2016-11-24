@@ -11,6 +11,7 @@
   "author": "w3cj <hello@cjr.co.de>",
   "license": "MIT",
   "dependencies": {
+    "at-quotes": "^1.3.0",
     "auth-github-org": "^1.0.0",
     "cheerio": "^0.22.0",
     "dotenv": "^2.0.0",

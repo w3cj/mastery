@@ -4,6 +4,11 @@ class Instructor {
     this.instructors.index('id');
     this.instructors.index('github_id');
   }
+  find(github_id) {
+    return this.instructors.findOne({
+        github_id
+      });
+  }
   findByIds(ids) {
     return this.instructors.find({
         github_id: {
