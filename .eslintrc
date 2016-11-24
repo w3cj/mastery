@@ -1,0 +1,25 @@
+{
+  "extends": ["eslint:recommended"],
+  "ecmaFeatures": {
+    "modules": true
+  },
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "globals": {},
+  "rules": {
+    "no-console": 1,
+    "comma-dangle": 2,
+    "no-unreachable": 2,
+    "no-unused-vars": 2,
+    "no-var": 2,
+    "semi": 2,
+    "object-shorthand": 2,
+    "prefer-arrow-callback": 2,
+    "prefer-const": 2,
+    "prefer-spread": 2,
+    "prefer-template": 2,
+    "require-yield": 2
+  }
+}
