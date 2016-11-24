@@ -1,4 +1,4 @@
-const {users} = require('./db');
+const {User} = require('./models');
 
 require('dotenv').load();
 
@@ -17,13 +17,9 @@ module.exports = {
     name: 'zipfian'
   }],
   findUser(github_id) {
-    return users
-      .findOne({
-        github_id
-      });
+    return User.find(github_id);
   },
   insertUser(user) {
-    return users
-      .insert(user);
+    return User.insert(user);
   }
 };
