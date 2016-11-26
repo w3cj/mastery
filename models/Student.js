@@ -19,14 +19,7 @@ class Student {
   upsert(array) {
     return Promise.all(array.map(student => {
       return this.students
-        .findOneAndUpdate({ id: student.id }, student)
-        .then(found => {
-          if(!found.full_name) {
-            return this.students.insert(student);
-          } else {
-            return found;
-          }
-        });
+        .findOneAndUpdate({ id: student.id }, student, {upsert: true});
     }));
   }
 }

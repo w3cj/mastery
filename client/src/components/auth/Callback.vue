@@ -1,0 +1,20 @@
+<template>
+  <div class="center text-center">
+    <h1>Logging in...</h1>
+  </div>
+</template>
+
+<script>
+import Auth from '../../lib/Auth';
+
+export default {
+  name: 'callback',
+  data () {
+    return {}
+  },
+  created() {
+    Auth.callbackLogin(this.$cookie);
+    this.$router.push('/dashboard');
+  }
+}
+</script>

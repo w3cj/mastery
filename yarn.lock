@@ -188,6 +188,12 @@ core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
 
+cors@^2.8.1:
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/cors/-/cors-2.8.1.tgz#6181aa56abb45a2825be3304703747ae4e9d2383"
+  dependencies:
+    vary "^1"
+
 css-select@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/css-select/-/css-select-1.2.0.tgz#2b3a110539c5355f1cd8d314623e870b121ec858"
@@ -293,6 +299,16 @@ ecdsa-sig-formatter@1.0.7:
 ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
+
+emoji-favicon@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/emoji-favicon/-/emoji-favicon-0.3.0.tgz#1ac40736b628dd251ac16c24fdb302ab69e96ce0"
+  dependencies:
+    emoji-img "^1.0.0"
+
+emoji-img@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/emoji-img/-/emoji-img-1.0.0.tgz#6b62407f3a46c02c10888c28929e46a3bf2fde11"
 
 encodeurl@~1.0.1:
   version "1.0.1"
@@ -1135,7 +1151,7 @@ utils-merge@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.0.tgz#0294fb922bb9375153541c4f7096231f287c8af8"
 
-vary@~1.1.0:
+vary@^1, vary@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.0.tgz#e1e5affbbd16ae768dd2674394b9ad3022653140"
 

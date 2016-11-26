@@ -24,5 +24,6 @@ router.get('/', (req, res) => {
 });
 
 router.use('/cohorts', require('./cohorts'));
+router.use('/evidence', require('./evidence'));
 
 module.exports = router;

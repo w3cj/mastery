@@ -13,6 +13,36 @@ class Cohort {
     return this.cohorts
       .insert(cohort);
   }
+  assignStandard(cohort_id, standard_id, assign) {
+    return this.cohorts
+      .update({
+        cohort_id
+      }, {
+        $set: {
+          [`standards.${standard_id}.assigned`]: assign
+        }
+      });
+  }
+  addStandardTag(cohort_id, standard_id, tagName, value) {
+    return this.cohorts
+      .update({
+        cohort_id
+      }, {
+        $push: {
+          [`standards.${standard_id}.tags.${tagName}`]: value
+        }
+      });
+  }
+  removeStandardTag(cohort_id, standard_id, tagName, value) {
+    return this.cohorts
+      .update({
+        cohort_id
+      }, {
+        $pull: {
+          [`standards.${standard_id}.tags.${tagName}`]: value
+        }
+      });
+  }
   findByGithubId(github_id) {
     return this.cohorts
       .find({}, {
