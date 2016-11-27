@@ -9,14 +9,16 @@ const state = {
   cohort: {
     subjects: []
   },
-  evidences: {}
+  evidences: {},
+  editing: {}
 }
 
 // getters
 const getters = {
   cohort: state => state.cohort,
   defaultCohort: state => state.defaultCohort,
-  evidences: state => state.evidences
+  evidences: state => state.evidences,
+  editing: state => state.editing
 }
 
 // actions
@@ -47,12 +49,16 @@ const actions = {
         commit(mutationTypes.RECEIVE_EVIDENCES, evidences);
       });
   },
-  [actionTypes.CHECK_SUCCESS_CRITERIA] ({ commit, state }, success_criteria) {
-    commit(mutationTypes.CHECKING_SUCCESS_CRITERIA, success_criteria._id);
-    const newValue = !state.evidences[success_criteria._id].checked;
-    API.checkSuccessCriteria(state.cohort.cohort_id, success_criteria._id, newValue)
+  [actionTypes.CHECK_SUCCESS_CRITERIA] ({ commit, state }, id) {
+    let checked = state.evidences[id] ? state.evidences[id].checked : false;
+    commit(mutationTypes.CHECKING_SUCCESS_CRITERIA, {
+      id,
+      checked
+    });
+    checked = !checked;
+    API.checkSuccessCriteria(state.cohort.cohort_id, id, checked)
       .then((result) => {
-        commit(mutationTypes.SUCCESS_CRITERIA_CHECKED, { newValue, id: success_criteria._id });
+        commit(mutationTypes.SUCCESS_CRITERIA_CHECKED, { id, checked });
       });
   },
   [actionTypes.ASSIGN_STANDARD] ({ commit, state }, standard) {
@@ -61,6 +67,9 @@ const actions = {
       .then(() => {
         commit(mutationTypes.ASSIGNED_STANDARD, standard.id);
       });
+  },
+  [actionTypes.TOGGLE_EDIT_STANDARD] ({ commit, state }, id) {
+    commit(mutationTypes.UPDATE_EDIT_STANDARD, {id, editing: !state.editing[id]})
   }
 }
 
@@ -75,13 +84,25 @@ const mutations = {
   [mutationTypes.RECEIVE_EVIDENCES] (state, evidences) {
     state.evidences = evidences;
   },
-  [mutationTypes.CHECKING_SUCCESS_CRITERIA] (state, id) {
-    state.evidences[id] = state.evidences[id] || {};
-    state.evidences[id].checking = true;
+  [mutationTypes.CHECKING_SUCCESS_CRITERIA] (state, {id, checked}) {
+    state.evidences = {
+      ...state.evidences,
+      [id]: {
+        ...state.evidences[id],
+        checking: true,
+        checked
+      }
+    }
   },
-  [mutationTypes.SUCCESS_CRITERIA_CHECKED] (state, {newValue, id}) {
-    state.evidences[id].checking = false;
-    state.evidences[id].checked = newValue;
+  [mutationTypes.SUCCESS_CRITERIA_CHECKED] (state, {id, checked}) {
+    state.evidences = {
+      ...state.evidences,
+      [id]: {
+        ...state.evidences[id],
+        checking: false,
+        checked
+      }
+    }
   },
   [mutationTypes.ASSIGNING_STANDARD] (state, id) {
     state.cohort.standards[id].assigning = true;
@@ -89,6 +110,12 @@ const mutations = {
   [mutationTypes.ASSIGNED_STANDARD] (state, id) {
     state.cohort.standards[id].assigned = true;
     state.cohort.standards[id].assigning = false;
+  },
+  [mutationTypes.UPDATE_EDIT_STANDARD] (state, {id, editing}) {
+    state.editing = {
+      ...state.editing,
+      [id]: editing
+    }
   }
 }
 
