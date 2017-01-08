@@ -1,0 +1,3304 @@
+{
+	"https://learn.galvanize.com/content/gSchool/productivity-curriculum/master/Misc/Learning%20to%20Learn.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/productivity-curriculum/master/Misc/Learning%20to%20Learn.md",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"Article": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://gist.github.com/berto/7af74d54544cc21faefa5a80e69be2ca": {
+		"href": "https://gist.github.com/berto/7af74d54544cc21faefa5a80e69be2ca",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"🐦 Danny - the robotic bird": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://slides.gteach.xyz/Productivity/Command-Line-FS/intro-to-command-line.md#/": {
+		"href": "http://slides.gteach.xyz/Productivity/Command-Line-FS/intro-to-command-line.md#/",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/productivity-curriculum/master/Misc/Command%20Line.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/productivity-curriculum/master/Misc/Command%20Line.md",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"Intro to CLI Article": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/productivity-curriculum/master/Misc/Intermediate%20Command%20Line.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/productivity-curriculum/master/Misc/Intermediate%20Command%20Line.md",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"Stretch: Intermediate CLI Article": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/productivity-curriculum/master/Command%20Line/Permissions.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/productivity-curriculum/master/Command%20Line/Permissions.md",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"Stretch: Permissions Article": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/cmdLineSentence": {
+		"href": "https://github.com/gSchool/cmdLineSentence",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"CLI Sentence": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/veltman/clmystery": {
+		"href": "https://github.com/veltman/clmystery",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"Stretch: Murder Mystery Exercise": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://slides.gteach.xyz/Productivity/Git-and-Github/intro-to-git.md#/": {
+		"href": "http://slides.gteach.xyz/Productivity/Git-and-Github/intro-to-git.md#/",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/productivity-curriculum/master/Misc/Intro%20to%20Git.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/productivity-curriculum/master/Misc/Intro%20to%20Git.md",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"Intro to Git": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/productivity-curriculum/master/Git/Feature%20Branch%20Workflow.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/productivity-curriculum/master/Git/Feature%20Branch%20Workflow.md",
+		"weeks": {
+			"1": true,
+			"4": true
+		},
+		"text": {
+			"Stretch: Branch Workflow": true,
+			"Article: Feature Branch Workflow": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/warmup/tree/master/12-CLI-Galvanize-Directories": {
+		"href": "https://github.com/gSchool/warmup/tree/master/12-CLI-Galvanize-Directories",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"CLI Galvanize Directories": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://slides.gteach.xyz/Frontend/HTML-Valid-and-Semantic/html-valid-and-semantic.md#/": {
+		"href": "http://slides.gteach.xyz/Frontend/HTML-Valid-and-Semantic/html-valid-and-semantic.md#/",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/html-css-curriculum/master/HTML/README.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/html-css-curriculum/master/HTML/README.md",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"Intro to HTML": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/html-css-curriculum/master/HTML/Semantic.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/html-css-curriculum/master/HTML/Semantic.md",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"Intro to Semantic HTML": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://developer.mozilla.org/en-US/docs/Web/HTML/Element": {
+		"href": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"HTML Element Reference": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/html-intro": {
+		"href": "https://github.com/gSchool/html-intro",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"HTML Intro": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/semantic-html-exercise": {
+		"href": "https://github.com/gSchool/semantic-html-exercise",
+		"weeks": {
+			"1": true,
+			"2": true
+		},
+		"text": {
+			"Semantic HTML": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/warmup/tree/master/02-git-workflow": {
+		"href": "https://github.com/gSchool/warmup/tree/master/02-git-workflow",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"Collaborative Git Workflow": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://slides.gteach.xyz/Frontend/CSS-Style-HTML/intro_to_css.md": {
+		"href": "http://slides.gteach.xyz/Frontend/CSS-Style-HTML/intro_to_css.md",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/html-css-curriculum/master/CSS/README.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/html-css-curriculum/master/CSS/README.md",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"Article: Intro to CSS": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://developer.mozilla.org/en-US/docs/Learn/CSS": {
+		"href": "https://developer.mozilla.org/en-US/docs/Learn/CSS",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"MDN: Learn CSS": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://css-tricks.com/almanac/": {
+		"href": "https://css-tricks.com/almanac/",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"CSS Tricks: CSS Almanac": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Introduction_to_the_CSS_box_model": {
+		"href": "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Introduction_to_the_CSS_box_model",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"MDN: The Box Model": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.smashingmagazine.com/2007/07/css-specificity-things-you-should-know/": {
+		"href": "https://www.smashingmagazine.com/2007/07/css-specificity-things-you-should-know/",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"Smashing Magazine: CSS Specificity": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://flukeout.github.io/": {
+		"href": "https://flukeout.github.io/",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"CSS Selector Practice: CSS Diner": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://slides.gteach.xyz/Frontend/CSS-Style-HTML/intro_to_css.md#/19": {
+		"href": "http://slides.gteach.xyz/Frontend/CSS-Style-HTML/intro_to_css.md#/19",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"Exercise": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/html-css-curriculum/master/CSS/Intermediate.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/html-css-curriculum/master/CSS/Intermediate.md",
+		"weeks": {
+			"1": true,
+			"4": true
+		},
+		"text": {
+			"Article: \"Intermediate\" CSS": true,
+			"Intermediate CSS": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://developer.mozilla.org/en-US/docs/Web/CSS/Reference": {
+		"href": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"MDN: CSS Reference": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/": {
+		"href": "https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"CSS Tricks: Positioning": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/html-css-curriculum/master/CSS/Flexbox.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/html-css-curriculum/master/CSS/Flexbox.md",
+		"weeks": {
+			"1": true,
+			"4": true
+		},
+		"text": {
+			"Flexbox Article": true,
+			"Flexbox": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://flexboxfroggy.com/": {
+		"href": "http://flexboxfroggy.com/",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"Flexbox Practice: Flexbox Froggy": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://css-tricks.com/snippets/css/a-guide-to-flexbox/": {
+		"href": "https://css-tricks.com/snippets/css/a-guide-to-flexbox/",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"CSS Tricks: Guide to Flexbox": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/css-exercises": {
+		"href": "https://github.com/gSchool/css-exercises",
+		"weeks": {
+			"1": true,
+			"2": true
+		},
+		"text": {
+			"CSS Exercises": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://wireframe.cc/GuRoUr": {
+		"href": "https://wireframe.cc/GuRoUr",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"Wireframe Challenge": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/flexbox-exercises": {
+		"href": "https://github.com/gSchool/flexbox-exercises",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"Flexbox Exercises": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/basic-html-practice": {
+		"href": "https://github.com/gSchool/basic-html-practice",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"HTML/CSS Mockups": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/css-card-flip": {
+		"href": "https://github.com/gSchool/css-card-flip",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"CSS Card Flip": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/css-nav-challenge": {
+		"href": "https://github.com/gSchool/css-nav-challenge",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"CSS Nav Challenge": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries": {
+		"href": "https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"MDN: Media Queries": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/week-1-project": {
+		"href": "https://github.com/gSchool/week-1-project",
+		"weeks": {
+			"1": true
+		},
+		"text": {
+			"Week 1 Project": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/structured-english-assessment": {
+		"href": "https://github.com/gSchool/structured-english-assessment",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"Structured English": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://docs.google.com/presentation/d/1rBLtH-XgDjzQkuZXkg5AasWcr2amjLpOVrarZEbDuhk/edit": {
+		"href": "https://docs.google.com/presentation/d/1rBLtH-XgDjzQkuZXkg5AasWcr2amjLpOVrarZEbDuhk/edit",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"Ergonomics": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/js-programming-fundamentals-assessment": {
+		"href": "https://github.com/gSchool/js-programming-fundamentals-assessment",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"JS Programming Fundamentals Assessment": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/javascript-curriculum/master/Memory%20Diagrams.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/javascript-curriculum/master/Memory%20Diagrams.md",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"LMS: Javascript Memory Diagrams": true,
+			"LMS: Memory Diagrams": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/javascript-curriculum/master/Basics.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/javascript-curriculum/master/Basics.md",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"LMS: Intro to Javascript": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/getify/You-Dont-Know-JS/blob/master/up%20&%20going/README.md#you-dont-know-js-up--going": {
+		"href": "https://github.com/getify/You-Dont-Know-JS/blob/master/up%20&%20going/README.md#you-dont-know-js-up--going",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"YDKJS: Up & Going - Up to Chapter 2": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://eloquentjavascript.net/": {
+		"href": "http://eloquentjavascript.net/",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"Eloquent JavaScript - Intro and Chapter 1": true,
+			"Eloquent JavaScript - Up to Chapter 8": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/wd-javascript-fundamentals": {
+		"href": "https://github.com/gSchool/wd-javascript-fundamentals",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"Javascript Fundamentals": true,
+			"JavaScript Fundamentals": true,
+			"JavaScript Fundamentals: Part 2": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/g15/blob/master/curriculum/02-week/js-part-1.md": {
+		"href": "https://github.com/gSchool/g15/blob/master/curriculum/02-week/js-part-1.md",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"Intro to JS Notes": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/g15/blob/master/curriculum/02-week/js-part-3.md": {
+		"href": "https://github.com/gSchool/g15/blob/master/curriculum/02-week/js-part-3.md",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"An Introduction to Functions": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://slides.com/lizh/intro-to-javascript#/": {
+		"href": "http://slides.com/lizh/intro-to-javascript#/",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"An Introduction to JS": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://docs.google.com/presentation/d/1IJ8hEVEI86QwZG-PxcSM0H6P0gXUdBqgSU45fzEZ2R8/edit#slide=id.p": {
+		"href": "https://docs.google.com/presentation/d/1IJ8hEVEI86QwZG-PxcSM0H6P0gXUdBqgSU45fzEZ2R8/edit#slide=id.p",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"JavaScript Objects": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/getify/You-Dont-Know-JS/blob/master/types%20&%20grammar/README.md#you-dont-know-js-types--grammar": {
+		"href": "https://github.com/getify/You-Dont-Know-JS/blob/master/types%20&%20grammar/README.md#you-dont-know-js-types--grammar",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"YDKJS: Types and Grammar": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/getify/You-Dont-Know-JS/blob/master/scope%20&%20closures/README.md#you-dont-know-js-scope--closures": {
+		"href": "https://github.com/getify/You-Dont-Know-JS/blob/master/scope%20&%20closures/README.md#you-dont-know-js-scope--closures",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"YDKJS: Scope - Up to Chapter 4": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide": {
+		"href": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"MDN Tutorials": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.youtube.com/channel/UCO1cgjhGzsSYb1rsB4bFe4Q": {
+		"href": "https://www.youtube.com/channel/UCO1cgjhGzsSYb1rsB4bFe4Q",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"Fun Fun Functions YouTube Channel": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"": {
+		"href": "",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"Economics": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/js-common-errors": {
+		"href": "https://github.com/gSchool/js-common-errors",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"JS Common Errors": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gschool/js-array-intro": {
+		"href": "https://github.com/gschool/js-array-intro",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"JS Array Intro": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/js-object-intro": {
+		"href": "https://github.com/gSchool/js-object-intro",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"JS Object Intro": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/exercise-js-scope-hoisting-closure-higherorder": {
+		"href": "https://github.com/gSchool/exercise-js-scope-hoisting-closure-higherorder",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"JS Scope, Hoisting, Closure, Higher Order Function": true,
+			"JS Scope Intro": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/javascript-challenges": {
+		"href": "https://github.com/gSchool/javascript-challenges",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"JS Challenges with TDD": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/map-filter-reduce-exercises": {
+		"href": "https://github.com/gSchool/map-filter-reduce-exercises",
+		"weeks": {
+			"2": true,
+			"7": true
+		},
+		"text": {
+			"Map, Reduce, Filter": true,
+			"Map, Filter, Reduce Exercises": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/DailyProgrammer": {
+		"href": "https://github.com/gSchool/DailyProgrammer",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"Daily Programmer - Lots of JS and CSS Practice Exercises": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/javascript-curriculum/tree/master/Accumulator%20Pattern": {
+		"href": "https://github.com/gSchool/javascript-curriculum/tree/master/Accumulator%20Pattern",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"Accumulator Pattern": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://math.berkeley.edu/~gmelvin/polya.pdf": {
+		"href": "https://math.berkeley.edu/~gmelvin/polya.pdf",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"Polya Problem Solving Technique": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/problem-solving-curriculum/master/README.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/problem-solving-curriculum/master/README.md",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"LMS: Intro to Problem Solving": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://slides.gteach.xyz/Programming/JS-Concepts/Scope.md#/": {
+		"href": "http://slides.gteach.xyz/Programming/JS-Concepts/Scope.md#/",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://slides.gteach.xyz/Programming/Accumulator-Pattern/README.md#/": {
+		"href": "http://slides.gteach.xyz/Programming/Accumulator-Pattern/README.md#/",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/javascript-curriculum/master/Accumulator%20Pattern/README.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/javascript-curriculum/master/Accumulator%20Pattern/README.md",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"LMS: Accumulator Pattern": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://docs.google.com/a/galvanize.com/presentation/d/1gashqbDrxNMj6zgrmMU2WY54ki9aKH0AC_gWHBf6ATw/": {
+		"href": "https://docs.google.com/a/galvanize.com/presentation/d/1gashqbDrxNMj6zgrmMU2WY54ki9aKH0AC_gWHBf6ATw/",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/js-array-intro": {
+		"href": "https://github.com/gSchool/js-array-intro",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"JS Array Intro": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/javascript-curriculum/master/Arrays-Objects-Iteration.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/javascript-curriculum/master/Arrays-Objects-Iteration.md",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"LMS: Arrays, Objects and Iteration": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/javascript-curriculum/master/Functions.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/javascript-curriculum/master/Functions.md",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"LMS: Functions": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/javascript-curriculum/master/Scope.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/javascript-curriculum/master/Scope.md",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"LMS: Scope": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/javascript-curriculum/master/Hoisting.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/javascript-curriculum/master/Hoisting.md",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"LMS: Hoisting": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/javascript-curriculum/master/Refactoring.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/javascript-curriculum/master/Refactoring.md",
+		"weeks": {
+			"2": true,
+			"5": true
+		},
+		"text": {
+			"LMS: Refactoring": true,
+			"https://learn.galvanize.com/content/gSchool/javascript-curriculum/master/Refactoring.md": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://drewdahlman.com/": {
+		"href": "http://drewdahlman.com/",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"Website": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://twitter.com/meusPartum": {
+		"href": "http://twitter.com/meusPartum",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"Twitter": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/DrewDahlman": {
+		"href": "https://github.com/DrewDahlman",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"Github": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://www.legworkstudio.com/": {
+		"href": "http://www.legworkstudio.com/",
+		"weeks": {
+			"2": true
+		},
+		"text": {
+			"Legwork Studio": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://slides.gteach.xyz/Frontend/DOM-Coding/intro-to-dom.md#/": {
+		"href": "http://slides.gteach.xyz/Frontend/DOM-Coding/intro-to-dom.md#/",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/browser-dom-curriculum/master/README.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/browser-dom-curriculum/master/README.md",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"LMS: DOM Curriculum": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/js-dom-exercises": {
+		"href": "https://github.com/gSchool/js-dom-exercises",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"DOM Exercises Part 1: Selection and Mutation": true,
+			"DOM Exercises Part 2: jQuery Selection and Mutation": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/stoplight-event-exercise": {
+		"href": "https://github.com/gSchool/stoplight-event-exercise",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"Stoplight Events": true,
+			"Stoplight": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/js-dom-tests": {
+		"href": "https://github.com/gSchool/js-dom-tests",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"DOM Exercises Part 1: Creation and Events": true,
+			"DOM Exercises Part 2: jQuery Creation and Events": true,
+			"JS: DOM Selection and Mutation Part 1 and Part 2": true,
+			"JS: DOM Creation and Events Part 1 and Part 2": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://docs.google.com/presentation/d/1fYUQ3ICHxrCpWxe2Ndd7c1dGxcvKwQOY4gptbzrpajU/edit": {
+		"href": "https://docs.google.com/presentation/d/1fYUQ3ICHxrCpWxe2Ndd7c1dGxcvKwQOY4gptbzrpajU/edit",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/browser-dom-curriculum/master/jQuery/README.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/browser-dom-curriculum/master/jQuery/README.md",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"LMS: jQuery": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/boxes-jQuery-playground": {
+		"href": "https://github.com/gSchool/boxes-jQuery-playground",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"jQuery Boxes Playground": true,
+			"Boxes Playground": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://standardjs.com/": {
+		"href": "http://standardjs.com/",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"Standard-js": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://eslint.org/": {
+		"href": "http://eslint.org/",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"ES Lint": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/airbnb/javascript": {
+		"href": "https://github.com/airbnb/javascript",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"Airbnb Style Guide": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb": {
+		"href": "https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"Airbnb ESLint Config": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.npmjs.com/search?q=eslint-config-": {
+		"href": "https://www.npmjs.com/search?q=eslint-config-",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"Other ESLint Configs": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/dom-query-function": {
+		"href": "https://github.com/gSchool/dom-query-function",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"DOM Query": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/jquery-calculator": {
+		"href": "https://github.com/gSchool/jquery-calculator",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"jQuery Calculator": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/pixel-art-maker": {
+		"href": "https://github.com/gSchool/pixel-art-maker",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"jQuery Pixel Art Maker": true,
+			"Pixel Art Maker": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction": {
+		"href": "https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"MDN: Intro to the DOM": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Events": {
+		"href": "https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Events",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"MDN: Events and the DOM": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://learn.jquery.com/": {
+		"href": "http://learn.jquery.com/",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"Learn jQuery": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://jqfundamentals.com/": {
+		"href": "http://jqfundamentals.com/",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"jQuery Fundamentals": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://oscarotero.com/jquery/": {
+		"href": "https://oscarotero.com/jquery/",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"jQuery Cheat Sheet": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/oneuijs/You-Dont-Need-jQuery": {
+		"href": "https://github.com/oneuijs/You-Dont-Need-jQuery",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"You don't need jQuery": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://youmightnotneedjquery.com/": {
+		"href": "http://youmightnotneedjquery.com/",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"You might not need jQuery": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://docs.google.com/document/d/103tckT6Dt-hQhPurZFnFetCDzhI3DBzInd0K8_tgJpE/edit": {
+		"href": "https://docs.google.com/document/d/103tckT6Dt-hQhPurZFnFetCDzhI3DBzInd0K8_tgJpE/edit",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"here": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://docs.google.com/presentation/d/1_zSNM9nLoaTFL0zYNvRYWvJE6BPKGx0y7JMOlFnrcao/edit": {
+		"href": "https://docs.google.com/presentation/d/1_zSNM9nLoaTFL0zYNvRYWvJE6BPKGx0y7JMOlFnrcao/edit",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"HTTP Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://slides.com/momolove/deck#/": {
+		"href": "http://slides.com/momolove/deck#/",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"Full Stack Diagrams": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop": {
+		"href": "https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"Postman": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/browser-dom-curriculum/master/HTTP/README.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/browser-dom-curriculum/master/HTTP/README.md",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"LMS: HTTP": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.youtube.com/watch?v=7_LPdttKXPc": {
+		"href": "https://www.youtube.com/watch?v=7_LPdttKXPc",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"Youtube: How the Internet Works": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://docs.google.com/presentation/d/1t84LDQWZ4xlVwEd2CkJld-QeZ7XbX1-P4MK-bY-bSUA/edit#slide=id.p": {
+		"href": "https://docs.google.com/presentation/d/1t84LDQWZ4xlVwEd2CkJld-QeZ7XbX1-P4MK-bY-bSUA/edit#slide=id.p",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/html-css-curriculum/master/HTML/Forms.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/html-css-curriculum/master/HTML/Forms.md",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"LMS: Forms": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/html-forms": {
+		"href": "https://github.com/gSchool/html-forms",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"Exercise: HTML Forms": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/browser-dom-curriculum/master/HTTP/AJAX.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/browser-dom-curriculum/master/HTTP/AJAX.md",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"LMS: HTTP AJAX": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/browser-dom-curriculum/master/jQuery/AJAX.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/browser-dom-curriculum/master/jQuery/AJAX.md",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"LMS: jQuery AJAX": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/node-curriculum/master/Express/CORS.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/node-curriculum/master/Express/CORS.md",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"LMS: CORS": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/omdb-ajax": {
+		"href": "https://github.com/gSchool/omdb-ajax",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"OMDB AJAX": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/DailyProgrammer/tree/master/02_rampNumbers": {
+		"href": "https://github.com/gSchool/DailyProgrammer/tree/master/02_rampNumbers",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"Daily Programmer Ramp Numbers": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://docs.google.com/presentation/d/1WuwCIuqSMnqDp2glALPDQ-HOVMx_6-d8oTZr9ZIw8p8/edit": {
+		"href": "https://docs.google.com/presentation/d/1WuwCIuqSMnqDp2glALPDQ-HOVMx_6-d8oTZr9ZIw8p8/edit",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/productivity-curriculum/master/Deployment/Firebase.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/productivity-curriculum/master/Deployment/Firebase.md",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"LMS: Firebase Deployment": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/static-deployment-practice": {
+		"href": "https://github.com/gSchool/static-deployment-practice",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"Static Deployment Practice": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/checkerboard-exercise": {
+		"href": "https://github.com/gSchool/checkerboard-exercise",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"Checkerboard": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/js-spotify-ajax": {
+		"href": "https://github.com/gSchool/js-spotify-ajax",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"Spotify Search for Artist": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/spotify-albums-and-tracks": {
+		"href": "https://github.com/gSchool/spotify-albums-and-tracks",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"Spotify Albums and Tracks": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/itunes_song_guessing_game": {
+		"href": "https://github.com/gSchool/itunes_song_guessing_game",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"iTunes Guessing Game": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/toddmotto/public-apis": {
+		"href": "https://github.com/toddmotto/public-apis",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"publicly available apis": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/w3cj/api-baby-maker": {
+		"href": "https://github.com/w3cj/api-baby-maker",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"API Baby Maker": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://jsonplaceholder.typicode.com/": {
+		"href": "http://jsonplaceholder.typicode.com/",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"JSON API": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.meetup.com/DenverUX/events/234784376/": {
+		"href": "https://www.meetup.com/DenverUX/events/234784376/",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"UX Happy Hour - 5:30-6:30": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.meetup.com/denver-creative-tech/events/234695555/": {
+		"href": "https://www.meetup.com/denver-creative-tech/events/234695555/",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"Denver Creative Tech - Creative Sound Design and Robotic Bartenders - 6:00pm": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.meetup.com/Node-js-Denver-Boulder/events/235157614/": {
+		"href": "https://www.meetup.com/Node-js-Denver-Boulder/events/235157614/",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"Nodeschool Workshop - Learn NodeJS - 6:00pm to 8:00pm": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.meetup.com/AR-VR-Play-Place/events/234519604/": {
+		"href": "https://www.meetup.com/AR-VR-Play-Place/events/234519604/",
+		"weeks": {
+			"3": true
+		},
+		"text": {
+			"Denver Film Festival AR/VR Play Place #1": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://gist.github.com/w3cj/8e52b4a2ef3e2dc1520613306b1106a2": {
+		"href": "https://gist.github.com/w3cj/8e52b4a2ef3e2dc1520613306b1106a2",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"this gist": true,
+			"Week 4 Standards": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://docs.google.com/presentation/d/1h7SCMspzBpstO45_gNcXQpw8GN6l1coLmUoDUtAdPQk/edit": {
+		"href": "https://docs.google.com/presentation/d/1h7SCMspzBpstO45_gNcXQpw8GN6l1coLmUoDUtAdPQk/edit",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://docs.google.com/presentation/d/1-2PgjNjNx0hRnObDQglpm7GAkyJodLvoL9D9Usj-tOQ/edit#slide=id.p": {
+		"href": "https://docs.google.com/presentation/d/1-2PgjNjNx0hRnObDQglpm7GAkyJodLvoL9D9Usj-tOQ/edit#slide=id.p",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/html-css-curriculum/master/UI/Wireframing.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/html-css-curriculum/master/UI/Wireframing.md",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"LMS Article: Wireframing": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/Wireframe_Exercise": {
+		"href": "https://github.com/gSchool/Wireframe_Exercise",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"Wireframing Exercise": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/DailyProgrammer/tree/master/21_swissRecordDesign": {
+		"href": "https://github.com/gSchool/DailyProgrammer/tree/master/21_swissRecordDesign",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"Swiss Record Design with CSS/HTML": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://youtu.be/xVPgqlcBgO0": {
+		"href": "https://youtu.be/xVPgqlcBgO0",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"DEMO Lecture!! Video": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://bitbucket.org/roberto_ortega/responsive-design/src/4449b25fd52a66994fd86000217a54c9852f7283?at=master": {
+		"href": "https://bitbucket.org/roberto_ortega/responsive-design/src/4449b25fd52a66994fd86000217a54c9852f7283?at=master",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"The Code": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://docs.google.com/presentation/d/1qahNvqpwpnx_y7Pe0unHeZAhRvvR5ty4hQrevoDEUz0/edit#slide=id.gd3443a9b4_1_7": {
+		"href": "https://docs.google.com/presentation/d/1qahNvqpwpnx_y7Pe0unHeZAhRvvR5ty4hQrevoDEUz0/edit#slide=id.gd3443a9b4_1_7",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"Flexbox": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://docs.google.com/presentation/d/1HqCNWlgk_igU3Otw4Aoz-y9iKkZ3GSgVO_1-0oc_mwg/edit#slide=id.p": {
+		"href": "https://docs.google.com/presentation/d/1HqCNWlgk_igU3Otw4Aoz-y9iKkZ3GSgVO_1-0oc_mwg/edit#slide=id.p",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"Media Queries": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/media-query-css-exercise": {
+		"href": "https://github.com/gSchool/media-query-css-exercise",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"Repo": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.youtube.com/watch?v=y5kSAbxIJjg": {
+		"href": "https://www.youtube.com/watch?v=y5kSAbxIJjg",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"Video": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://gist.github.com/w3cj/90a9455658303c468e9ab2f347110204": {
+		"href": "https://gist.github.com/w3cj/90a9455658303c468e9ab2f347110204",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"The Code": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://gist.github.com/w3cj/49109f34b7525771dafd24f2fc5d072f": {
+		"href": "https://gist.github.com/w3cj/49109f34b7525771dafd24f2fc5d072f",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"one of many CSS frameworks": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/BootstrapMocksAssignment": {
+		"href": "https://github.com/gSchool/BootstrapMocksAssignment",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"Wireframes": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/bootstrap_mocks_assignment": {
+		"href": "https://github.com/gSchool/bootstrap_mocks_assignment",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"More Wireframes": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://codepen.io/jakob-e/pen/emzxqd": {
+		"href": "https://codepen.io/jakob-e/pen/emzxqd",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"placeholder image services": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://mashable.com/2013/07/11/lorem-ipsum/": {
+		"href": "http://mashable.com/2013/07/11/lorem-ipsum/",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"ipsum generators": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://docs.google.com/presentation/d/19-y2PVXAJ-J6Yqct_Lvqkaplagk9fNMrwi_3gasfARU/edit#slide=id.p": {
+		"href": "https://docs.google.com/presentation/d/19-y2PVXAJ-J6Yqct_Lvqkaplagk9fNMrwi_3gasfARU/edit#slide=id.p",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/q1-project-requirements": {
+		"href": "https://github.com/gSchool/q1-project-requirements",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"Project Requirements": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/api-list": {
+		"href": "https://github.com/gSchool/api-list",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"API List": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/q1-project-proposals": {
+		"href": "https://github.com/gSchool/q1-project-proposals",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"Project Proposal Repo": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://sass-lang.com/": {
+		"href": "http://sass-lang.com/",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"Site": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/html-css-curriculum/master/CSS/SASS.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/html-css-curriculum/master/CSS/SASS.md",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"Article": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.npmjs.com/package/node-sass": {
+		"href": "https://www.npmjs.com/package/node-sass",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"node-sass": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/sass-style-guide-exercise": {
+		"href": "https://github.com/gSchool/sass-style-guide-exercise",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"Optional Style Guide Exercise": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/DailyProgrammer/tree/master/37_ironMan": {
+		"href": "https://github.com/gSchool/DailyProgrammer/tree/master/37_ironMan",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"Iron Man": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/cohorts/66/articles/2939": {
+		"href": "https://learn.galvanize.com/cohorts/66/articles/2939",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"Article": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://coderwall.com/p/euwpig/a-better-git-log": {
+		"href": "https://coderwall.com/p/euwpig/a-better-git-log",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"pretty logs": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/git-branch-exercise": {
+		"href": "https://github.com/gSchool/git-branch-exercise",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"Exercise": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://docs.google.com/document/d/1T5CH3q5_3wh9zpHVEeuDRGVDYqmJniroWH-Z1-06AOA/edit": {
+		"href": "https://docs.google.com/document/d/1T5CH3q5_3wh9zpHVEeuDRGVDYqmJniroWH-Z1-06AOA/edit",
+		"weeks": {
+			"4": true
+		},
+		"text": {
+			"Note Guide": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://spiffygif.com/": {
+		"href": "http://spiffygif.com/",
+		"weeks": {
+			"5": true
+		},
+		"text": {
+			"http://spiffygif.com/": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://materializecss.com/preloader.html": {
+		"href": "http://materializecss.com/preloader.html",
+		"weeks": {
+			"5": true
+		},
+		"text": {
+			"http://materializecss.com/preloader.html": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://docs.google.com/spreadsheets/d/12S1nAEwrpmMDRkf3BAhRjLr5zfZIRtpGXj1_2InhKso/edit#gid=0": {
+		"href": "https://docs.google.com/spreadsheets/d/12S1nAEwrpmMDRkf3BAhRjLr5zfZIRtpGXj1_2InhKso/edit#gid=0",
+		"weeks": {
+			"5": true
+		},
+		"text": {
+			"https://docs.google.com/spreadsheets/d/12S1nAEwrpmMDRkf3BAhRjLr5zfZIRtpGXj1_2InhKso/edit#gid=0": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.stayintech.com/info/UX": {
+		"href": "https://www.stayintech.com/info/UX",
+		"weeks": {
+			"5": true
+		},
+		"text": {
+			"https://www.stayintech.com/info/UX": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://sensible.com/downloads/test-script.pdf": {
+		"href": "https://sensible.com/downloads/test-script.pdf",
+		"weeks": {
+			"5": true
+		},
+		"text": {
+			"https://sensible.com/downloads/test-script.pdf": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://fontpair.co/": {
+		"href": "http://fontpair.co/",
+		"weeks": {
+			"5": true
+		},
+		"text": {
+			"http://fontpair.co/": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://briangardner.com/google-font-combinations/": {
+		"href": "http://briangardner.com/google-font-combinations/",
+		"weeks": {
+			"5": true
+		},
+		"text": {
+			"http://briangardner.com/google-font-combinations/": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://coolors.co/": {
+		"href": "https://coolors.co/",
+		"weeks": {
+			"5": true
+		},
+		"text": {
+			"https://coolors.co/": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.materialpalette.com/": {
+		"href": "https://www.materialpalette.com/",
+		"weeks": {
+			"5": true
+		},
+		"text": {
+			"https://www.materialpalette.com/": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/javascript-curriculum/master/SOLID/Single%20Responsibility%20Principle.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/javascript-curriculum/master/SOLID/Single%20Responsibility%20Principle.md",
+		"weeks": {
+			"5": true
+		},
+		"text": {
+			"https://learn.galvanize.com/content/gSchool/javascript-curriculum/master/SOLID/Single%20Responsibility%20Principle.md": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/DailyProgrammer/tree/master/06_longestString": {
+		"href": "https://github.com/gSchool/DailyProgrammer/tree/master/06_longestString",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Daily Programmer #6: Longest String": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://slides.gteach.xyz/Programming/JS-Concepts/Concepts.md#/": {
+		"href": "http://slides.gteach.xyz/Programming/JS-Concepts/Concepts.md#/",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Review Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://gist.github.com/w3cj/5087dd225a39d8fb1c64ab4293bec395": {
+		"href": "https://gist.github.com/w3cj/5087dd225a39d8fb1c64ab4293bec395",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Review Notes": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://gist.github.com/w3cj/3b14a9467bc575a4bb29bd6b9e210bbd": {
+		"href": "https://gist.github.com/w3cj/3b14a9467bc575a4bb29bd6b9e210bbd",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Concepts Live Code": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://slides.com/mattsprague/es2015": {
+		"href": "http://slides.com/mattsprague/es2015",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://kangax.github.io/compat-table/es6/": {
+		"href": "http://kangax.github.io/compat-table/es6/",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Compatibility Chart": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://babeljs.io/": {
+		"href": "http://babeljs.io/",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Babel Transpiler": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://babeljs.io/repl/": {
+		"href": "https://babeljs.io/repl/",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Babel live preview": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://exploringjs.com/es6.html": {
+		"href": "http://exploringjs.com/es6.html",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Exploring ES6": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/metagrover/ES6-for-humans": {
+		"href": "https://github.com/metagrover/ES6-for-humans",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"ES6 For Humans": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/es2015-with-babeljs": {
+		"href": "https://github.com/gSchool/es2015-with-babeljs",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"ES2015 Exercises": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/workbook/tree/master/server/routes": {
+		"href": "https://github.com/gSchool/workbook/tree/master/server/routes",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"https://github.com/gSchool/workbook/tree/master/server/routes": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/workbook/tree/master/server/lib": {
+		"href": "https://github.com/gSchool/workbook/tree/master/server/lib",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"https://github.com/gSchool/workbook/tree/master/server/lib": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://slides.com/kylecoberly/deck-5#/4": {
+		"href": "http://slides.com/kylecoberly/deck-5#/4",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://slides.com/mattsprague/intro-to-npm-and-node": {
+		"href": "http://slides.com/mattsprague/intro-to-npm-and-node",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://browsenpm.org/package.json": {
+		"href": "http://browsenpm.org/package.json",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Interactive guide to package.json": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/node-project-setup": {
+		"href": "https://github.com/gSchool/node-project-setup",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Setup a Node Project": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://gitlab.com/cjr_/q1-review/tree/master": {
+		"href": "https://gitlab.com/cjr_/q1-review/tree/master",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Example Code": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/galvanize-eats-project": {
+		"href": "https://github.com/gSchool/galvanize-eats-project",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Project Description": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/galvanize-eats": {
+		"href": "https://github.com/gSchool/galvanize-eats",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Project Repo - Fork/Clone (Do your work here!)": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://s3-us-west-2.amazonaws.com/lesson-plan-images/galvanize_eats_assessments/Q1+Assessment+Stories.csv": {
+		"href": "https://s3-us-west-2.amazonaws.com/lesson-plan-images/galvanize_eats_assessments/Q1+Assessment+Stories.csv",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"User Stories CSV (Import to Pivotal)": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/node-modules-examples": {
+		"href": "https://github.com/gSchool/node-modules-examples",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Examples from Lesson": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/module.exports": {
+		"href": "https://github.com/gSchool/module.exports",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Exercise: module.exports": true,
+			"Exercise: modules": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/node-curriculum/master/Node/Modules.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/node-curriculum/master/Node/Modules.md",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"LMS: node.js Modules": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://nodejs.org/api/modules.html": {
+		"href": "https://nodejs.org/api/modules.html",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"node.js Modules Documentation": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://eloquentjavascript.net/20_node.html#h_BOlGLA/wK7": {
+		"href": "http://eloquentjavascript.net/20_node.html#h_BOlGLA/wK7",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Eloquent JavaScript Chapter 20: Node - Modules": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/maxogden/art-of-node#modular-development-workflow": {
+		"href": "https://github.com/maxogden/art-of-node#modular-development-workflow",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Art of Node - Modular Development Workflow": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.safaribooksonline.com/library/view/learning-node/9781449326128/ch04.html": {
+		"href": "https://www.safaribooksonline.com/library/view/learning-node/9781449326128/ch04.html",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Learning Node - Chapter 4 - The Node Module System": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/nodejs/node/tree/master/lib": {
+		"href": "https://github.com/nodejs/node/tree/master/lib",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Node.js core modules source code": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://bites.goodeggs.com/posts/export-this/": {
+		"href": "http://bites.goodeggs.com/posts/export-this/",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Export This: Interface Design Patterns for Node.js Modules": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://docs.google.com/presentation/d/15B25ke3v9aNrhpCgldy9vFSyyjmWjwTM8roZioAPptA/edit#slide=id.p": {
+		"href": "https://docs.google.com/presentation/d/15B25ke3v9aNrhpCgldy9vFSyyjmWjwTM8roZioAPptA/edit#slide=id.p",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://gist.github.com/mairinbailey/4ff574ba10e3aa603c7db04be4944742": {
+		"href": "https://gist.github.com/mairinbailey/4ff574ba10e3aa603c7db04be4944742",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Research: express definitions": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/express-basic-CRUD": {
+		"href": "https://github.com/gSchool/express-basic-CRUD",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Exercise: express CRUD": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://team.goodeggs.com/export-this-interface-design-patterns-for-node-js-modules-b48a3b1f8f40": {
+		"href": "https://team.goodeggs.com/export-this-interface-design-patterns-for-node-js-modules-b48a3b1f8f40",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Export This: Interface Design Patterns for Node.js Modules": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api": {
+		"href": "http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Best Practices for RESTful APIs": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.npmjs.com/package/cors": {
+		"href": "https://www.npmjs.com/package/cors",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"cors": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.jquery.com/ajax/jquery-ajax-methods/": {
+		"href": "https://learn.jquery.com/ajax/jquery-ajax-methods/",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Research $.ajax": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/express-drills/tree/master/calculator": {
+		"href": "https://github.com/gSchool/express-drills/tree/master/calculator",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Exercise: express Calculator": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/node-http-server-intro/": {
+		"href": "https://github.com/gSchool/node-http-server-intro/",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Exercise: node http server from scratch": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.linkedin.com/in/morgandesignwerks": {
+		"href": "https://www.linkedin.com/in/morgandesignwerks",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Senior Engineer / UX Advocate": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://quickleft.com/": {
+		"href": "https://quickleft.com/",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Cognizant Quick Left": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://quickleft.com/blog/meet-team-cqler-morgan-whaley/": {
+		"href": "https://quickleft.com/blog/meet-team-cqler-morgan-whaley/",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Meet the team: Morgan Whaley": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://gist.github.com/w3cj/a32274c92b4fa0a43255c37b7f881715": {
+		"href": "https://gist.github.com/w3cj/a32274c92b4fa0a43255c37b7f881715",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Week 7 Standards Checklist": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://www.indigoproject.org/indigo-inventory/": {
+		"href": "http://www.indigoproject.org/indigo-inventory/",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"Indigo Assessment": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://static1.squarespace.com/static/56c15de859827ef22c082045/t/56d3a447c6fc087c7301b670/1456710729441/Sheri+Smith+Indigo+Assessment.pdf": {
+		"href": "https://static1.squarespace.com/static/56c15de859827ef22c082045/t/56d3a447c6fc087c7301b670/1456710729441/Sheri+Smith+Indigo+Assessment.pdf",
+		"weeks": {
+			"7": true
+		},
+		"text": {
+			"here": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://gist.github.com/w3cj/b7070e2a098a9bbce74540c78c40e7fe": {
+		"href": "https://gist.github.com/w3cj/b7070e2a098a9bbce74540c78c40e7fe",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"this gist": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/colors-with-node": {
+		"href": "https://github.com/gSchool/colors-with-node",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Colors with node.js": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://docs.google.com/presentation/d/1NzxwJzjmTJcm8FwWnjbPl0BbO6-_xNdqGwauVh0IyTs/edit#slide=id.p": {
+		"href": "https://docs.google.com/presentation/d/1NzxwJzjmTJcm8FwWnjbPl0BbO6-_xNdqGwauVh0IyTs/edit#slide=id.p",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://dev.mysql.com/doc/employee/en/sakila-structure.html": {
+		"href": "https://dev.mysql.com/doc/employee/en/sakila-structure.html",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"MySQL Employees Example": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://docs.oracle.com/cd/B28359_01/server.111/b28328/diagrams.htm#G5482": {
+		"href": "https://docs.oracle.com/cd/B28359_01/server.111/b28328/diagrams.htm#G5482",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Oracle Exapmles": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://www.databaseanswers.org/data_models/": {
+		"href": "http://www.databaseanswers.org/data_models/",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Tons of examples here": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.lucidchart.com/publicSegments/view/27ecec9d-a456-4969-b2b7-dfce4f2991e4/image.png": {
+		"href": "https://www.lucidchart.com/publicSegments/view/27ecec9d-a456-4969-b2b7-dfce4f2991e4/image.png",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Galvanize Observer": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.lucidchart.com/publicSegments/view/a09ba7fc-b174-42e1-9011-ad5b587be79c/image.png": {
+		"href": "https://www.lucidchart.com/publicSegments/view/a09ba7fc-b174-42e1-9011-ad5b587be79c/image.png",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Inquire": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://www.vertabelo.com/": {
+		"href": "http://www.vertabelo.com/",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Vertabelo": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.lucidchart.com/": {
+		"href": "https://www.lucidchart.com/",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Lucid Chart": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://www.vertabelo.com/blog/technical-articles/crow-s-foot-notation": {
+		"href": "http://www.vertabelo.com/blog/technical-articles/crow-s-foot-notation",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Notes on crows foot notation": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/galvanize-music-ERD": {
+		"href": "https://github.com/gSchool/galvanize-music-ERD",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Exercise: Galvanize Music": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/DailyProgrammer/tree/master/08_combineAndSort": {
+		"href": "https://github.com/gSchool/DailyProgrammer/tree/master/08_combineAndSort",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Daily Programmer: Combine and Sort": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://docs.google.com/presentation/d/14sW33aMnNnBadpDzoCQ-6Bj8qXp680IuHfhNM6x5JdE/edit#slide=id.p": {
+		"href": "https://docs.google.com/presentation/d/14sW33aMnNnBadpDzoCQ-6Bj8qXp680IuHfhNM6x5JdE/edit#slide=id.p",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://docs.google.com/presentation/d/1hOQERqa5UFrENm7HXJfXxElmgdBY7jssnW3Mm4RvwWw/edit#slide=id.p": {
+		"href": "https://docs.google.com/presentation/d/1hOQERqa5UFrENm7HXJfXxElmgdBY7jssnW3Mm4RvwWw/edit#slide=id.p",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"DDL Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://docs.google.com/presentation/d/1fuwnawYO7q12IiDzNpvEsoyUaopYsAaX8umgXuoPKYg/edit#slide=id.p": {
+		"href": "https://docs.google.com/presentation/d/1fuwnawYO7q12IiDzNpvEsoyUaopYsAaX8umgXuoPKYg/edit#slide=id.p",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"DML Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.postgresql.org/docs/current/static/ddl.html": {
+		"href": "https://www.postgresql.org/docs/current/static/ddl.html",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Postgres DDL Documentation": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.postgresql.org/docs/current/static/dml.html": {
+		"href": "https://www.postgresql.org/docs/current/static/dml.html",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Postgres DML Documentation": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.postgresql.org/docs/current/static/datatype.html": {
+		"href": "https://www.postgresql.org/docs/current/static/datatype.html",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Postgres Data Types": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/sql-curriculum/master/PSQL.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/sql-curriculum/master/PSQL.md",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"LMS: psql overview and exercises": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/sql-curriculum/master/SQL%20Intro.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/sql-curriculum/master/SQL%20Intro.md",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"LMS: sql intro and exercises": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/learn-sql": {
+		"href": "https://github.com/gSchool/learn-sql",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"SQL Weather Exercise": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/stack-overflow-SQL": {
+		"href": "https://github.com/gSchool/stack-overflow-SQL",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Stack Overflow SQL Exercise": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/intro_sql_exercise": {
+		"href": "https://github.com/gSchool/intro_sql_exercise",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"SQL Apartment Exercise": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.postgresql.org/docs/current/static/index.html": {
+		"href": "https://www.postgresql.org/docs/current/static/index.html",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Postgres Documentation": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://sqlzoo.net/wiki/SQL_Tutorial": {
+		"href": "http://sqlzoo.net/wiki/SQL_Tutorial",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"SQL Zoo": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.pgexercises.com/": {
+		"href": "https://www.pgexercises.com/",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"PG Exercises": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://www.w3schools.com/sql/default.asp": {
+		"href": "http://www.w3schools.com/sql/default.asp",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"w3schools SQL": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://gitlab.com/cjr_/post-put-breakout/tree/master": {
+		"href": "https://gitlab.com/cjr_/post-put-breakout/tree/master",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Le Code": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.youtube.com/watch?v=yxS415ktnEo": {
+		"href": "https://www.youtube.com/watch?v=yxS415ktnEo",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Le Video": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/sql-curriculum/master/Normalization%20Examples.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/sql-curriculum/master/Normalization%20Examples.md",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Examples": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/content/gSchool/sql-curriculum/master/Normalization.md": {
+		"href": "https://learn.galvanize.com/content/gSchool/sql-curriculum/master/Normalization.md",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Normalization": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://camo.githubusercontent.com/3fb9ffc32cbff3cdcd70cddc9cec1931468aeee5/68747470733a2f2f73332d75732d776573742d322e616d617a6f6e6177732e636f6d2f6c6573736f6e2d706c616e2d696d616765732f6e6f726d616c697a6174696f6e5f696d616765732f4e6f726d616c697a6174696f6e2b4578657263697365732b2d2b44656e6f726d616c697a65642b322b2831292e6a706567": {
+		"href": "https://camo.githubusercontent.com/3fb9ffc32cbff3cdcd70cddc9cec1931468aeee5/68747470733a2f2f73332d75732d776573742d322e616d617a6f6e6177732e636f6d2f6c6573736f6e2d706c616e2d696d616765732f6e6f726d616c697a6174696f6e5f696d616765732f4e6f726d616c697a6174696f6e2b4578657263697365732b2d2b44656e6f726d616c697a65642b322b2831292e6a706567",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"this": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://docs.google.com/presentation/d/1UweML44UKtAhYXXChjtjBX94eyJUa7KOvDhWZaDAvPs/edit#slide=id.p": {
+		"href": "https://docs.google.com/presentation/d/1UweML44UKtAhYXXChjtjBX94eyJUa7KOvDhWZaDAvPs/edit#slide=id.p",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Slides": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/sql-curriculum": {
+		"href": "https://github.com/gSchool/sql-curriculum",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"https://github.com/gSchool/sql-curriculum": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/sql-curriculum/tree/master/Exercises/src/customers": {
+		"href": "https://github.com/gSchool/sql-curriculum/tree/master/Exercises/src/customers",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"https://github.com/gSchool/sql-curriculum/tree/master/Exercises/src/customers": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/node-curriculum/tree/master/Knex": {
+		"href": "https://github.com/gSchool/node-curriculum/tree/master/Knex",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"LMS: Knex": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://slides.com/lizh/intro_to_knex#/": {
+		"href": "http://slides.com/lizh/intro_to_knex#/",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Knex Intro": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://slides.com/lizh/knex-associations#/": {
+		"href": "http://slides.com/lizh/knex-associations#/",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Knex Associations (Joins!)": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/sql-to-knex-assignment": {
+		"href": "https://github.com/gSchool/sql-to-knex-assignment",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"SQL to Knex": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/knex-migrations-and-deployment": {
+		"href": "https://github.com/gSchool/knex-migrations-and-deployment",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Knex Migrations and Deployment": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/knex-migration-seed-music-script": {
+		"href": "https://github.com/gSchool/knex-migration-seed-music-script",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Knex Music Pair Exercise": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/knex_booklist": {
+		"href": "https://github.com/gSchool/knex_booklist",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Knex Booklist": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://knexjs.org/": {
+		"href": "http://knexjs.org/",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Knex Docs": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"http://michaelavila.com/knex-querylab/": {
+		"href": "http://michaelavila.com/knex-querylab/",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Knex Query Lab": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/Chanaeva/Knex-Breakout": {
+		"href": "https://github.com/Chanaeva/Knex-Breakout",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"The Code": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/DailyProgrammer/tree/master/39_joins": {
+		"href": "https://github.com/gSchool/DailyProgrammer/tree/master/39_joins",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Joins with JavaScript": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/express-knex-CRUD": {
+		"href": "https://github.com/gSchool/express-knex-CRUD",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Express knex CRUD Example": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/knex-express-intro": {
+		"href": "https://github.com/gSchool/knex-express-intro",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"this repo": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://www.heroku.com/": {
+		"href": "https://www.heroku.com/",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Create an Account": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://devcenter.heroku.com/articles/heroku-cli#os-x": {
+		"href": "https://devcenter.heroku.com/articles/heroku-cli#os-x",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Install CLI": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/intro-to-deploying-express-pg-apps-to-heroku": {
+		"href": "https://github.com/gSchool/intro-to-deploying-express-pg-apps-to-heroku",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Instructions": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://learn.galvanize.com/instructor/cohorts/89/exercises/8837": {
+		"href": "https://learn.galvanize.com/instructor/cohorts/89/exercises/8837",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Exercises tab": true
+		},
+		"tags": {
+			"": true
+		}
+	},
+	"https://github.com/gSchool/galvanize-brews": {
+		"href": "https://github.com/gSchool/galvanize-brews",
+		"weeks": {
+			"8": true
+		},
+		"text": {
+			"Galvanize Brews Project": true
+		},
+		"tags": {
+			"": true
+		}
+	}
+}

@@ -10,6 +10,7 @@ const Cohort = require('./Cohort');
 const Student = require('./Student');
 const Instructor = require('./Instructor');
 const Evidence = require('./Evidence');
+const Resource = require('./Resource');
 
 function deleteAll() {
   db.get('users').remove({});
@@ -17,6 +18,7 @@ function deleteAll() {
   db.get('students').remove({});
   db.get('instructors').remove({});
   db.get('evidences').remove({});
+  db.get('resources').remove({});
 }
 
 // deleteAll();
@@ -27,5 +29,6 @@ module.exports = {
   Cohort: new Cohort(db),
   Student: new Student(db),
   Instructor: new Instructor(db),
-  Evidence: new Evidence(db)
+  Evidence: new Evidence(db),
+  Resource: new Resource(db)
 };

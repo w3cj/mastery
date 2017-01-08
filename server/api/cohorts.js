@@ -41,6 +41,10 @@ const routes = {
   '/:cohort_id/instructors': (req, res, next) => {
     const {cohort_id} = req.params;
     processRequest(CohortManager.getInstructors(cohort_id), res, next);
+  },
+  '/:cohort_id/performances/:user_id': (req, res, next) => {
+    const {cohort_id, user_id} = req.params;
+    processRequest(CohortManager.getPerformances(cohort_id, user_id), res, next);
   }
 };
 

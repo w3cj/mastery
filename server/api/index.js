@@ -1,18 +1,7 @@
 const ezc = require('express-zero-config');
 const at = require('at-quotes');
 
-const {Instructor} = require('../models');
-
 const router = ezc.createRouter();
-
-router.use((req, res, next) => {
-  Instructor
-    .find(req.user.github_id)
-    .then(instructor => {
-      req.user.isInstructor = instructor ? true : false;
-      next();
-    });
-});
 
 router.get('/', (req, res) => {
   res.json({
@@ -21,6 +10,19 @@ router.get('/', (req, res) => {
     user: req.user,
     message: at.getQuote()
   });
+});
+
+router.use('/auth', require('./auth'));
+
+router.use((req, res, next) => {
+  if(!req.user.learn_id) {
+    res.status(401);
+    res.json({
+      message: 'You must exchange your token before making requests.'
+    });
+  } else {
+    next();
+  }
 });
 
 router.use('/cohorts', require('./cohorts'));

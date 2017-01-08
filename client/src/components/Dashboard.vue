@@ -1,113 +1,59 @@
 <template>
   <div>
     <h1>Standards</h1>
-    <div v-for="subject in cohort.subjects" class="card" v-if="isAssigned(subject)">
+    <center>
+      <v-progress-circular v-if="loadingStandards" active green green-flash></v-progress-circular>
+    </center>
+    <div v-for="subject in cohort.subjects" class="card" v-if="!loadingStandards && hasAssignedStandards(subject.name)">
       <v-collection with-header>
           <v-collection-item header>
               <h3>{{subject.name}}</h3>
           </v-collection-item>
-          <v-collection-item v-for="standard in assigned(subject.standards)">
-            <h4 v-if="!isEditing(standard.id)"><a v-on:click="toggleEditStandard(standard, $event)" class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">playlist_add_check</i></a> {{standard.title}}</h4>
-            <h4 v-if="isEditing(standard.id)"><a v-on:click="toggleEditStandard(standard, $event)" class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">close</i></a> {{standard.title}}</h4>
+          <v-collection-item v-for="standard in subject.standards" v-if="standard.assigned || performances[standard.id]">
+            <h4>
+              <a v-on:click="toggleEditStandard(standard, $event)" class="btn-floating btn-large waves-effect waves-light" v-bind:class="performanceColors(standard.id)">
+                <i v-if="!isEditing(standard.id)" class="material-icons">playlist_add_check</i>
+                <i v-if="isEditing(standard.id)" class="material-icons">arrow_back</i>
+              </a> {{standard.title}}
+              <span style="float:right" v-bind:class="performanceTextColors(standard.id)">
+                {{performances[standard.id]}}
+              </span>
+            </h4>
             <ul v-if="!isEditing(standard.id)">
               <li v-for="success_criteria in standard.success_criteria">
                 <p class="grey-text center" style="flex-direction: row;cursor: not-allowed;">
-                  <v-icon v-if="isChecked(success_criteria._id)">check_box</v-icon>
+                  <v-icon v-if="isChecked(success_criteria._id)" class="green-text">check_box</v-icon>
                   <v-icon v-if="!isChecked(success_criteria._id)">check_box_outline_blank</v-icon>
-                  <span>{{success_criteria.text}}</span>
+                  <span>{{decodeHtml(success_criteria.text)}}</span>
                   <v-progress-linear indeterminate v-if="evidences[success_criteria._id] && evidences[success_criteria._id].checking"></v-progress-linear>
                 </p>
               </li>
             </ul>
             <v-collapsible collapse popout v-if="isEditing(standard.id)">
               <li>
-                  <v-collapsible-header class="active" style="padding:2em;">
-                      <h5>Evidences of Mastery</h5>
+                  <v-collapsible-header class="active" style="padding:1em;">
+                    <h4>Success Criteria</h4>
                   </v-collapsible-header>
                   <v-collapsible-body>
-                    <p>Evidence of mastery can be: Pull request URL, Project URL, gist with code, short answer in gist etc.</p>
-                    <div class="col s9 row" style="margin-left:2em;">
-                      <div class="col s10">
-                        <ul>
-                          <li>
-                            <a class="btn-floating yellow actionButton"><i class="material-icons">edit</i></a>
-                            <a class="btn-floating red actionButton"><i class="material-icons">delete</i></a>
-                            https://www.pivotaltracker.com/n/projects/1920561
-                          </li>
-                          <li>
-                            <a class="btn-floating yellow actionButton"><i class="material-icons">edit</i></a>
-                            <a class="btn-floating red actionButton"><i class="material-icons">delete</i></a>
-                            https://www.pivotaltracker.com/n/projects/1920561
-                          </li>
-                          <li>
-                            <a class="btn-floating yellow actionButton"><i class="material-icons">edit</i></a>
-                            <a class="btn-floating red actionButton"><i class="material-icons">delete</i></a>
-                            https://www.pivotaltracker.com/n/projects/1920561
-                          </li>
-                        </ul>
-                      </div>
-                      <div class="col s12">
-                      </div>
-                      <div class="input-field col s10 center" style="flex-direction:row;">
-                        <a class="btn-floating green actionButton"><i class="material-icons">link</i></a>
-                          <v-text-input
-                            placeholder="Evidence of mastery."
-                            v-bind:name="'evidence' + standard.id"
-                            v-bind:id="'evidence' + standard.id">
-                          </v-text-input>
-                      </div>
-                    </div>
                     <ul>
-                      <li v-for="success_criteria in standard.success_criteria" class="row">
-                          <p class="center" style="cursor:pointer; flex-direction: row;">
-                            <!-- <a class="btn-floating yellow darken-1 actionButton"><i class="material-icons">edit</i></a> -->
+                      <li v-for="success_criteria in standard.success_criteria">
+                          <p class="center success_criteria" style="cursor:pointer; flex-direction: row;">
                             <span class="center" v-on:mousedown="checkSuccessCriteria(success_criteria, $event)" style="flex-direction: row;">
-                              <v-icon v-if="isChecked(success_criteria._id)">check_box</v-icon>
+                              <v-icon v-if="isChecked(success_criteria._id)"  v-bind:class="{'green-text': isChecked(success_criteria._id), 'grey-text': !isChecked(success_criteria._id)}">check_box</v-icon>
                               <v-icon v-if="!isChecked(success_criteria._id)">check_box_outline_blank</v-icon>
-                              <span>{{success_criteria.text}}</span>
+                              <h5 style="text-align:left;margin-left:1em;" v-bind:class="{'grey-text': !isChecked(success_criteria._id)}">{{decodeHtml(success_criteria.text)}}</h5>
                             </span>
                           </p>
                           <p v-if="evidences[success_criteria._id] && evidences[success_criteria._id].checking">
                             <v-progress-linear indeterminate></v-progress-linear>
                           </p>
-                          <div class="col s9 row" style="margin-left:2em;">
-                            <div class="col s10">
-                              <ul>
-                                <li>
-                                  <a class="btn-floating yellow actionButton"><i class="material-icons">edit</i></a>
-                                  <a class="btn-floating red actionButton"><i class="material-icons">delete</i></a>
-                                  https://www.pivotaltracker.com/n/projects/1920561
-                                </li>
-                                <li>
-                                  <a class="btn-floating yellow actionButton"><i class="material-icons">edit</i></a>
-                                  <a class="btn-floating red actionButton"><i class="material-icons">delete</i></a>
-                                  https://www.pivotaltracker.com/n/projects/1920561
-                                </li>
-                                <li>
-                                  <a class="btn-floating yellow actionButton"><i class="material-icons">edit</i></a>
-                                  <a class="btn-floating red actionButton"><i class="material-icons">delete</i></a>
-                                  https://www.pivotaltracker.com/n/projects/1920561
-                                </li>
-                              </ul>
-                            </div>
-                            <div class="col s12">
-                            </div>
-                            <div class="input-field col s10 center" style="flex-direction:row;">
-                              <a class="btn-floating green actionButton"><i class="material-icons">link</i></a>
-                                <v-text-input
-                                  placeholder="Evidence of mastery."
-                                  v-bind:name="'evidence' + success_criteria.id"
-                                  v-bind:id="'evidence' + success_criteria.id">
-                                </v-text-input>
-                            </div>
-                          </div>
                       </li>
                     </ul>
                   </v-collapsible-body>
               </li>
           </v-collapsible>
           </v-collection-item>
-      </v-collection>
+      </v-collection-item>
     </div>
   </div>
 </template>
@@ -115,33 +61,81 @@
 <script>
 import { mapGetters } from 'vuex';
 import Auth from '../lib/Auth';
+import API from '../lib/API';
+import EvidenceButtons from './EvidenceButtons';
 import * as actionTypes from '../store/action-types';
 import * as mutationTypes from '../store/mutation-types';
 
 export default {
   name: 'dashboard',
+  components: {
+    'evidence-buttons': EvidenceButtons
+  },
   data() {
-    return {};
+    return {
+      defaultCohort: localStorage.defaultCohort,
+      editMode: true,
+      loadingStandards: true,
+      performances: {},
+      cohort: {}
+    };
   },
   computed: {
     ...mapGetters({
       currentUser: 'currentUser',
-      cohort: 'cohort',
       defaultCohort: 'defaultCohort',
       evidences: 'evidences',
       editing: 'editing',
     })
   },
   created() {
-    this.$store.dispatch(actionTypes.GET_COHORT);
     this.$store.dispatch(actionTypes.GET_EVIDENCES);
+
+    const user = Auth.getCurrentUser();
+    API
+      .getDefaultCohort()
+      .then(defaultCohort => {
+        this.defaultCohort = defaultCohort;
+        return API.getCohort(defaultCohort);
+      }).then(cohort => {
+        this.cohort = cohort;
+      }).then(() => {
+        return API
+                .getPerformances(this.defaultCohort, 1677)
+      }).then(data => {
+        this.performances = data;
+      }).catch(error => {
+        console.error(error);
+      }).then(() => {
+        this.loadingStandards = false;
+      });
   },
   methods: {
-    isAssigned(subject) {
-      return this.assigned(subject.standards).length > 0;
+    performanceColors(standard_id) {
+      const score = this.performances[standard_id];
+      return {
+        'grey': score == 0,
+        'red': score == 1,
+        'yellow': score == 2,
+        'green': score == 3,
+        'accent-4': score == 2
+      }
     },
-    assigned(standards) {
-      return standards.filter(standard => standard.assigned);
+    performanceTextColors(standard_id) {
+      const performanceColors = this.performanceColors(standard_id);
+      return {
+        'grey-text': performanceColors.grey,
+        'red-text': performanceColors.red,
+        'yellow-text': performanceColors.yellow,
+        'green-text': performanceColors.green,
+        'accent-4': performanceColors.yellow
+      }
+    },
+    hasAssignedStandards(subject) {
+      subject = this.cohort.subjects.filter(s => s.name == subject)[0];
+      return subject.standards.reduce((isAssigned, standard) => {
+        return isAssigned || standard.assigned || this.performances[standard.id] != 0;
+      }, false);
     },
     isEditing(id) {
       return this.editing[id];
@@ -156,6 +150,11 @@ export default {
     toggleEditStandard(standard, event) {
       event.stopPropagation();
       this.$store.dispatch(actionTypes.TOGGLE_EDIT_STANDARD, standard.id);
+    },
+    decodeHtml(html) {
+      var txt = document.createElement("textarea");
+      txt.innerHTML = html;
+      return txt.value;
     }
   }
 }
@@ -166,5 +165,8 @@ export default {
   }
   .actionButton {
     margin: 0.25em;
+  }
+  .padding-left {
+    margin-left: 20em;
   }
 </style>

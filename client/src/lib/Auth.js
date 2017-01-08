@@ -1,3 +1,5 @@
+import API from './API';
+
 class Auth {
   constructor() {
     this.AUTH_URL = 'http://localhost:3000/auth/mastery/github';
@@ -11,11 +13,16 @@ class Auth {
     return this.getCurrentUser() == null ? false : true;
   }
   callbackLogin(cookie) {
-    const token = cookie.get('x-auth-token');
+    let token = cookie.get('x-auth-token');
     if(token) {
       localStorage.token = token;
       cookie.delete('x-auth-token');
     }
+    return API
+      .getExchange()
+      .then(result => {
+        localStorage.token = result.token;
+      })
   }
   getCurrentUser() {
     const localStorageToken = localStorage.getItem('token');

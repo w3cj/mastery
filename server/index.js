@@ -11,14 +11,19 @@ const router = ezc.createRouter();
 
 router.use(cors());
 
+router.get('/', (req, res) => {
+  res.json({
+    message: 'Galvanize Mastery API'
+  });
+});
+
 router.use(auth.checkTokenSetUser);
 router.use('/auth', auth.config(authConfig));
 router.use('/api/v1', auth.ensureLoggedIn, api);
 
 const app = ezc.createApp({
   router,
-  use: [emojiFavicon('white_check_mark')],
-  static_dir: path.join(__dirname, 'client')
+  use: [emojiFavicon('white_check_mark')]
 });
 
 const server = ezc.createServer(app);

@@ -1,41 +1,29 @@
 import fetch from 'isomorphic-fetch';
 
-const API_URL = window.location.host.indexOf('localhost') > -1 ? 'http://localhost:3000/api/v1/' : 'production';
-
-function fetchJSON(endpoint) {
-  return fetch(`${API_URL}${endpoint}`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.token}`
-    }
-  }).then(response => {
-    return response.json();
-  })
-}
-
-function postJSON(endpoint, body) {
-  return fetchWithBody('POST', endpoint, body);
-}
-
-function deleteJSON(endpoint, body) {
-  return fetchWithBody('DELETE', endpoint, body);
-}
-
-function fetchWithBody(method, endpoint, body) {
-  return fetch(`${API_URL}${endpoint}`, {
-    method,
-    headers: {
-      Authorization: `Bearer ${localStorage.token}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(body)
-  }).then(response => {
-    return response.json();
-  });
-}
+import {
+  fetchJSON,
+  postJSON,
+  deleteJSON,
+  fetchWithBody
+} from './fetch';
 
 class API {
+  getExchange() {
+    return fetchJSON('auth/exchange');
+  }
   getCohorts() {
     return fetchJSON('cohorts');
+  }
+  getDefaultCohort() {
+    if(localStorage.defaultCohort) return Promise.resolve(localStorage.defaultCohort);
+    
+    return this
+            .getCohorts()
+            .then(cohorts => {
+              const defaultCohort = cohorts[0].cohort_id;
+              localStorage.defaultCohort = defaultCohort;
+              return defaultCohort;
+            });
   }
   getCohort(cohort_id) {
     return fetchJSON(`cohorts/${cohort_id}`)
@@ -66,6 +54,9 @@ class API {
           return evidences;
         }, {});
       });
+  }
+  getPerformances(cohort_id, user_id) {
+    return fetchJSON(`cohorts/${cohort_id}/performances/${user_id}`);
   }
   checkSuccessCriteria(cohort_id, success_criteria_id, checked) {
     return postJSON(`evidence`, {cohort_id, success_criteria_id, checked});

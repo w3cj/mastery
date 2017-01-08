@@ -4,10 +4,10 @@ class Instructor {
     this.instructors.index('id');
     this.instructors.index('github_id');
   }
-  find(github_id) {
+  find(github_id, properties) {
     return this.instructors.findOne({
         github_id
-      });
+      }, properties);
   }
   findByIds(ids) {
     return this.instructors.find({

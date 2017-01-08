@@ -1,4 +1,4 @@
-const {fetchCohortData} = require('./learnInterface');
+const {fetchCohortData, fetchPerformances} = require('./learnInterface');
 const {Cohort, Student, Instructor} = require('../models');
 const {resUnAuthorized} = require('./routeHelpers');
 
@@ -48,6 +48,10 @@ class CohortManager {
     return this
       .waitFindGetProperty(cohort_id, 'instructors')
       .then((ids) => Instructor.findByIds(ids));
+  }
+
+  getPerformances(cohort_id, user_id) {
+    return fetchPerformances(cohort_id, user_id);
   }
 
   waitFindGetProperty(cohort_id, property) {
@@ -108,17 +112,8 @@ class CohortManager {
   }
 
   isInstructor(req, res, next) {
-    const {github_id} = req.user;
-    if(github_id) {
-      Instructor
-        .find(github_id)
-        .then(instructor => {
-          if(instructor) {
-            next();
-          } else {
-            resUnAuthorized(res);
-          }
-        });
+    if(req.user.isInstructor) {
+      next();
     } else {
       resUnAuthorized(res);
     }

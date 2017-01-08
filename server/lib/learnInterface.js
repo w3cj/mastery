@@ -111,6 +111,16 @@ function getUserFromBody(body) {
   }
 }
 
+function fetchPerformances(cohort_id, user_id) {
+  return fetchJSON(`${learnURL}cohorts/${cohort_id}/users/${user_id}/performances.json`, getAuthHeader())
+    .then(data => {
+      return data.standards.reduce((performances, standard) => {
+        standard.performances.forEach(s => performances[s.id] = s.score);
+        return performances;
+      }, {});
+    });
+}
+
 function fetchCohortData(cohort_id) {
   return fetchJSON(`${learnURL}api/v1/cohorts/${cohort_id}/performances`, getAuthHeader())
     .then(data => {
@@ -194,6 +204,7 @@ function parseSuccessCriteria(standard_id, success_criteria_text) {
 }
 
 module.exports = {
+  fetchPerformances,
   fetchCohortData,
   getLearnUser,
   getStudentsFromBody,

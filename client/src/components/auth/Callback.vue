@@ -13,8 +13,11 @@ export default {
     return {}
   },
   created() {
-    Auth.callbackLogin(this.$cookie);
-    this.$router.push('/dashboard');
+    Auth
+      .callbackLogin(this.$cookie)
+      .then(() => {
+        this.$router.push('/dashboard');
+      });
   }
 }
 </script>

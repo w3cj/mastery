@@ -1,4 +1,5 @@
 import API from '../../lib/API';
+import getEncouragement from '../../lib/encouragement';
 
 import * as actionTypes from '../action-types';
 import * as mutationTypes from '../mutation-types';
@@ -26,13 +27,9 @@ const actions = {
   [actionTypes.GET_COHORT] ({ commit, state }) {
     let promise = null;
     if(!state.defaultCohort) {
-      promise = API.getCohorts()
-                  .then(cohorts => {
-                    const defaultCohort = cohorts[0].cohort_id;
-                    localStorage.defaultCohort = defaultCohort;
-                    commit(mutationTypes.SET_DEFAULT_COHORT, { defaultCohort });
-                    return defaultCohort;
-                  });
+      promise = API.getDefaultCohort().then(defaultCohort => {
+        commit(mutationTypes.SET_DEFAULT_COHORT, { defaultCohort });
+      });
     } else {
       promise = Promise.resolve(state.defaultCohort);
     }
@@ -58,7 +55,9 @@ const actions = {
     checked = !checked;
     API.checkSuccessCriteria(state.cohort.cohort_id, id, checked)
       .then((result) => {
-        commit(mutationTypes.SUCCESS_CRITERIA_CHECKED, { id, checked });
+        setTimeout(() => {
+          commit(mutationTypes.SUCCESS_CRITERIA_CHECKED, { id, checked });
+        }, 500);
       });
   },
   [actionTypes.ASSIGN_STANDARD] ({ commit, state }, standard) {
@@ -102,6 +101,10 @@ const mutations = {
         checking: false,
         checked
       }
+    }
+
+    if(checked) {
+      Materialize.toast(getEncouragement(), 3000);
     }
   },
   [mutationTypes.ASSIGNING_STANDARD] (state, id) {
