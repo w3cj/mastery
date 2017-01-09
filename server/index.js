@@ -16,6 +16,8 @@ router.use(cors({
   credentials: true
 }));
 
+router.use(emojiFavicon('white_check_mark'));
+
 router.get('/', (req, res) => {
   res.json({
     message: 'Galvanize Mastery API'
@@ -27,8 +29,7 @@ router.use('/auth', auth.config(authConfig));
 router.use('/api/v1', api);
 
 const app = ezc.createApp({
-  router,
-  use: [emojiFavicon('white_check_mark')]
+  router
 });
 
 const server = ezc.createServer(app);
