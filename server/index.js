@@ -4,12 +4,17 @@ const cors = require('cors');
 const emojiFavicon = require('emoji-favicon');
 const path = require('path');
 
+require('dotenv').config();
+
 const api = require('./api');
 const authConfig = require('./auth-github.config');
 
 const router = ezc.createRouter();
 
-router.use(cors());
+router.use(cors({
+  origin: process.env.CORS_ORIGIN,
+  credentials: true
+}));
 
 router.get('/', (req, res) => {
   res.json({
