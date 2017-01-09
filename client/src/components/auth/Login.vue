@@ -1,7 +1,7 @@
 <template>
   <div class="center text-center">
     <h1>Galvanize Mastery</h1>
-    <v-btn v-on:click="login">Login with Github</v-btn>
+    <a v-on:click="login" class="waves btn">Login with Github</a>
   </div>
 </template>
 

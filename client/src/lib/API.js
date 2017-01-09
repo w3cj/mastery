@@ -16,7 +16,7 @@ class API {
   }
   getDefaultCohort() {
     if(localStorage.defaultCohort) return Promise.resolve(localStorage.defaultCohort);
-    
+
     return this
             .getCohorts()
             .then(cohorts => {

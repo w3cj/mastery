@@ -1,6 +1,9 @@
 <template>
   <div class="center text-center">
     <h1>Logging in...</h1>
+    <center>
+      <v-progress-circular active yellow yellow-flash></v-progress-circular>
+    </center>
   </div>
 </template>
 

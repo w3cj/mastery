@@ -83,12 +83,11 @@ export default {
   computed: {
     ...mapGetters({
       currentUser: 'currentUser',
-      defaultCohort: 'defaultCohort',
       evidences: 'evidences',
       editing: 'editing',
     })
   },
-  created() {
+  mounted() {
     this.$store.dispatch(actionTypes.GET_EVIDENCES);
 
     const user = Auth.getCurrentUser();
@@ -101,7 +100,7 @@ export default {
         this.cohort = cohort;
       }).then(() => {
         return API
-                .getPerformances(this.defaultCohort, 1677)
+                .getPerformances(this.defaultCohort, user.learn_id)
       }).then(data => {
         this.performances = data;
       }).catch(error => {

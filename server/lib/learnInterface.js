@@ -92,15 +92,36 @@ function getLearnUser(id) {
     });
 }
 
+function getLearnUserByEmail(email) {
+  const searchURL = `${learnURL}users?q=${email}`;
+  return fetchText(searchURL, getAuthHeader())
+    .then(body => {
+      const $ = cheerio.load(body);
+      const id = $($('div.container table td a')[0]).attr('href').split('/users/')[1];
+      return id;
+    }).then(getLearnUser);
+}
+
 function getUserFromBody(body) {
   const $ = cheerio.load(body);
   const full_name = $('ol.breadcrumb li.active').text();
   const github_username = $($('dl.dl-horizontal dd')[1]).text();
+  const cohorts = [];
+
+  $('div.container ul li a[href*="/cohorts/"]').each(function() {
+    const cohort_id = $(this).attr('href').replace('/dashboard', '').split('/cohorts/')[1];
+    cohorts.push(cohort_id);
+  });
+
+  const admin = $($('dd')[2]).text() == 'admin';
+
   if(github_username) {
     return getGithubUser(github_username)
       .then(githubUser => {
         return {
           full_name,
+          cohorts,
+          admin,
           github_id: githubUser.id
         };
       });
@@ -207,6 +228,7 @@ module.exports = {
   fetchPerformances,
   fetchCohortData,
   getLearnUser,
+  getLearnUserByEmail,
   getStudentsFromBody,
   getStudentInfo,
   getInstructorsFromBody,
