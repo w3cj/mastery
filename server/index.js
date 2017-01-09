@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 
 router.use(auth.checkTokenSetUser);
 router.use('/auth', auth.config(authConfig));
-router.use('/api/v1', auth.ensureLoggedIn, api);
+router.use('/api/v1', api);
 
 const app = ezc.createApp({
   router,

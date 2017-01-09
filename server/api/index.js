@@ -1,4 +1,5 @@
 const ezc = require('express-zero-config');
+const auth = require('auth-github-org');
 const at = require('at-quotes');
 
 const router = ezc.createRouter();
@@ -12,7 +13,7 @@ router.get('/', (req, res) => {
   });
 });
 
-router.use('/auth', require('./auth'));
+router.use(auth.ensureLoggedIn);
 
 router.use((req, res, next) => {
   if(!req.user.learn_id) {
@@ -25,6 +26,7 @@ router.use((req, res, next) => {
   }
 });
 
+router.use('/auth', require('./auth'));
 router.use('/cohorts', require('./cohorts'));
 router.use('/evidence', require('./evidence'));
 
