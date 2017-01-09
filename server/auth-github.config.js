@@ -7,6 +7,10 @@ module.exports = {
   client_id: process.env.GITHUB_CLIENT_ID,
   client_secret: process.env.GITHUB_CLIENT_SECRET,
   token_secret: process.env.TOKEN_SECRET,
+  cookieOptions: {
+    domain: process.env.COOKIE_DOMAIN,
+    secure: true
+  },
   clients: [{
     name: 'mastery',
     callback: `${process.env.CORS_ORIGIN}#/auth/callback/`

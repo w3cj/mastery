@@ -76,8 +76,8 @@ at-quotes@^1.3.0:
     typographic-single-spaces "^1.0.2"
 
 auth-github-org@^1.0.0:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/auth-github-org/-/auth-github-org-1.1.1.tgz#84952e5fd6b4b34f3a18bb05f8904cffcd871695"
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/auth-github-org/-/auth-github-org-1.2.0.tgz#e05a486c510abc80ff5c27de12f76953b22de955"
   dependencies:
     express "^4.14.0"
     github "^6.1.0"
@@ -725,13 +725,9 @@ https-proxy-agent@^1.0.0:
     debug "2"
     extend "3"
 
-iconv-lite@0.4.13:
+iconv-lite@0.4.13, iconv-lite@~0.4.13:
   version "0.4.13"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.13.tgz#1f88aba4ab0b1508e8312acc39345f36e992e2f2"
-
-iconv-lite@~0.4.13:
-  version "0.4.15"
-  resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.15.tgz#fe265a218ac6a57cfe854927e9d04c19825eddeb"
 
 inflight@^1.0.4:
   version "1.0.6"

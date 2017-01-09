@@ -7,7 +7,7 @@ const {getLearnUserByEmail} = require('../lib/learnInterface');
 
 function resUserToken(res, user) {
   const authConfig = require('../auth-github.config');
-  res.clearCookie('x-auth-token');
+  res.clearCookie('x-auth-token', authConfig.cookieOptions);
   jwt.sign(user, authConfig.token_secret, {},
     (err, token) => {
       if (err) return next(err);
