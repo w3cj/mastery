@@ -4,12 +4,18 @@
     <center>
       <v-progress-circular v-if="loadingStandards" active green green-flash></v-progress-circular>
     </center>
-    <div v-for="subject in cohort.subjects" class="card" v-if="!loadingStandards && hasAssignedStandards(subject.name)">
+    <div v-if="!loadingStandards">
+      <div class="input-field">
+           <v-icon prefix>search</v-icon>
+           <v-text-input v-model="search" name="search" id="search"></v-text-input>
+       </div>
+    </div>
+    <div v-for="subject in cohort.subjects" class="card" v-if="!loadingStandards && isSubjectVisible(subject.name)">
       <v-collection with-header>
           <v-collection-item header>
               <h3>{{subject.name}}</h3>
           </v-collection-item>
-          <v-collection-item v-for="standard in subject.standards" v-if="standard.assigned || performances[standard.id]">
+          <v-collection-item v-for="standard in subject.standards" v-if="isStandardVisible(standard)">
             <h4>
               <a v-on:click="toggleEditStandard(standard, $event)" class="btn-floating btn-large waves-effect waves-light" v-bind:class="performanceColors(standard.id)">
                 <i v-if="!isEditing(standard.id)" class="material-icons">playlist_add_check</i>
@@ -73,6 +79,7 @@ export default {
   },
   data() {
     return {
+      search: '',
       defaultCohort: localStorage.defaultCohort,
       editMode: true,
       loadingStandards: true,
@@ -130,11 +137,28 @@ export default {
         'accent-4': performanceColors.yellow
       }
     },
-    hasAssignedStandards(subject) {
+    isSubjectVisible(subject) {
       subject = this.cohort.subjects.filter(s => s.name == subject)[0];
-      return subject.standards.reduce((isAssigned, standard) => {
-        return isAssigned || standard.assigned || this.performances[standard.id] != 0;
+      const isVisible = subject.standards.reduce((isAssigned, standard) => {
+        return (isAssigned || this.isStandardVisible(standard));
       }, false);
+
+      if(isVisible && this.search.trim() != '') {
+        const regexp = new RegExp(this.search, 'gi');
+        return isVisible || subject.name.match(regexp);
+      } else {
+        return isVisible;
+      }
+    },
+    isStandardVisible(standard) {
+      const isVisible = standard.assigned || this.performances[standard.id];
+
+      if(isVisible && this.search.trim() != '') {
+        const regexp = new RegExp(this.search, 'gi');
+        return isVisible && JSON.stringify(standard).match(regexp);
+      } else {
+        return isVisible;
+      }
     },
     isEditing(id) {
       return this.editing[id];
