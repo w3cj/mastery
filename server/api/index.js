@@ -13,8 +13,6 @@ router.get('/', (req, res) => {
   });
 });
 
-router.use(auth.ensureLoggedIn);
-
 router.use('/auth', require('./auth'));
 
 router.use((req, res, next) => {
@@ -27,6 +25,8 @@ router.use((req, res, next) => {
     next();
   }
 });
+
+router.use(auth.ensureLoggedIn);
 
 router.use('/cohorts', require('./cohorts'));
 router.use('/evidence', require('./evidence'));

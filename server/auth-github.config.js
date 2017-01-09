@@ -9,7 +9,7 @@ module.exports = {
   token_secret: process.env.TOKEN_SECRET,
   clients: [{
     name: 'mastery',
-    callback: 'http://localhost:8080/#/auth/callback/'
+    callback: `${process.env.CORS_ORIGIN}#/auth/callback/`
   }],
   orgs: [{
     name: 'gschool'
