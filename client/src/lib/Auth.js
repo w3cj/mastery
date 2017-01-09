@@ -2,7 +2,7 @@ import API from './API';
 
 class Auth {
   constructor() {
-    this.AUTH_URL = 'http://localhost:3000/auth/mastery/github';
+    this.AUTH_URL = window.location.host.indexOf('localhost') > -1 ? 'http://localhost:3000/auth/mastery/github' : 'https://mastery-api.galvanize.network/auth/mastery/github';
     this.currentUser = null;
     this.currentToken = undefined;
   }
