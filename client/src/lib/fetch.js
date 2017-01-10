@@ -3,8 +3,8 @@ const API_URL = window.location.host.indexOf('localhost') > -1 ? 'http://localho
 function fetchJSON(endpoint) {
   return fetch(`${API_URL}${endpoint}`, {
     headers: {
-      authorization: `Bearer ${localStorage.token}`,
-      credentials: 'include'
+      Authorization: `Bearer ${localStorage.token}`,
+      Credentials: 'include'
     }
   }).then(response => {
     return response.json();

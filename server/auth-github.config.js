@@ -9,7 +9,7 @@ module.exports = {
   token_secret: process.env.TOKEN_SECRET,
   cookieOptions: {
     domain: process.env.COOKIE_DOMAIN,
-    secure: true
+    secure: process.env.NODE_ENV == 'production'
   },
   clients: [{
     name: 'mastery',

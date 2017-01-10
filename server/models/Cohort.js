@@ -47,7 +47,9 @@ class Cohort {
     return this.cohorts
       .find({}, {
         fields: {
-          cohort_id: true
+          cohort_id: true,
+          name: true,
+          label: true
         },
         $or: [{
           instructors: {

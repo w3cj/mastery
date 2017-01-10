@@ -2,7 +2,6 @@ const ezc = require('express-zero-config');
 const jwt = require('jsonwebtoken');
 
 const {Instructor, Student} = require('../models');
-const CohortManager = require('../lib/CohortManager');
 const {getLearnUserByEmail} = require('../lib/learnInterface');
 
 function resUserToken(res, user) {
@@ -42,11 +41,7 @@ const routes = {
             user.learn_id = learnUser.id;
             user.isInstructor = learnUser.admin;
 
-            CohortManager
-              .waitFindCohort(learnUser.cohorts[learnUser.cohorts.length - 1])
-              .then(() => {
-                resUserToken(res, user);
-              });
+            resUserToken(res, user);
           });
       }
     });

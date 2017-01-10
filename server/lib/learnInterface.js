@@ -115,20 +115,20 @@ function getUserFromBody(body) {
 
   const admin = $($('dd')[2]).text() == 'admin';
 
+  const user = {
+    full_name,
+    cohorts,
+    admin
+  };
+
   if(github_username) {
     return getGithubUser(github_username)
       .then(githubUser => {
-        return {
-          full_name,
-          cohorts,
-          admin,
-          github_id: githubUser.id
-        };
+        user.github_id = githubUser.id;
+        return user;
       });
   } else {
-    return Promise.resolve({
-      full_name
-    });
+    return Promise.resolve(user);
   }
 }
 
@@ -142,11 +142,30 @@ function fetchPerformances(cohort_id, user_id) {
     });
 }
 
+function fetchCohortInfo(cohort_id) {
+  return fetchJSON(`${learnURL}api/v1/cohorts/${cohort_id}`, getAuthHeader())
+          .then(json => {
+            const cohort_info = {
+              cohort_id,
+              name: json.data.attributes.name,
+              label: json.data.attributes.label
+            };
+
+            return cohort_info;
+          });
+}
+
 function fetchCohortData(cohort_id) {
-  return fetchJSON(`${learnURL}api/v1/cohorts/${cohort_id}/performances`, getAuthHeader())
-    .then(data => {
+  return Promise.all([
+    fetchJSON(`${learnURL}api/v1/cohorts/${cohort_id}/performances`, getAuthHeader()),
+    fetchCohortInfo(cohort_id),
+  ]).then(results => {
+      const data = results[0];
+      const cohort_info = results[1];
       if(data.error) throw data.error;
       data.cohort_id = cohort_id;
+      data.name = cohort_info.name;
+      data.label = cohort_info.label;
       return formatCohortData(data)
         .then(() => Promise.all([
           Student.upsert(data.students),
@@ -227,6 +246,7 @@ function parseSuccessCriteria(standard_id, success_criteria_text) {
 module.exports = {
   fetchPerformances,
   fetchCohortData,
+  fetchCohortInfo,
   getLearnUser,
   getLearnUserByEmail,
   getStudentsFromBody,

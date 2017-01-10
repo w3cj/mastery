@@ -1,7 +1,15 @@
 <template>
   <div>
-    <h1>Standards</h1>
+    <div v-if="Object.keys(cohorts).length > 1" class="right">
+      <v-btn v-dropdown:dropdown>Change Cohort</v-btn>
+      <v-dropdown id="dropdown">
+          <li v-for="cohort in cohorts">
+              <a v-on:click="changeCohort(cohort.cohort_id)">{{getCohortBadge(cohort.name)}}</a>
+          </li>
+      </v-dropdown>
+    </div>
     <center>
+      <h1>{{cohorts[defaultCohort] ? getCohortBadge(cohorts[defaultCohort].name) : 'Loading standards...'}}</h1>
       <v-progress-circular v-if="loadingStandards" active green green-flash></v-progress-circular>
     </center>
     <div v-if="!loadingStandards">
@@ -79,12 +87,14 @@ export default {
   },
   data() {
     return {
+      user: Auth.getCurrentUser(),
       search: '',
       defaultCohort: localStorage.defaultCohort,
       editMode: true,
       loadingStandards: true,
       performances: {},
-      cohort: {}
+      cohort: {},
+      cohorts: {}
     };
   },
   computed: {
@@ -97,26 +107,44 @@ export default {
   mounted() {
     this.$store.dispatch(actionTypes.GET_EVIDENCES);
 
-    const user = Auth.getCurrentUser();
+    API
+      .getCohorts()
+      .then(cohorts => {
+        this.cohorts = cohorts.reduce((byId, cohort) => {
+          byId[cohort.cohort_id] = cohort;
+          return byId;
+        }, {});
+      });
+
     API
       .getDefaultCohort()
       .then(defaultCohort => {
         this.defaultCohort = defaultCohort;
         return API.getCohort(defaultCohort);
-      }).then(cohort => {
-        this.cohort = cohort;
-      }).then(() => {
-        return API
-                .getPerformances(this.defaultCohort, user.learn_id)
-      }).then(data => {
-        this.performances = data;
-      }).catch(error => {
-        console.error(error);
-      }).then(() => {
-        this.loadingStandards = false;
-      });
+      }).then(this.loadCohort);
   },
   methods: {
+    loadCohort(cohort) {
+      this.cohort = cohort;
+      API
+        .getPerformances(this.defaultCohort, this.user.learn_id)
+        .then(data => {
+          this.performances = data;
+        }).catch(error => {
+          console.error(error);
+        }).then(() => {
+          this.loadingStandards = false;
+        });
+    },
+    changeCohort(cohort_id) {
+      this.defaultCohort = cohort_id;
+      localStorage.defaultCohort = cohort_id;
+      this.loadingStandards = true;
+
+      API
+        .getCohort(this.defaultCohort)
+        .then(this.loadCohort);
+    },
     performanceColors(standard_id) {
       const score = this.performances[standard_id];
       return {
@@ -126,6 +154,9 @@ export default {
         'green': score == 3,
         'accent-4': score == 2
       }
+    },
+    getCohortBadge(name) {
+      return name.split(' ')[0];
     },
     performanceTextColors(standard_id) {
       const performanceColors = this.performanceColors(standard_id);

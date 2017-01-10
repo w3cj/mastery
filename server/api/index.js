@@ -28,6 +28,7 @@ router.use((req, res, next) => {
 
 router.use(auth.ensureLoggedIn);
 
+router.use('/learn', require('./learn'));
 router.use('/cohorts', require('./cohorts'));
 router.use('/evidence', require('./evidence'));
 

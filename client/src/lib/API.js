@@ -12,7 +12,7 @@ class API {
     return fetchJSON('auth/exchange');
   }
   getCohorts() {
-    return fetchJSON('cohorts');
+    return fetchJSON('learn/cohorts');
   }
   getDefaultCohort() {
     if(localStorage.defaultCohort) return Promise.resolve(localStorage.defaultCohort);
@@ -20,7 +20,7 @@ class API {
     return this
             .getCohorts()
             .then(cohorts => {
-              const defaultCohort = cohorts[0].cohort_id;
+              const defaultCohort = Math.max.apply(null, cohorts.map(c => Number(c.cohort_id)));
               localStorage.defaultCohort = defaultCohort;
               return defaultCohort;
             });
@@ -61,8 +61,8 @@ class API {
   checkSuccessCriteria(cohort_id, success_criteria_id, checked) {
     return postJSON(`evidence`, {cohort_id, success_criteria_id, checked});
   }
-  assignStandard(cohort_id, standard_id) {
-    return postJSON(`cohorts/${cohort_id}/standards/${standard_id}/assign`, {assign: true});
+  assignStandard(cohort_id, standard_id, assign = true) {
+    return postJSON(`cohorts/${cohort_id}/standards/${standard_id}/assign`, {assign});
   }
   addStandardTag(cohort_id, standard_id, tagName, value) {
     return postJSON(`cohorts/${cohort_id}/standards/${standard_id}/tag`, { tagName, value });
