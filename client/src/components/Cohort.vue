@@ -1,5 +1,8 @@
 <template>
   <div class="">
+    <br />
+    <router-link to="/dashboard" class="waves btn indigo">Dashboard</router-link>
+    <br />
     <h1>Standards</h1>
     <p>
       <v-icon>check</v-icon><strong>Assigned</strong>

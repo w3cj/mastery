@@ -1,12 +1,15 @@
 <template>
   <div>
-    <div v-if="Object.keys(cohorts).length > 1" class="right">
-      <v-btn v-dropdown:dropdown>Change Cohort</v-btn>
+    <div class="left">
+      <v-btn v-if="Object.keys(cohorts).length > 1" v-dropdown:dropdown>Change Cohort</v-btn>
       <v-dropdown id="dropdown">
           <li v-for="cohort in cohorts">
               <a v-on:click="changeCohort(cohort.cohort_id)">{{getCohortBadge(cohort.name)}}</a>
           </li>
       </v-dropdown>
+    </div>
+    <div class="right">
+      <router-link v-if="user.isInstructor" :to="{ name: 'cohort', params: { id: defaultCohort }}" class="waves btn green">Assign Standards</router-link>
     </div>
     <center>
       <h1>{{cohorts[defaultCohort] ? getCohortBadge(cohorts[defaultCohort].name) : 'Loading standards...'}}</h1>
