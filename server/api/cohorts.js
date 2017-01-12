@@ -10,6 +10,17 @@ function processRequest(promise, res, next) {
     .catch(nextError(next));
 }
 
+function authorize(id) {
+  return function(req, res, next) {
+    if(req.user.id == req[id]) {
+      next();
+    } else {
+      res.status(401);
+      next(new Error('Un-Authorized'));
+    }
+  }
+}
+
 const routes = {
   '/': (req, res, next) => {
     processRequest(CohortManager.getCohorts(req.user.github_id), res, next);
@@ -44,7 +55,11 @@ const routes = {
   },
   '/:cohort_id/performances/:user_id': (req, res, next) => {
     const {cohort_id, user_id} = req.params;
-    processRequest(CohortManager.getPerformances(cohort_id, user_id), res, next);
+    if(req.user.isInstructor || req.user.id == user_id) {
+      processRequest(CohortManager.getPerformances(cohort_id, user_id), res, next);
+    } else {
+      next(new Error('Un-Authorized'));
+    }
   }
 };
 

@@ -1,7 +1,7 @@
 const ezc = require('express-zero-config');
 const jwt = require('jsonwebtoken');
 
-const {getLearnUser, fetchCohortInfo} = require('../lib/learnInterface');
+const {getLearnUser, fetchCohortInfo, getStudentImages} = require('../lib/learnInterface');
 
 const routes = {
   '/cohorts': (req, res, next) => {
@@ -15,6 +15,14 @@ const routes = {
 					res.json(cohorts);
 				});
 			});
+  },
+  '/cohorts/:cohort_id/student-images': (req, res, next) => {
+    const {cohort_id} = req.params;
+
+    getStudentImages(cohort_id)
+      .then(students => {
+        res.json(students);
+      });
   }
 };
 

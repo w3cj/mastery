@@ -41,7 +41,7 @@ class CohortManager {
   getStudents(cohort_id) {
     return this
       .waitFindGetProperty(cohort_id, 'students')
-      .then((ids) => Student.findByIds(ids));
+      .then((ids) => Student.findByIds(ids.filter(id => id != null)));
   }
 
   getInstructors(cohort_id) {

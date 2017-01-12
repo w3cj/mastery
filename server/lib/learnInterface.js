@@ -8,6 +8,12 @@ const {fetchJSON, fetchText, getAuthHeader} = require('./fetchHelpers');
 const {Student, Instructor} = require('../models');
 const {learnURL} = require('./constants');
 
+function getStudentImages(cohort_id) {
+  const studentURL = `${learnURL}cohorts/${cohort_id}/students?layout=grid`;
+  return fetchText(studentURL, getAuthHeader())
+    .then(getStudentImagesFromBody);
+}
+
 function getStudentInfo(cohort_id) {
   const studentURL = `${learnURL}cohorts/${cohort_id}/students`;
 
@@ -35,6 +41,23 @@ function getInstructorInfo(cohort_id) {
 
   return fetchText(staffingURL, getAuthHeader())
     .then(getInstructorsFromBody);
+}
+
+function getStudentImagesFromBody(body) {
+  const $ = cheerio.load(body);
+  const thumbnails = $('a.thumbnail');
+
+  const imagesById = {};
+
+  thumbnails.each(function() {
+    const thumbnail = $(this);
+    const id = thumbnail.attr('href').split('/students/')[1];
+    const img = thumbnail.find('img').attr('src');
+
+    imagesById[id] = img;
+  });
+
+  return imagesById;
 }
 
 function getStudentsFromBody(body) {
@@ -250,6 +273,7 @@ module.exports = {
   getLearnUser,
   getLearnUserByEmail,
   getStudentsFromBody,
+  getStudentImages,
   getStudentInfo,
   getInstructorsFromBody,
   getInstructorInfo

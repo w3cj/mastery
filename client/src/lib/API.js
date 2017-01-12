@@ -35,10 +35,6 @@ class API {
         Object.keys(cohort.standards).forEach(standard_id => {
           const standard = cohort.standards[standard_id];
           standard.assigning = false;
-          if(!standard.tags) standard.tags = {};
-          standard.tags.quarters = standard.tags.quarters || [];
-          standard.tags.weeks = standard.tags.weeks || [];
-          standard.selectedQuarter = "";
           const subject = cohort.subjectsById[standard.subject_id];
           subject.standards = subject.standards || [];
           subject.standards.push(standard);
@@ -57,6 +53,12 @@ class API {
   }
   getPerformances(cohort_id, user_id) {
     return fetchJSON(`cohorts/${cohort_id}/performances/${user_id}`);
+  }
+  getStudents(cohort_id) {
+    return fetchJSON(`cohorts/${cohort_id}/students`);
+  }
+  getStudentImages(cohort_id) {
+    return fetchJSON(`learn/cohorts/${cohort_id}/student-images`);
   }
   checkSuccessCriteria(cohort_id, success_criteria_id, checked) {
     return postJSON(`evidence`, {cohort_id, success_criteria_id, checked});
