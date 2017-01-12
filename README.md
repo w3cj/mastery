@@ -5,6 +5,7 @@ A tool for self assessed mastery tracking of a standards based curriculum.
 ### Features
 
 * [x] View assigned/scored standards
+* [x] Filter standards by score
 * [ ] Sort and filter standards by day (daily plan!), week, quarter, subject, exercise and a custom set
 * [x] View and check success criteria
 	* [x] Student can check success criteria as completed (self assessment)
