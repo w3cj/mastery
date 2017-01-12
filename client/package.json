@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",
+    "deploy": "cd dist && aws s3 sync . s3://mastery.galvanize.network && cd ..",
     "lint": "eslint --ext .js,.vue src",
     "flow": "flow; test $? -eq 0 -o $? -eq 2"
   },

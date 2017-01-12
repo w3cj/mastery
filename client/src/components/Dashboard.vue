@@ -21,6 +21,26 @@
            <v-text-input v-model="search" name="search" id="search"></v-text-input>
        </div>
     </div>
+    <div class="left">
+      <h4 class="white-text">wat</h4>
+      <a v-on:click="hideShowSuccessCriteria()" class="waves-effect waves-light btn indigo lighten-1">{{showSuccessCriteria ? 'Hide' : 'Show'}} Success Criteria</a>
+    </div>
+    <div class="score-buttons">
+      <h4>Filter Score</h4>
+      <a v-on:click="filterScore()" class="waves-effect waves-light btn">All</a>
+      <a v-on:click="filterScore(0)" class="waves-effect waves-light btn grey" v-bind:class="{'lighten-5': !scoreFilter[0]}">0</a>
+      <a v-on:click="filterScore(1)" class="waves-effect waves-light btn red" v-bind:class="{'lighten-5': !scoreFilter[1]}">1</a>
+      <a v-on:click="filterScore(2)" class="waves-effect waves-light btn yellow" v-bind:class="{'lighten-5': !scoreFilter[2], 'accent-4': scoreFilter[2]}">2</a>
+      <a v-on:click="filterScore(3)" class="waves-effect waves-light btn green" v-bind:class="{'lighten-5': !scoreFilter[3]}">3</a>
+    </div>
+    <div class="clear">
+
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
     <div v-for="subject in cohort.subjects" class="card" v-if="!loadingStandards && isSubjectVisible(subject.name)">
       <v-collection with-header>
           <v-collection-item header>
@@ -36,7 +56,7 @@
                 {{performances[standard.id]}}
               </span>
             </h4>
-            <ul v-if="!isEditing(standard.id)">
+            <ul v-if="showSuccessCriteria && !isEditing(standard.id)">
               <li v-for="success_criteria in standard.success_criteria">
                 <p class="grey-text center" style="flex-direction: row;cursor: not-allowed;">
                   <v-icon v-if="isChecked(success_criteria._id)" class="green-text">check_box</v-icon>
@@ -97,7 +117,14 @@ export default {
       loadingStandards: true,
       performances: {},
       cohort: {},
-      cohorts: {}
+      cohorts: {},
+      showSuccessCriteria: true,
+      scoreFilter: {
+        0: true,
+        1: true,
+        2: true,
+        3: true
+      }
     };
   },
   computed: {
@@ -158,6 +185,18 @@ export default {
         'accent-4': score == 2
       }
     },
+    filterScore(score) {
+      if (typeof score == 'number') {
+        this.scoreFilter[score] = !this.scoreFilter[score];
+      } else {
+        this.scoreFilter = {
+          0: true,
+          1: true,
+          2: true,
+          3: true
+        };
+      }
+    },
     getCohortBadge(name) {
       return name.split(' ')[0];
     },
@@ -185,7 +224,8 @@ export default {
       }
     },
     isStandardVisible(standard) {
-      const isVisible = standard.assigned || this.performances[standard.id];
+      const performance = this.performances[standard.id];
+      const isVisible = (standard.assigned || this.performances[standard.id]) && this.scoreFilter[performance];
 
       if(isVisible && this.search.trim() != '') {
         const regexp = new RegExp(this.search, 'gi');
@@ -193,6 +233,9 @@ export default {
       } else {
         return isVisible;
       }
+    },
+    hideShowSuccessCriteria() {
+      this.showSuccessCriteria = !this.showSuccessCriteria;
     },
     isEditing(id) {
       return this.editing[id];
@@ -225,5 +268,11 @@ export default {
   }
   .padding-left {
     margin-left: 20em;
+  }
+  .score-buttons {
+    float: right;
+  }
+  .clear {
+    float: clear;
   }
 </style>
