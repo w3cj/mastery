@@ -1,7 +1,7 @@
 <template>
   <div>
-    <instructor-dashboard v-if="user.isInstructor"></instructor-dashboard>
-    <student-dashboard v-if="!user.isInstructor"></student-dashboard>
+    <instructor-dashboard v-if="user.isInstructor && !$route.params.student_id"></instructor-dashboard>
+    <student-dashboard v-if="!user.isInstructor || $route.params.student_id"></student-dashboard>
   </div>
 </template>
 

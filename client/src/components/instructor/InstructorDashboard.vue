@@ -27,7 +27,9 @@
           </div>
           <div class="card-content">
             <span class="card-title activator grey-text text-darken-4">{{formatName(student.full_name)}}<i class="material-icons right">more_vert</i></span>
-            <p><a href="#">Mastery</a></p>
+            <p>
+              <router-link :to="{ name: 'student-dashboard', params: { student_id: student.id} }">Mastery</router-link>
+            </p>
           </div>
           <div class="card-reveal">
             <span class="card-title grey-text text-darken-4">{{formatName(student.full_name)}}<i class="material-icons right">close</i></span>

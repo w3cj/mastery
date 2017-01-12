@@ -28,6 +28,7 @@ const router = new VueRouter({
   routes: [
     { path: '/', name: 'home', component: Home },
     { path: '/dashboard', name: 'dashboard', component: Dashboard, beforeEnter: requireAuth },
+    { path: '/dashboard/student/:student_id', name: 'student-dashboard', component: Dashboard, beforeEnter: requireAuth },
     { path: '/cohort/:id', name: 'cohort', component: Cohort, beforeEnter: requireAuth },
     { path: '/auth/login', name: 'login', component: Login },
     { path: '/auth/callback', name: 'callback', component: AuthCallback },

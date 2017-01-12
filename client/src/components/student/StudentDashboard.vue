@@ -9,10 +9,12 @@
         </v-dropdown>
       </div>
       <div class="right">
+        <router-link v-if="user.isInstructor" :to="{ name: 'dashboard' }" class="waves btn indigo lighten-1">Dashboard</router-link>
         <router-link v-if="user.isInstructor" :to="{ name: 'cohort', params: { id: defaultCohort }}" class="waves btn green">Assign Standards</router-link>
       </div>
       <center>
         <h1>{{cohorts[defaultCohort] ? getCohortBadge(cohorts[defaultCohort].name) : 'Loading standards...'}}</h1>
+        <h1>{{student.full_name}}</h1>
         <v-progress-circular v-if="loadingStandards" active green green-flash></v-progress-circular>
       </center>
       <div v-if="!loadingStandards">
@@ -118,6 +120,7 @@ export default {
       performances: {},
       cohort: {},
       cohorts: {},
+      student: {},
       showSuccessCriteria: true,
       scoreFilter: {
         0: true,
@@ -150,14 +153,23 @@ export default {
       .getDefaultCohort()
       .then(defaultCohort => {
         this.defaultCohort = defaultCohort;
-        return API.getCohort(defaultCohort);
-      }).then(this.loadCohort);
+        return Promise.all([
+          API.getStudents(defaultCohort),
+          API.getStudentImages(defaultCohort),
+          API.getCohort(defaultCohort)
+        ]).then(results => {
+          const student_id = this.$route.params.student_id || this.user.learn_id;
+          this.student = results[0].filter(s => s.id == student_id)[0];
+          this.studentImage = results[1][student_id];
+          this.loadCohort(results[2]);
+        });
+      });
   },
   methods: {
     loadCohort(cohort) {
       this.cohort = cohort;
       API
-        .getPerformances(this.defaultCohort, this.user.learn_id)
+        .getPerformances(this.defaultCohort, this.$route.params.student_id || this.user.learn_id)
         .then(data => {
           this.performances = data;
         }).catch(error => {
