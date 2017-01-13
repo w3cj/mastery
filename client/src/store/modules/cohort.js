@@ -46,14 +46,14 @@ const actions = {
         commit(mutationTypes.RECEIVE_EVIDENCES, evidences);
       });
   },
-  [actionTypes.CHECK_SUCCESS_CRITERIA] ({ commit, state }, id) {
+  [actionTypes.CHECK_SUCCESS_CRITERIA] ({ commit, state }, {user_id, id}) {
     let checked = state.evidences[id] ? state.evidences[id].checked : false;
     commit(mutationTypes.CHECKING_SUCCESS_CRITERIA, {
       id,
       checked
     });
     checked = !checked;
-    API.checkSuccessCriteria(state.cohort.cohort_id, id, checked)
+    API.checkSuccessCriteria(user_id, state.cohort.cohort_id, id, checked)
       .then((result) => {
         setTimeout(() => {
           commit(mutationTypes.SUCCESS_CRITERIA_CHECKED, { id, checked });

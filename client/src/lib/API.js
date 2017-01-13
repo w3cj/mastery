@@ -60,8 +60,8 @@ class API {
   getStudentImages(cohort_id) {
     return fetchJSON(`learn/cohorts/${cohort_id}/student-images`);
   }
-  checkSuccessCriteria(cohort_id, success_criteria_id, checked) {
-    return postJSON(`evidence`, {cohort_id, success_criteria_id, checked});
+  checkSuccessCriteria(user_id, cohort_id, success_criteria_id, checked) {
+    return postJSON(`evidence/${user_id}`, {cohort_id, success_criteria_id, checked});
   }
   assignStandard(cohort_id, standard_id, assign = true) {
     return postJSON(`cohorts/${cohort_id}/standards/${standard_id}/assign`, {assign});

@@ -101,6 +101,7 @@
 import { mapGetters } from 'vuex';
 import Auth from '../../lib/Auth';
 import API from '../../lib/API';
+import getEncouragement from '../../lib/encouragement';
 import EvidenceButtons from '../EvidenceButtons';
 import * as actionTypes from '../../store/action-types';
 import * as mutationTypes from '../../store/mutation-types';
@@ -139,6 +140,7 @@ export default {
   },
   mounted() {
     const student_id = this.$route.params.student_id || this.user.learn_id;
+    this.student_id = student_id;
 
     API.getEvidences(student_id)
       .then(evidences => {
@@ -261,7 +263,25 @@ export default {
     },
     checkSuccessCriteria(success_criteria, event) {
       event.stopPropagation();
-      this.$store.dispatch(actionTypes.CHECK_SUCCESS_CRITERIA, success_criteria._id);
+      const id = success_criteria._id;
+      let checked = this.evidences[id] ? !this.evidences[id].checked : true;
+
+      if(!this.evidences[id]) {
+        this.$set(this.evidences, id, {
+          checking: true
+        });
+      }
+
+      API.checkSuccessCriteria(this.student_id, this.cohort.cohort_id, id, checked)
+        .then((result) => {
+          setTimeout(() => {
+            this.evidences[id] = result;
+            if(result.checked) {
+              Materialize.toast(getEncouragement(), 3000);
+            }
+          }, 500);
+        });
+
     },
     toggleEditStandard(standard, event) {
       event.stopPropagation();
