@@ -16,6 +16,11 @@ class Student {
         }
       });
   }
+  findById(id) {
+    return this.students.findOne({
+        id: Number(id)
+      });
+  }
   upsert(array) {
     return Promise.all(array.map(student => {
       return this.students

@@ -42,8 +42,8 @@ class API {
         return cohort;
       });
   }
-  getEvidences() {
-    return fetchJSON(`evidence`)
+  getEvidences(student_id) {
+    return fetchJSON(`evidence/${student_id}`)
       .then(evidences => {
         return evidences.reduce((evidences, evidence) => {
           evidences[evidence.success_criteria_id] = evidence;

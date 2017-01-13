@@ -118,6 +118,7 @@ export default {
       editMode: true,
       loadingStandards: true,
       performances: {},
+      evidences: {},
       cohort: {},
       cohorts: {},
       student: {},
@@ -133,12 +134,16 @@ export default {
   computed: {
     ...mapGetters({
       currentUser: 'currentUser',
-      evidences: 'evidences',
       editing: 'editing',
     })
   },
   mounted() {
-    this.$store.dispatch(actionTypes.GET_EVIDENCES);
+    const student_id = this.$route.params.student_id || this.user.learn_id;
+
+    API.getEvidences(student_id)
+      .then(evidences => {
+        this.evidences = evidences;
+      });
 
     API
       .getCohorts()
@@ -158,7 +163,6 @@ export default {
           API.getStudentImages(defaultCohort),
           API.getCohort(defaultCohort)
         ]).then(results => {
-          const student_id = this.$route.params.student_id || this.user.learn_id;
           this.student = results[0].filter(s => s.id == student_id)[0];
           this.studentImage = results[1][student_id];
           this.loadCohort(results[2]);

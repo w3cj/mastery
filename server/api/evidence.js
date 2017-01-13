@@ -1,7 +1,7 @@
 const ezc = require('express-zero-config');
 
 const {resJSON, nextError} = require('../lib/routeHelpers');
-const {Evidence} = require('../models');
+const {Evidence, Student} = require('../models');
 
 function processRequest(promise, res, next) {
   promise
@@ -12,6 +12,18 @@ function processRequest(promise, res, next) {
 const routes = {
   '/': (req, res, next) => {
     processRequest(Evidence.find(req.user.github_id), res, next);
+  },
+  '/:user_id': (req, res, next) => {
+    const {user_id} = req.params;
+    if(req.user.isInstructor || req.user.learn_id == user_id) {
+      processRequest(
+        Student.findById(user_id)
+          .then(student => {
+            return Evidence.find(student.github_id);
+          }), res, next);
+    } else {
+      next(new Error('Un-Authorized'));
+    }
   }
 };
 
