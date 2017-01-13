@@ -270,6 +270,8 @@ export default {
         this.$set(this.evidences, id, {
           checking: true
         });
+      } else {
+        this.evidences[id].checking = true;
       }
 
       API.checkSuccessCriteria(this.student_id, this.cohort.cohort_id, id, checked)
