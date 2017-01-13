@@ -277,7 +277,7 @@ export default {
       API.checkSuccessCriteria(this.student_id, this.cohort.cohort_id, id, checked)
         .then((result) => {
           setTimeout(() => {
-            this.evidences[id] = result;
+            this.$set(this.evidences, id, result);
             if(result.checked) {
               Materialize.toast(getEncouragement(), 3000);
             }
