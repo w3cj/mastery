@@ -16,6 +16,18 @@ const routes = {
 				});
 			});
   },
+  '/cohorts/:user_id': (req, res, next) => {
+    const {user_id} = req.params;
+
+    getLearnUser(user_id)
+      .then(learnUser => {
+        Promise.all(learnUser.cohorts.map(cohort_id => {
+          return fetchCohortInfo(cohort_id);
+        })).then(cohorts => {
+          res.json(cohorts);
+        });
+      });
+  },
   '/cohorts/:cohort_id/student-images': (req, res, next) => {
     const {cohort_id} = req.params;
 

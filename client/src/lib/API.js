@@ -11,8 +11,12 @@ class API {
   getExchange() {
     return fetchJSON('auth/exchange');
   }
-  getCohorts() {
-    return fetchJSON('learn/cohorts');
+  getCohorts(user_id) {
+    if(user_id) {
+      return fetchJSON(`learn/cohorts/${user_id}`);
+    } else {
+      return fetchJSON('learn/cohorts');
+    }
   }
   getDefaultCohort() {
     if(localStorage.defaultCohort) return Promise.resolve(localStorage.defaultCohort);
@@ -56,6 +60,10 @@ class API {
   }
   getStudents(cohort_id) {
     return fetchJSON(`cohorts/${cohort_id}/students`);
+  }
+  getStudent(cohort_id, student_id) {
+    return this.getStudentImages(cohort_id)
+      .then((students) => students.filter(s => s.id == student_id)[0]);
   }
   getStudentImages(cohort_id) {
     return fetchJSON(`learn/cohorts/${cohort_id}/student-images`);

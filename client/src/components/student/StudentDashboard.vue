@@ -1,20 +1,22 @@
 <template>
     <div>
+      <br>
+      <div class="right">
+        <router-link v-if="user.isInstructor" :to="{ name: 'dashboard', params: { id: cohort_id } }" class="waves btn indigo lighten-1">Students</router-link>
+        <router-link v-if="user.isInstructor" :to="{ name: 'cohort', params: { id: cohort_id }}" class="waves btn green">Assign Standards</router-link>
+      </div>
+      <br>
+      <h1 class="text-center">{{student.full_name}}</h1>
       <div class="left">
         <v-btn v-if="Object.keys(cohorts).length > 1" v-dropdown:dropdown>Change Cohort</v-btn>
         <v-dropdown id="dropdown">
             <li v-for="cohort in cohorts">
-                <a v-on:click="changeCohort(cohort.cohort_id)">{{getCohortBadge(cohort.name)}}</a>
+                <router-link :to="{ name: 'student-dashboard', params: { cohort_id: cohort.cohort_id, student_id: student_id}}">{{getCohortBadge(cohort.name)}}</router-link>
             </li>
         </v-dropdown>
       </div>
-      <div class="right">
-        <router-link v-if="user.isInstructor" :to="{ name: 'dashboard' }" class="waves btn indigo lighten-1">Dashboard</router-link>
-        <router-link v-if="user.isInstructor" :to="{ name: 'cohort', params: { id: defaultCohort }}" class="waves btn green">Assign Standards</router-link>
-      </div>
       <center>
-        <h1>{{cohorts[defaultCohort] ? getCohortBadge(cohorts[defaultCohort].name) : 'Loading standards...'}}</h1>
-        <h1>{{student.full_name}}</h1>
+        <h1>{{cohorts[cohort_id] ? getCohortBadge(cohorts[cohort_id].name) : 'Loading standards...'}}</h1>
         <v-progress-circular v-if="loadingStandards" active green green-flash></v-progress-circular>
       </center>
       <div v-if="!loadingStandards">
@@ -101,6 +103,7 @@
 import { mapGetters } from 'vuex';
 import Auth from '../../lib/Auth';
 import API from '../../lib/API';
+import {requireType} from '../../lib/utils';
 import getEncouragement from '../../lib/encouragement';
 import EvidenceButtons from '../EvidenceButtons';
 import * as actionTypes from '../../store/action-types';
@@ -113,16 +116,13 @@ export default {
   },
   data() {
     return {
-      user: Auth.getCurrentUser(),
       search: '',
-      defaultCohort: localStorage.defaultCohort,
       editMode: true,
       loadingStandards: true,
       performances: {},
       evidences: {},
-      cohort: {},
-      cohorts: {},
       student: {},
+      student_id: this.$route.params.student_id,
       showSuccessCriteria: true,
       scoreFilter: {
         0: true,
@@ -132,50 +132,47 @@ export default {
       }
     };
   },
+  props: {
+    user: requireType(Object),
+    cohort_id: requireType([String, Number]),
+    cohort: requireType(Object),
+    cohorts: requireType(Object),
+    loading: requireType(Boolean)
+  },
   computed: {
     ...mapGetters({
       currentUser: 'currentUser',
       editing: 'editing',
     })
   },
+  watch: {
+    '$route.params.cohort_id'(newId, oldId) {
+      this.cohort_id = newId;
+      this.load();
+    },
+    '$route.params.student_id'(newId, oldId) {
+      const cohort_id = this.$route.params.cohort_id;
+      this.load();
+    }
+  },
   mounted() {
-    const student_id = this.$route.params.student_id || this.user.learn_id;
-    this.student_id = student_id;
-
-    API.getEvidences(student_id)
-      .then(evidences => {
-        this.evidences = evidences;
-      });
-
-    API
-      .getCohorts()
-      .then(cohorts => {
-        this.cohorts = cohorts.reduce((byId, cohort) => {
-          byId[cohort.cohort_id] = cohort;
-          return byId;
-        }, {});
-      });
-
-    API
-      .getDefaultCohort()
-      .then(defaultCohort => {
-        this.defaultCohort = defaultCohort;
-        return Promise.all([
-          API.getStudents(defaultCohort),
-          API.getStudentImages(defaultCohort),
-          API.getCohort(defaultCohort)
-        ]).then(results => {
-          this.student = results[0].filter(s => s.id == student_id)[0];
-          this.studentImage = results[1][student_id];
-          this.loadCohort(results[2]);
-        });
-      });
+    this.load();
   },
   methods: {
-    loadCohort(cohort) {
-      this.cohort = cohort;
+    load() {
+      API.getStudent(this.cohort_id, this.student_id)
+        .then(student => {
+          this.student = student ? student : this.user;
+          this.student_id = this.student.id;
+        });
+
+      API.getEvidences(this.student_id)
+        .then(evidences => {
+          this.evidences = evidences;
+        });
+
       API
-        .getPerformances(this.defaultCohort, this.$route.params.student_id || this.user.learn_id)
+        .getPerformances(this.cohort_id, this.student_id)
         .then(data => {
           this.performances = data;
         }).catch(error => {
@@ -183,15 +180,6 @@ export default {
         }).then(() => {
           this.loadingStandards = false;
         });
-    },
-    changeCohort(cohort_id) {
-      this.defaultCohort = cohort_id;
-      localStorage.defaultCohort = cohort_id;
-      this.loadingStandards = true;
-
-      API
-        .getCohort(this.defaultCohort)
-        .then(this.loadCohort);
     },
     performanceColors(standard_id) {
       const score = this.performances[standard_id];

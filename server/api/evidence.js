@@ -1,7 +1,7 @@
 const ezc = require('express-zero-config');
 
 const {resJSON, nextError} = require('../lib/routeHelpers');
-const {Evidence, Student} = require('../models');
+const {Evidence, Student, Instructor} = require('../models');
 
 function processRequest(promise, res, next) {
   promise
@@ -24,13 +24,24 @@ router.get('/', (req, res, next) => {
   processRequest(Evidence.find(req.user.github_id), res, next);
 });
 
+function findUser(user_id) {
+  return Promise.all([
+    Instructor.findById(user_id),
+    Student.findById(user_id),
+  ]).then(results => {
+    const instructor = results[0];
+    const student = results[1];
+    const user = (instructor ? instructor : student);
+    return user;
+  });
+}
+
 router.get('/:user_id', authorize, (req, res, next) => {
   const {user_id} = req.params;
   processRequest(
-    Student.findById(user_id)
-      .then(student => {
-        return Evidence.find(student.github_id);
-      }), res, next);
+    findUser(user_id).then(user => {
+      return Evidence.find(user.github_id);
+    }), res, next);
 });
 
 router.post('/', (req, res, next) => {
@@ -42,9 +53,9 @@ router.post('/:user_id', authorize, (req, res, next) => {
   const {cohort_id, success_criteria_id, checked} = req.body;
   const {user_id} = req.params;
   processRequest(
-    Student.findById(user_id)
-      .then(student => {
-        return Evidence.update(student.github_id, cohort_id, success_criteria_id, checked);
+    findUser(user_id)
+      .then(user => {
+        return Evidence.update(user.github_id, cohort_id, success_criteria_id, checked);
       }), res, next);
 });
 

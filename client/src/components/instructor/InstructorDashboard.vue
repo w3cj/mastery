@@ -4,18 +4,18 @@
       <v-btn v-if="Object.keys(cohorts).length > 1" v-dropdown:dropdown>Change Cohort</v-btn>
       <v-dropdown id="dropdown">
           <li v-for="cohort in cohorts">
-              <a v-on:click="changeCohort(cohort.cohort_id)">{{getCohortBadge(cohort.name)}}</a>
+              <router-link :to="{ name: 'dashboard', params: { cohort_id: cohort.cohort_id }}">{{getCohortBadge(cohort.cohort_id)}}</router-link>
           </li>
       </v-dropdown>
     </div>
     <div class="right">
-      <router-link v-if="user.isInstructor" :to="{ name: 'cohort', params: { id: defaultCohort }}" class="waves btn green">Assign Standards</router-link>
+      <router-link v-if="user.isInstructor" :to="{ name: 'cohort', params: { id: cohort_id }}" class="waves btn green">Assign Standards</router-link>
     </div>
     <center>
-      <h1>{{cohorts[defaultCohort] ? getCohortBadge(cohorts[defaultCohort].name) : 'Loading students...'}}</h1>
-      <v-progress-circular v-if="loadingStudents" active green green-flash></v-progress-circular>
+      <h1>{{cohort || cohorts[cohort_id] ? getCohortBadge(cohort_id) : 'Loading students...'}}</h1>
+      <v-progress-circular v-if="loading" active green green-flash></v-progress-circular>
     </center>
-    <div v-if="!loadingStudents">
+    <div v-if="!loading">
       <!-- <div class="input-field">
            <v-icon prefix>search</v-icon>
            <v-text-input v-model="search" name="search" id="search"></v-text-input>
@@ -23,12 +23,12 @@
        <div class="row">
          <div class="card col s12 m4 l3" v-for="student in students">
           <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" v-bind:src="studentImages[student.id]">
+            <img class="activator" v-bind:src="student.img">
           </div>
           <div class="card-content">
             <span class="card-title activator grey-text text-darken-4">{{formatName(student.full_name)}}<i class="material-icons right">more_vert</i></span>
             <p>
-              <router-link :to="{ name: 'student-dashboard', params: { student_id: student.id} }">Mastery</router-link>
+              <router-link :to="{ name: 'student-dashboard', params: { cohort_id: cohort_id, student_id: student.id} }">Mastery</router-link>
             </p>
           </div>
           <div class="card-reveal">
@@ -42,81 +42,37 @@
 </template>
 
 <script>
-import Auth from '../../lib/Auth';
 import API from '../../lib/API';
+import {requireType} from '../../lib/utils';
 
 export default {
   name: 'instructor-dashboard',
   data() {
     return {
-      user: Auth.getCurrentUser(),
-      search: '',
-      defaultCohort: localStorage.defaultCohort,
-      loadingStudents: true,
-      performances: {},
-      cohort: {},
-      cohorts: {}
+      search: ''
     };
   },
-  mounted() {
-    this.loadDefaultCohort();
+  props: {
+    user: requireType(Object),
+    cohort_id: requireType([String, Number]),
+    cohort: requireType(Object),
+    cohorts: requireType(Object),
+    loading: requireType(Boolean),
+    students: requireType(Array)
   },
   methods: {
-    changeCohort(cohort_id) {
-      this.loadingStudents = true;
-      localStorage.defaultCohort = cohort_id;
-      this.defaultCohort = cohort_id;
-      this.loadDefaultCohort();
-    },
-    loadDefaultCohort() {
-      API
-        .getCohorts()
-        .then(cohorts => {
-          this.cohorts = cohorts.reduce((byId, cohort) => {
-            byId[cohort.cohort_id] = cohort;
-            return byId;
-          }, {});
-        });
-
-      API
-        .getDefaultCohort()
-        .then(defaultCohort => {
-          this.defaultCohort = defaultCohort;
-          return Promise.all([
-            API.getStudents(defaultCohort),
-            API.getStudentImages(defaultCohort)
-          ]);
-        }).then(results => {
-          this.students = results[0];
-          this.studentImages = results[1];
-          this.loadingStudents = false;
-        });
-    },
     formatName(name) {
       return name.split(' ')[0];
     },
-    performanceColors(standard_id) {
-      const score = this.performances[standard_id];
-      return {
-        'grey': score == 0,
-        'red': score == 1,
-        'yellow': score == 2,
-        'green': score == 3,
-        'accent-4': score == 2
-      }
-    },
-    getCohortBadge(name) {
-      return name.split(' ')[0];
-    },
-    performanceTextColors(standard_id) {
-      const performanceColors = this.performanceColors(standard_id);
-      return {
-        'grey-text': performanceColors.grey,
-        'red-text': performanceColors.red,
-        'yellow-text': performanceColors.yellow,
-        'green-text': performanceColors.green,
-        'accent-4': performanceColors.yellow
-      }
+    getCohortBadge(cohort_id) {
+      let name = '';
+      if (this.cohort && this.cohort.cohort_id == cohort_id) {
+        name = this.cohort.name;
+      } else if(this.cohorts && this.cohorts[cohort_id]) {
+        name = this.cohorts[cohort_id].name;
+       }
+
+      return name ? name.split(' ')[0] : 'wat ';
     },
     decodeHtml(html) {
       var txt = document.createElement("textarea");

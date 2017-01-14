@@ -47,17 +47,22 @@ function getStudentImagesFromBody(body) {
   const $ = cheerio.load(body);
   const thumbnails = $('a.thumbnail');
 
-  const imagesById = {};
+  const images = [];
 
   thumbnails.each(function() {
     const thumbnail = $(this);
     const id = thumbnail.attr('href').split('/students/')[1];
     const img = thumbnail.find('img').attr('src');
+    const full_name = thumbnail.find('.caption').text().trim();
 
-    imagesById[id] = img;
+    images.push({
+      id,
+      img,
+      full_name
+    });
   });
 
-  return imagesById;
+  return images;
 }
 
 function getStudentsFromBody(body) {
