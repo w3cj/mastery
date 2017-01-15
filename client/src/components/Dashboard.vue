@@ -48,7 +48,7 @@ export default {
       next({
         name: 'dashboard',
         params: {
-          cohort_id: localStorage.defaultCohort ?  localStorage.defaultCohort : 'default'
+          cohort_id: localStorage.defaultCohort ?  localStorage.defaultCohort : 'default',
         }
       });
     } else {
@@ -70,7 +70,6 @@ export default {
   },
   methods: {
     load(cohort_id) {
-      console.log('loading...');
       this.loading = true;
       this.loadCohorts();
 
@@ -88,7 +87,6 @@ export default {
       }
     },
     loadCohorts() {
-      console.log('Getting cohorts');
       API
         .getCohorts(this.$route.params.student_id)
         .then(cohorts => {

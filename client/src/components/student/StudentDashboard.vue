@@ -7,7 +7,7 @@
       </div>
       <br>
       <h1 class="text-center">{{student.full_name}}</h1>
-      <div class="left">
+      <div class="left" v-if="!loading && student_id">
         <v-btn v-if="Object.keys(cohorts).length > 1" v-dropdown:dropdown>Change Cohort</v-btn>
         <v-dropdown id="dropdown">
             <li v-for="cohort in cohorts">
@@ -160,15 +160,32 @@ export default {
   },
   methods: {
     load() {
-      API.getStudent(this.cohort_id, this.student_id)
-        .then(student => {
-          this.student = student ? student : this.user;
-          this.student_id = this.student.id;
-        });
+      this.student_id = this.$route.params.student_id ? this.$route.params.student_id : this.user.learn_id;
 
       API.getEvidences(this.student_id)
         .then(evidences => {
           this.evidences = evidences;
+        }).catch(() => {
+          this.$router.replace('/');
+        });
+
+      if(this.cohort_id == 'default') {
+        API
+          .getDefaultCohort()
+          .then(cohort_id => {
+            this.cohort_id = cohort_id;
+            this.getStudentAndPerformances();
+          });
+      } else {
+        this.getStudentAndPerformances();
+      }
+    },
+    getStudentAndPerformances() {
+      API.getStudent(this.cohort_id, this.student_id)
+        .then(student => {
+          student = student ? student : this.user;
+          this.student = student;
+          this.student_id = student.id ? student.id : student.learn_id;
         });
 
       API
@@ -176,7 +193,8 @@ export default {
         .then(data => {
           this.performances = data;
         }).catch(error => {
-          console.error(error);
+          // this.$router.go('/');
+          console.log('error!');
         }).then(() => {
           this.loadingStandards = false;
         });

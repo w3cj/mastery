@@ -4,7 +4,8 @@ function fetchJSON(endpoint) {
   return fetch(`${API_URL}${endpoint}`, {
     headers: {
       Authorization: `Bearer ${localStorage.token}`,
-      Credentials: 'include'
+      Credentials: 'include',
+      Accept: 'application/json'
     }
   }).then(response => {
     return response.json();
