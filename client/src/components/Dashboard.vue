@@ -110,7 +110,7 @@ export default {
       });
     },
     getCohortBadge(cohort) {
-      return cohort.name.trim() == '' ? cohort.label : cohort.name.split(' ')[0];
+      return !cohort.name || cohort.name.trim() == '' ? cohort.label : cohort.name.split(' ')[0];
     },
     loadStudents(cohort_id) {
       return API.getStudentImages(cohort_id)
