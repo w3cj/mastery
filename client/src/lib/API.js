@@ -8,6 +8,29 @@ import {
 } from './fetch';
 
 class API {
+  constructor() {
+    this.cache = {};
+    this.cacheify('getCohorts');
+    this.cacheify('getCohort');
+    this.cacheify('getStudent');
+    this.cacheify('getStudents');
+    this.cacheify('getStudentImages');
+  }
+  cacheify(name) {
+    const original = this[name];
+    this[name] = (function () {
+      const cacheName = `${name}-${Array.prototype.join.call(arguments, ',')}`;
+      if(this.cache[cacheName]) {
+        return Promise.resolve(this.cache[cacheName]);
+      } else {
+        return original.apply(this, arguments)
+          .then(data => {
+            this.cache[cacheName] = data;
+            return data;
+          });
+      }
+    }).bind(this);
+  }
   getExchange() {
     return fetchJSON('auth/exchange');
   }

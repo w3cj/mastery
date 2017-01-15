@@ -7,8 +7,8 @@
       </div>
       <br>
       <h1 class="text-center">{{student.full_name}}</h1>
-      <div class="left" v-if="!loading && student_id">
-        <v-btn v-if="Object.keys(cohorts).length > 1" v-dropdown:dropdown>Change Cohort</v-btn>
+      <div class="left" v-if="!loading && student_id && Object.keys(cohorts).length > 1">
+        <v-btn v-dropdown:dropdown>Change Cohort</v-btn>
         <v-dropdown id="dropdown">
             <li v-for="cohort in cohorts">
                 <router-link :to="{ name: 'student-dashboard', params: { cohort_id: cohort.cohort_id, student_id: student_id}}">{{cohort.badge}}</router-link>
