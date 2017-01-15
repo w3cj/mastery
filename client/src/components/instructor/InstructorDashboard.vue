@@ -4,7 +4,7 @@
       <v-btn v-if="Object.keys(cohorts).length > 1" v-dropdown:dropdown>Change Cohort</v-btn>
       <v-dropdown id="dropdown">
           <li v-for="cohort in cohorts">
-              <router-link :to="{ name: 'dashboard', params: { cohort_id: cohort.cohort_id }}">{{getCohortBadge(cohort.cohort_id)}}</router-link>
+              <router-link :to="{ name: 'dashboard', params: { cohort_id: cohort.cohort_id }}">{{cohort.badge}}</router-link>
           </li>
       </v-dropdown>
     </div>
@@ -12,7 +12,7 @@
       <router-link v-if="user.isInstructor" :to="{ name: 'cohort', params: { id: cohort_id }}" class="waves btn green">Assign Standards</router-link>
     </div>
     <center>
-      <h1>{{cohort_badge}}</h1>
+      <h1>{{cohort.badge}}</h1>
       <v-progress-circular v-if="loading" active green green-flash></v-progress-circular>
     </center>
     <div v-if="!loading">
@@ -60,23 +60,7 @@ export default {
     loading: requireType(Boolean),
     students: requireType(Array)
   },
-  computed: {
-    cohort_badge() {
-      const cohort_id = this.cohort_id ? this.cohort_id : this.cohort.cohort_id;
-      return this.getCohortBadge(cohort_id);
-    }
-  },
   methods: {
-    getCohortBadge(cohort_id) {
-      let name = '';
-      if (this.cohort && this.cohort.cohort_id == cohort_id) {
-        name = this.cohort.name;
-      } else if(this.cohorts && this.cohorts[cohort_id]) {
-        name = this.cohorts[cohort_id].name;
-       }
-
-      return name ? name.split(' ')[0] : 'Loading...';
-    },
     formatName(name) {
       return name.split(' ')[0];
     },

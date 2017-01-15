@@ -91,6 +91,7 @@ export default {
         .getCohorts(this.$route.params.student_id)
         .then(cohorts => {
           this.cohorts = cohorts.reduce((byId, cohort) => {
+            cohort.badge = this.getCohortBadge(cohort);
             byId[cohort.cohort_id] = cohort;
             return byId;
           }, {});
@@ -103,9 +104,13 @@ export default {
       ]).then(results => {
         const cohort = results[0];
         const students = results[1];
+        cohort.badge = this.getCohortBadge(cohort);
         this.cohort = cohort;
         this.students = students;
       });
+    },
+    getCohortBadge(cohort) {
+      return cohort.name.trim() == '' ? cohort.label : cohort.name.split(' ')[0];
     },
     loadStudents(cohort_id) {
       return API.getStudentImages(cohort_id)
