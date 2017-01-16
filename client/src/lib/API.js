@@ -15,6 +15,7 @@ class API {
     this.cacheify('getStudent');
     this.cacheify('getStudents');
     this.cacheify('getStudentImages');
+    this.cacheify('getAllCohorts');
   }
   cacheify(name) {
     const original = this[name];
