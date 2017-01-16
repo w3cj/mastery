@@ -1,6 +1,8 @@
 const cheerio = require('cheerio');
 const crypto = require('crypto');
 const monk = require('monk');
+const NodeCache = require( "node-cache" );
+const learnCache = new NodeCache();
 
 require('dotenv').config();
 
@@ -274,6 +276,47 @@ function parseSuccessCriteria(standard_id, success_criteria_text) {
   }
   return success_criteria;
 }
+
+function cacheify(fn, ttl) {
+  const original = fn;
+  const name = fn.toString().split('function ')[1].split('(')[0];
+  function cacheified() {
+    const cacheKey = `${name}-${Array.prototype.join.call(arguments, ',')}`;
+    return new Promise((resolve, reject) => {
+      learnCache.get(cacheKey, (err, value) => {
+        if(!err) {
+          if(value == undefined){
+            return original.apply(this, arguments)
+              .then(data => {
+                resolve(new Promise((resolve, reject) => {
+                  learnCache.set(cacheKey, data, ttl, (err, success) => {
+                    if(!err && success) {
+                      console.log('Set cache:', name, cacheKey);
+                      resolve(data);
+                    } else {
+                      console.log('Error setting cache:', name, cacheKey);
+                      reject(err);
+                    }
+                  });
+                }));
+              });
+          } else {
+            console.log('Serving from cache:', name, cacheKey);
+            resolve(value);
+          }
+        } else {
+          reject(err);
+        }
+      });
+    });
+  }
+
+  return cacheified;
+}
+
+getAllCohorts = cacheify(getAllCohorts, 86400);
+fetchCohortInfo = cacheify(fetchCohortInfo, 86400);
+getStudentImages = cacheify(getStudentImages, 3600);
 
 module.exports = {
   getAllCohorts,
