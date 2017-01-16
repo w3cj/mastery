@@ -1,13 +1,9 @@
 <template>
   <div>
     <br>
-    <div class="left" v-if="!loading">
-      <div class="row" v-bind:class="{ show: user.isInstructor && Object.keys(cohorts).length > 1, hide: !(user.isInstructor && Object.keys(cohorts).length > 1) }">
-        <div class="input-field col s12">
-          <i class="material-icons prefix">search</i>
-          <input v-model="cohort_search" type="text" id="cohort_search" class="autocomplete" placeholder="Search for a cohort...">
-        </div>
-        <a v-on:click="changeCohort()" v-bind:class="{ disabled: !cohort_search}" class="right waves-effect waves-light btn">Change Cohort</a>
+    <div class="left">
+      <div class="row" v-bind:class="{ show: (!loading && user.isInstructor && Object.keys(cohorts).length > 1), hide:  (loading || !(user.isInstructor && Object.keys(cohorts).length > 1)) }">
+        <cohort-search :cohorts="cohort_array" :onCohortChange="changeCohort"></cohort-search>
       </div>
       <div v-if="!user.isInstructor && student_id && Object.keys(cohorts).length > 1">
         <v-btn v-dropdown:dropdown>Change Cohort</v-btn>
@@ -61,12 +57,14 @@
 <script>
 import Auth from '../lib/Auth';
 import API from '../lib/API';
+import CohortSearch from './CohortSearch';
 import InstructorDashboard from './instructor/InstructorDashboard';
 import StudentDashboard from './student/StudentDashboard';
 
 export default {
   name: 'dashboard',
   components: {
+    'cohort-search': CohortSearch,
     'instructor-dashboard': InstructorDashboard,
     'student-dashboard': StudentDashboard,
   },
@@ -77,10 +75,10 @@ export default {
       student_id: this.$route.params.student_id,
       cohort: {},
       cohorts: {},
+      cohort_array: [],
       cohort_search: '',
       loading: false,
-      students: [],
-      data: {}
+      students: []
     };
   },
   beforeRouteEnter (to, from, next) {
@@ -114,7 +112,9 @@ export default {
       this.loadCohorts();
 
       if(!isNaN(cohort_id)) {
-        this.loadCohort(cohort_id).then(() => this.loading = false);
+        this.loadCohort(cohort_id).then(() => {
+          this.loading = false;
+        });
       } else {
         API
           .getDefaultCohort()
@@ -137,11 +137,9 @@ export default {
 
       getCohorts
         .then(cohorts => {
-          const data = {};
-
+          this.cohort_array = cohorts;
           this.cohorts = cohorts.reduce((byId, cohort) => {
             cohort.badge = this.getCohortBadge(cohort);
-            data[cohort.name] = null;
             try {
               cohort.badgeNumber = cohort.badge.split('[')[1].split(']')[0];
             } catch (e) {
@@ -150,9 +148,6 @@ export default {
             byId[cohort.cohort_id] = cohort;
             return byId;
           }, {});
-
-          this.data = data;
-          this.loadAutocomplete();
         });
     },
     loadCohort(cohort_id) {
@@ -181,32 +176,14 @@ export default {
           this.students = students;
         });
     },
-    loadAutocomplete() {
-      $('input.autocomplete').autocomplete ? $('input.autocomplete').autocomplete({
-        data: this.data
-      }) : '';
-    },
-    changeCohort() {
-      const cohort_search = document.querySelector('#cohort_search').value.trim();
-
-      if(cohort_search) {
-        API
-          .getAllCohorts()
-          .then(cohorts => {
-            const findCohort = cohorts.filter(c => c.name.startsWith(cohort_search));
-
-            if(findCohort.length > 0) {
-              const {cohort_id} = findCohort[0];
-              this.$router.push({
-                name: 'dashboard',
-                params: {
-                  cohort_id,
-                  student_id: this.$route.params.student_id
-                }
-              });
-            }
-          });
-      }
+    changeCohort(cohort_id) {
+      this.$router.push({
+        name: 'dashboard',
+        params: {
+          cohort_id,
+          student_id: this.$route.params.student_id
+        }
+      });
     }
   }
 }
