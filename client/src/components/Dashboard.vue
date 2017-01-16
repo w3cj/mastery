@@ -1,5 +1,42 @@
 <template>
   <div>
+    <br>
+    <div class="left" v-if="!loading">
+      <div class="row" v-bind:class="{ show: user.isInstructor && Object.keys(cohorts).length > 1, hide: !(user.isInstructor && Object.keys(cohorts).length > 1) }">
+        <div class="input-field col s12">
+          <i class="material-icons prefix">search</i>
+          <input v-model="cohort_search" type="text" id="cohort_search" class="autocomplete" placeholder="Search for a cohort...">
+        </div>
+        <a v-on:click="changeCohort()" v-bind:class="{ disabled: !cohort_search}" class="right waves-effect waves-light btn">Change Cohort</a>
+      </div>
+      <div v-if="!user.isInstructor && student_id && Object.keys(cohorts).length > 1">
+        <v-btn v-dropdown:dropdown>Change Cohort</v-btn>
+        <v-dropdown id="dropdown">
+            <li v-for="cohort in cohorts">
+                <router-link :to="{ name: 'student-dashboard', params: { cohort_id: cohort.cohort_id, student_id: student_id}}">{{cohort.badge}}</router-link>
+            </li>
+        </v-dropdown>
+      </div>
+    </div>
+    <div class="right" v-if="!loading">
+      <router-link v-if="user.isInstructor && $route.params.student_id" :to="{ name: 'dashboard', params: { cohort_id: cohort.cohort_id}}" class="waves btn indigo lighten-1">{{cohort.badge}} Students</router-link>
+      <router-link v-if="user.isInstructor" :to="{ name: 'cohort', params: { id: cohort_id }}" class="waves btn green">Assign Standards</router-link>
+    </div>
+    <div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <center>
+        <h1 v-if="!loading">
+          <span v-if="!cohort.badgeNumber || cohort.badgeNumber == -1">{{cohort.badge}}</span>
+          <img v-if="cohort.badgeNumber && cohort.badgeNumber != -1" v-bind:src="'https://badge.galvanize.network/' + cohort.badgeNumber + '.png'" alt="" style="height:175px;">
+        </h1>
+        <v-progress-circular v-if="loading" active green green-flash></v-progress-circular>
+      </center>
+    </div>
     <instructor-dashboard
       v-if="user.isInstructor && !$route.params.student_id"
       v-bind:user="user"
@@ -37,10 +74,13 @@ export default {
     return {
       user: Auth.getCurrentUser(),
       cohort_id: this.$route.params.cohort_id || localStorage.defaultCohort,
+      student_id: this.$route.params.student_id,
       cohort: {},
       cohorts: {},
+      cohort_search: '',
       loading: false,
-      students: []
+      students: [],
+      data: {}
     };
   },
   beforeRouteEnter (to, from, next) {
@@ -87,14 +127,32 @@ export default {
       }
     },
     loadCohorts() {
-      API
-        .getCohorts(this.$route.params.student_id)
+      let getCohorts = null;
+
+      if(this.user.isInstructor && !this.$route.params.student_id) {
+        getCohorts = API.getAllCohorts();
+      } else {
+        getCohorts = API.getCohorts(this.$route.params.student_id);
+      }
+
+      getCohorts
         .then(cohorts => {
+          const data = {};
+
           this.cohorts = cohorts.reduce((byId, cohort) => {
             cohort.badge = this.getCohortBadge(cohort);
+            data[cohort.name] = null;
+            try {
+              cohort.badgeNumber = cohort.badge.split('[')[1].split(']')[0];
+            } catch (e) {
+              cohort.badgeNumber = -1;
+            }
             byId[cohort.cohort_id] = cohort;
             return byId;
           }, {});
+
+          this.data = data;
+          this.loadAutocomplete();
         });
     },
     loadCohort(cohort_id) {
@@ -105,6 +163,11 @@ export default {
         const cohort = results[0];
         const students = results[1];
         cohort.badge = this.getCohortBadge(cohort);
+        try {
+          cohort.badgeNumber = cohort.badge.split('[')[1].split(']')[0];
+        } catch (e) {
+          cohort.badgeNumber = -1;
+        }
         this.cohort = cohort;
         this.students = students;
       });
@@ -117,7 +180,42 @@ export default {
         .then(students => {
           this.students = students;
         });
+    },
+    loadAutocomplete() {
+      $('input.autocomplete').autocomplete ? $('input.autocomplete').autocomplete({
+        data: this.data
+      }) : '';
+    },
+    changeCohort() {
+      const cohort_search = document.querySelector('#cohort_search').value.trim();
+
+      if(cohort_search) {
+        API
+          .getAllCohorts()
+          .then(cohorts => {
+            const findCohort = cohorts.filter(c => c.name.startsWith(cohort_search));
+
+            if(findCohort.length > 0) {
+              const {cohort_id} = findCohort[0];
+              this.$router.push({
+                name: 'dashboard',
+                params: {
+                  cohort_id,
+                  student_id: this.$route.params.student_id
+                }
+              });
+            }
+          });
+      }
     }
   }
 }
 </script>
+<style media="screen">
+  .hide {
+    display: none;
+  }
+  .show {
+    display: '';
+  }
+</style>

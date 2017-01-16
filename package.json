@@ -7,5 +7,6 @@
   },
   "keywords": [],
   "author": "w3cj <hello@cjr.co.de>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {}
 }

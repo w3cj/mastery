@@ -8,6 +8,10 @@ const {fetchJSON, fetchText, getAuthHeader} = require('./fetchHelpers');
 const {Student, Instructor} = require('../models');
 const {learnURL} = require('./constants');
 
+function getAllCohorts() {
+  return fetchJSON(`${learnURL}api/v1/cohorts`, getAuthHeader());
+}
+
 function getStudentImages(cohort_id) {
   const studentURL = `${learnURL}cohorts/${cohort_id}/students?layout=grid`;
   return fetchText(studentURL, getAuthHeader())
@@ -272,6 +276,7 @@ function parseSuccessCriteria(standard_id, success_criteria_text) {
 }
 
 module.exports = {
+  getAllCohorts,
   fetchPerformances,
   fetchCohortData,
   fetchCohortInfo,

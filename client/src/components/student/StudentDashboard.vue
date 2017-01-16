@@ -1,35 +1,18 @@
 <template>
     <div>
       <br>
-      <div class="right">
-        <router-link v-if="user.isInstructor" :to="{ name: 'dashboard', params: { id: cohort_id } }" class="waves btn indigo lighten-1">Students</router-link>
-        <router-link v-if="user.isInstructor" :to="{ name: 'cohort', params: { id: cohort_id }}" class="waves btn green">Assign Standards</router-link>
-      </div>
-      <br>
       <h1 class="text-center">{{student.full_name}}</h1>
-      <div class="left" v-if="!loading && student_id && Object.keys(cohorts).length > 1">
-        <v-btn v-dropdown:dropdown>Change Cohort</v-btn>
-        <v-dropdown id="dropdown">
-            <li v-for="cohort in cohorts">
-                <router-link :to="{ name: 'student-dashboard', params: { cohort_id: cohort.cohort_id, student_id: student_id}}">{{cohort.badge}}</router-link>
-            </li>
-        </v-dropdown>
-      </div>
-      <center>
-        <h1>{{cohort.badge}}</h1>
-        <v-progress-circular v-if="loadingStandards" active green green-flash></v-progress-circular>
-      </center>
-      <div v-if="!loadingStandards">
+      <div v-if="!loading && !loadingStandards">
         <div class="input-field">
              <v-icon prefix>search</v-icon>
              <v-text-input v-model="search" name="search" id="search"></v-text-input>
          </div>
       </div>
-      <div class="left">
+      <div class="left" v-if="!loading">
         <h4 class="white-text">wat</h4>
         <a v-on:click="hideShowSuccessCriteria()" class="waves-effect waves-light btn indigo lighten-1">{{showSuccessCriteria ? 'Hide' : 'Show'}} Success Criteria</a>
       </div>
-      <div class="score-buttons">
+      <div class="score-buttons" v-if="!loading">
         <h4>Filter Score</h4>
         <a v-on:click="filterScore()" class="waves-effect waves-light btn">All</a>
         <a v-on:click="filterScore(0)" class="waves-effect waves-light btn grey" v-bind:class="{'lighten-5': !scoreFilter[0]}">0</a>

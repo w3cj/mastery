@@ -1,9 +1,16 @@
 <template>
   <div class="">
     <br />
-    <router-link to="/dashboard" class="waves btn indigo">Dashboard</router-link>
+    <router-link v-if="!loading" :to="'/dashboard/' + cohort.cohort_id" class="waves btn indigo">{{cohort.badge}} Students</router-link>
     <br />
-    <h1>Standards</h1>
+    <center>
+      <h1 v-if="!loading">
+        <span v-if="!cohort.badgeNumber || cohort.badgeNumber == -1">{{cohort.badge}}</span>
+        <img v-if="cohort.badgeNumber && cohort.badgeNumber != -1" v-bind:src="'https://badge.galvanize.network/' + cohort.badgeNumber + '.png'" alt="" style="height:175px;">
+      </h1>
+      <h1 v-if="!loading">Standards</h1>
+      <v-progress-circular v-if="loading" active green green-flash></v-progress-circular>
+    </center>
     <p>
       <v-icon>check</v-icon><strong>Assigned</strong>
     </p>
@@ -55,7 +62,8 @@ export default {
     return {
       cohort: {},
       selectedQuarter: {},
-      selectedWeek: {}
+      selectedWeek: {},
+      loading: true
     };
   },
   created() {
@@ -65,6 +73,7 @@ export default {
       .getCohort(cohort_id)
       .then(cohort => {
         this.cohort = cohort;
+        this.loading = false;
       });
   },
   methods: {

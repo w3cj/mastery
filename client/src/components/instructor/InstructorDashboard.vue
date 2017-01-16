@@ -1,27 +1,14 @@
 <template>
   <div>
-    <div class="left" v-if="!loading">
-      <v-btn v-if="Object.keys(cohorts).length > 1" v-dropdown:dropdown>Change Cohort</v-btn>
-      <v-dropdown id="dropdown">
-          <li v-for="cohort in cohorts">
-              <router-link :to="{ name: 'dashboard', params: { cohort_id: cohort.cohort_id }}">{{cohort.badge}}</router-link>
-          </li>
-      </v-dropdown>
-    </div>
-    <div class="right">
-      <router-link v-if="user.isInstructor" :to="{ name: 'cohort', params: { id: cohort_id }}" class="waves btn green">Assign Standards</router-link>
-    </div>
-    <center>
-      <h1>{{cohort.badge}}</h1>
-      <v-progress-circular v-if="loading" active green green-flash></v-progress-circular>
-    </center>
     <div v-if="!loading">
-      <!-- <div class="input-field">
-           <v-icon prefix>search</v-icon>
-           <v-text-input v-model="search" name="search" id="search"></v-text-input>
-       </div> -->
+      <div class="row">
+        <div class="input-field col s12">
+          <v-icon prefix>search</v-icon>
+          <v-text-input v-model="search" name="search" id="search" placeholder="Search students..."></v-text-input>
+        </div>
+      </div>
        <div class="row">
-         <div class="card col s12 m4 l3" v-for="student in students">
+         <div class="card col s12 m4 l3" v-for="student in students" v-if="studentVisible(student)">
           <div class="card-image waves-effect waves-block waves-light">
             <img class="activator" v-bind:src="student.img">
           </div>
@@ -62,12 +49,24 @@ export default {
   },
   methods: {
     formatName(name) {
-      return name.split(' ')[0];
+      if(this.search.trim() != '') {
+        return name;
+      } else {
+        return name.split(' ')[0];
+      }
     },
     decodeHtml(html) {
-      var txt = document.createElement("textarea");
+      const txt = document.createElement("textarea");
       txt.innerHTML = html;
       return txt.value;
+    },
+    studentVisible(student) {
+      if(this.search.trim() != '') {
+        const regexp = new RegExp(this.search, 'gi');
+        return student.full_name.match(regexp);
+      } else {
+        return true;
+      }
     }
   }
 }

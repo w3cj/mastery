@@ -34,6 +34,15 @@ class API {
   getExchange() {
     return fetchJSON('auth/exchange');
   }
+  getAllCohorts() {
+    return fetchJSON('learn/cohorts/all')
+      .then(result => {
+        return result.data.map(cohort => {
+          cohort.data.attributes.cohort_id = cohort.data.id;
+          return cohort.data.attributes;
+        });
+      });
+  }
   getCohorts(user_id) {
     if(user_id) {
       return fetchJSON(`learn/cohorts/${user_id}`);
