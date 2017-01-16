@@ -10,7 +10,7 @@
        <div class="row">
          <div class="card col s12 m4 l3" v-for="student in students" v-if="studentVisible(student)">
           <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" v-bind:src="student.img">
+            <img class="activator" v-bind:src="student.img.replace('http://', 'https://')">
           </div>
           <div class="card-content">
             <span class="card-title activator grey-text text-darken-4">{{formatName(student.full_name)}}<i class="material-icons right">more_vert</i></span>

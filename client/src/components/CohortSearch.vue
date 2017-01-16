@@ -39,11 +39,7 @@ export default {
 					$('input.autocomplete').autocomplete({
 						data
 					});
-				} else {
-					console.log('not able to load autocomplete data');
 				}
-			} else {
-				console.log('already loaded');
 			}
     },
     changeCohort() {
