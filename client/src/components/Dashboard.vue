@@ -69,10 +69,13 @@ export default {
     'student-dashboard': StudentDashboard,
   },
   data() {
+    const user = Auth.getCurrentUser();
+    const student_id = this.$route.params.student_id || user.learn_id;
+
     return {
-      user: Auth.getCurrentUser(),
+      user,
       cohort_id: this.$route.params.cohort_id || localStorage.defaultCohort,
-      student_id: this.$route.params.student_id,
+      student_id,
       cohort: {},
       cohorts: {},
       cohort_array: [],
@@ -99,10 +102,12 @@ export default {
   watch: {
     '$route.params.cohort_id'(newId, oldId) {
       this.cohort_id = newId;
+      this.student_id = this.$route.params.student_id || this.user.learn_id;
       this.load(newId);
     },
     '$route.params.student_id'(newId, oldId) {
       const cohort_id = this.$route.params.cohort_id;
+      this.student_id = this.$route.params.student_id || this.user.learn_id;
       this.load(cohort_id);
     }
   },
