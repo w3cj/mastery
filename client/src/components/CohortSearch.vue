@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <form v-on:submit.prevent="changeCohort()">
 		<div class="input-field col s12" id="search-container">
 			<i class="material-icons prefix">search</i>
 			<input v-model="cohort_search" type="text" id="cohort_search" class="autocomplete" placeholder="Search for a cohort...">
 		</div>
-		<a v-on:click="changeCohort()" v-bind:class="{ disabled: !cohort_search}" class="right waves-effect waves-light btn">Change Cohort</a>
-  </div>
+		<button type="submit" v-bind:class="{ disabled: !cohort_search}" class="right waves-effect waves-light btn">Change Cohort</button>
+  </form>
 </template>
 
 <script>
