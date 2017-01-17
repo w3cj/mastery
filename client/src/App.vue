@@ -18,6 +18,23 @@
     <main class="container">
       <router-view class="view"></router-view>
     </main>
+    <v-footer>
+        <div class="container" slot="content">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">Galvanize Mastery</h5>
+                    <p class="grey-text text-lighten-4">A tool for self assessed mastery tracking of a standards based curriculum.</p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                    <h5 class="white-text">Links</h5>
+                    <ul>
+                        <li><a class="grey-text text-lighten-3" href="https://github.com/gSchool/mastery" target="_blank">Github</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container" slot="copyright">Made with ❤️ by CJ</div>
+    </v-footer>
   </div>
 </template>
 
@@ -49,6 +66,14 @@ export default {
 }
 </script>
 <style>
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+main {
+  flex: 1;
+}
 .container {
   margin-top: 2%;
   margin-left: 10%;

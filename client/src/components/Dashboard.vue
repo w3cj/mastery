@@ -1,30 +1,30 @@
 <template>
   <div>
     <br>
-    <div class="left">
-      <div class="row" v-bind:class="{ show: (!loading && user.isInstructor && Object.keys(cohorts).length > 1), hide:  (loading || !(user.isInstructor && Object.keys(cohorts).length > 1)) }">
-        <cohort-search :cohorts="cohort_array" :onCohortChange="changeCohort"></cohort-search>
+    <div class="row">
+      <div class="col s12 m6">
+        <div class="left">
+          <div class="row" v-bind:class="{ show: (!loading && user.isInstructor && Object.keys(cohorts).length > 1), hide:  (loading || !(user.isInstructor && Object.keys(cohorts).length > 1)) }">
+            <cohort-search :cohorts="cohort_array" :onCohortChange="changeCohort"></cohort-search>
+          </div>
+          <div v-if="!user.isInstructor && student_id && Object.keys(cohorts).length > 1">
+            <v-btn v-dropdown:dropdown>Change Cohort</v-btn>
+            <v-dropdown id="dropdown">
+                <li v-for="cohort in cohorts">
+                    <router-link :to="{ name: 'student-dashboard', params: { cohort_id: cohort.cohort_id, student_id: student_id}}">{{cohort.badge}}</router-link>
+                </li>
+            </v-dropdown>
+          </div>
+        </div>
       </div>
-      <div v-if="!user.isInstructor && student_id && Object.keys(cohorts).length > 1">
-        <v-btn v-dropdown:dropdown>Change Cohort</v-btn>
-        <v-dropdown id="dropdown">
-            <li v-for="cohort in cohorts">
-                <router-link :to="{ name: 'student-dashboard', params: { cohort_id: cohort.cohort_id, student_id: student_id}}">{{cohort.badge}}</router-link>
-            </li>
-        </v-dropdown>
+      <div class="col s12 m6">
+        <div class="right" v-if="!loading">
+          <router-link v-if="user.isInstructor && $route.params.student_id" :to="{ name: 'dashboard', params: { cohort_id: cohort.cohort_id}}" class="waves btn indigo lighten-1">{{cohort.badge}} Students</router-link>
+          <router-link v-if="user.isInstructor" :to="{ name: 'cohort', params: { id: cohort_id }}" class="waves btn green">Assign Standards</router-link>
+        </div>
       </div>
     </div>
-    <div class="right" v-if="!loading">
-      <router-link v-if="user.isInstructor && $route.params.student_id" :to="{ name: 'dashboard', params: { cohort_id: cohort.cohort_id}}" class="waves btn indigo lighten-1">{{cohort.badge}} Students</router-link>
-      <router-link v-if="user.isInstructor" :to="{ name: 'cohort', params: { id: cohort_id }}" class="waves btn green">Assign Standards</router-link>
-    </div>
-    <div>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
+    <!-- <div> -->
       <center>
         <h1 v-if="!loading">
           <span v-if="!cohort.badgeNumber || cohort.badgeNumber == -1">{{cohort.badge}}</span>
@@ -32,7 +32,7 @@
         </h1>
         <v-progress-circular v-if="loading" active green green-flash></v-progress-circular>
       </center>
-    </div>
+    <!-- </div> -->
     <instructor-dashboard
       v-if="user.isInstructor && !$route.params.student_id"
       v-bind:user="user"

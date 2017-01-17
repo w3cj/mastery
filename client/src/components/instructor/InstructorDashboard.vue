@@ -8,21 +8,12 @@
         </div>
       </div>
        <div class="row">
-         <div class="card col s12 m4 l3" v-for="student in students" v-if="studentVisible(student)">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" v-bind:src="student.img.replace('http://', 'https://')">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">{{formatName(student.full_name)}}<i class="material-icons right">more_vert</i></span>
-            <p>
-              <router-link :to="{ name: 'student-dashboard', params: { cohort_id: cohort_id, student_id: student.id} }">Mastery</router-link>
-            </p>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">{{formatName(student.full_name)}}<i class="material-icons right">close</i></span>
-            <p>Charts and metrics and other cool stuff coming soon...</p>
-          </div>
-        </div>
+         <student
+          v-for="student in students"
+          :student="student"
+          :cohort_id="cohort_id"
+          :search="search">
+         </student>
        </div>
     </div>
   </div>
@@ -30,10 +21,14 @@
 
 <script>
 import API from '../../lib/API';
+import Student from '../Student';
 import {requireType} from '../../lib/utils';
 
 export default {
   name: 'instructor-dashboard',
+  components: {
+    'student': Student,
+  },
   data() {
     return {
       search: ''
@@ -48,25 +43,10 @@ export default {
     students: requireType(Array)
   },
   methods: {
-    formatName(name) {
-      if(this.search.trim() != '') {
-        return name;
-      } else {
-        return name.split(' ')[0];
-      }
-    },
     decodeHtml(html) {
       const txt = document.createElement("textarea");
       txt.innerHTML = html;
       return txt.value;
-    },
-    studentVisible(student) {
-      if(this.search.trim() != '') {
-        const regexp = new RegExp(this.search, 'gi');
-        return student.full_name.match(regexp);
-      } else {
-        return true;
-      }
     }
   }
 }

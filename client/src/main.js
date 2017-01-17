@@ -2,8 +2,8 @@ import Vue from 'vue';
 import VueCookie from 'vue-cookie';
 import { sync } from 'vuex-router-sync';
 
-if(localStorage.version != '1.8.1') {
-  localStorage.version = '1.8.1';
+if(localStorage.version != '1.9.0') {
+  localStorage.version = '1.9.0';
   window.location.reload(true);
 }
 

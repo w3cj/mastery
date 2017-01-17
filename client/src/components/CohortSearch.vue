@@ -1,5 +1,5 @@
 <template>
-  <form v-on:submit.prevent="changeCohort()">
+  <form v-on:submit.prevent="changeCohort()" v-on:keyup.enter="changeCohort()">
 		<div class="input-field col s12" id="search-container">
 			<i class="material-icons prefix">search</i>
 			<input v-model="cohort_search" type="text" id="cohort_search" class="autocomplete" placeholder="Search for a cohort...">

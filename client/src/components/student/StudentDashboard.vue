@@ -1,83 +1,100 @@
 <template>
     <div>
-      <br>
       <h1 class="text-center">{{student.full_name}}</h1>
-      <div v-if="!loading && !loadingStandards">
-        <div class="input-field">
-             <v-icon prefix>search</v-icon>
-             <v-text-input v-model="search" name="search" id="search"></v-text-input>
-         </div>
-      </div>
-      <div class="left" v-if="!loading">
-        <h4 class="white-text">wat</h4>
-        <a v-on:click="hideShowSuccessCriteria()" class="waves-effect waves-light btn indigo lighten-1">{{showSuccessCriteria ? 'Hide' : 'Show'}} Success Criteria</a>
-      </div>
-      <div class="score-buttons" v-if="!loading">
-        <h4>Filter Score</h4>
-        <a v-on:click="filterScore()" class="waves-effect waves-light btn">All</a>
-        <a v-on:click="filterScore(0)" class="waves-effect waves-light btn grey" v-bind:class="{'lighten-5': !scoreFilter[0]}">0</a>
-        <a v-on:click="filterScore(1)" class="waves-effect waves-light btn red" v-bind:class="{'lighten-5': !scoreFilter[1]}">1</a>
-        <a v-on:click="filterScore(2)" class="waves-effect waves-light btn yellow" v-bind:class="{'lighten-5': !scoreFilter[2], 'accent-4': scoreFilter[2]}">2</a>
-        <a v-on:click="filterScore(3)" class="waves-effect waves-light btn green" v-bind:class="{'lighten-5': !scoreFilter[3]}">3</a>
-      </div>
-      <div class="clear">
+      <center>
+        <v-progress-circular v-if="loadingStandards" active red red-flash></v-progress-circular>
+      </center>
+      <div v-if="!loadingStandards">
+        <div class="row">
+          <!-- <div class="col s12">
+            <ul class="tabs">
+              <li class="tab col s6" v-on:click="tab = 'standards'"><a v-bind:class="{active: tab == 'standards'}">Standards</a></li>
+              <li class="tab col s6" v-on:click="tab = 'challenge-progress'"><a v-bind:class="{active: tab == 'challenge-progress'}">Challenge Progress</a></li>
+            </ul>
+          </div> -->
+          <div class="col s12" v-if="tab == 'standards'">
+            <div>
+              <div class="input-field">
+                   <v-icon prefix>search</v-icon>
+                   <v-text-input v-model="search" name="search" id="search" placeholder="Filter standards"></v-text-input>
+               </div>
+            </div>
+            <div class="left">
+              <h4 class="white-text">wat</h4>
+              <a v-on:click="hideShowSuccessCriteria()" class="waves-effect waves-light btn indigo lighten-1">{{showSuccessCriteria ? 'Hide' : 'Show'}} Success Criteria</a>
+            </div>
+            <div class="score-buttons">
+              <h4>Filter Score</h4>
+              <a v-on:click="filterScore()" class="waves-effect waves-light btn">All</a>
+              <a v-on:click="filterScore(0)" class="waves-effect waves-light btn grey" v-bind:class="{'lighten-5': !scoreFilter[0]}">0</a>
+              <a v-on:click="filterScore(1)" class="waves-effect waves-light btn red" v-bind:class="{'lighten-5': !scoreFilter[1]}">1</a>
+              <a v-on:click="filterScore(2)" class="waves-effect waves-light btn yellow" v-bind:class="{'lighten-5': !scoreFilter[2], 'accent-4': scoreFilter[2]}">2</a>
+              <a v-on:click="filterScore(3)" class="waves-effect waves-light btn green" v-bind:class="{'lighten-5': !scoreFilter[3]}">3</a>
+            </div>
+            <div class="clear">
 
-      </div>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <div v-for="subject in cohort.subjects" class="card" v-if="!loadingStandards && isSubjectVisible(subject.name)">
-        <v-collection with-header>
-            <v-collection-item header>
-                <h3>{{subject.name}}</h3>
-            </v-collection-item>
-            <v-collection-item v-for="standard in subject.standards" v-if="isStandardVisible(standard)">
-              <h4>
-                <a v-on:click="toggleEditStandard(standard, $event)" class="btn-floating btn-large waves-effect waves-light" v-bind:class="performanceColors(standard.id)">
-                  <i v-if="!isEditing(standard.id)" class="material-icons">playlist_add_check</i>
-                  <i v-if="isEditing(standard.id)" class="material-icons">arrow_back</i>
-                </a> {{standard.title}}
-                <span style="float:right" v-bind:class="performanceTextColors(standard.id)">
-                  {{performances[standard.id]}}
-                </span>
-              </h4>
-              <ul v-if="showSuccessCriteria && !isEditing(standard.id)">
-                <li v-for="success_criteria in standard.success_criteria">
-                  <p class="grey-text center" style="flex-direction: row;cursor: not-allowed;">
-                    <v-icon v-if="isChecked(success_criteria._id)" class="green-text">check_box</v-icon>
-                    <v-icon v-if="!isChecked(success_criteria._id)">check_box_outline_blank</v-icon>
-                    <span>{{decodeHtml(success_criteria.text)}}</span>
-                    <v-progress-linear indeterminate v-if="evidences[success_criteria._id] && evidences[success_criteria._id].checking"></v-progress-linear>
-                  </p>
-                </li>
-              </ul>
-              <v-collapsible collapse popout v-if="isEditing(standard.id)">
-                <li>
-                    <v-collapsible-header class="active" style="padding:1em;">
-                      <h4>Success Criteria</h4>
-                    </v-collapsible-header>
-                    <v-collapsible-body>
-                      <ul>
-                        <li v-for="success_criteria in standard.success_criteria">
-                            <p class="center success_criteria" style="cursor:pointer; flex-direction: row;">
-                              <span class="center" v-on:mousedown="checkSuccessCriteria(success_criteria, $event)" style="flex-direction: row;">
-                                <v-icon v-if="isChecked(success_criteria._id)"  v-bind:class="{'green-text': isChecked(success_criteria._id), 'grey-text': !isChecked(success_criteria._id)}">check_box</v-icon>
-                                <v-icon v-if="!isChecked(success_criteria._id)">check_box_outline_blank</v-icon>
-                                <h5 style="text-align:left;margin-left:1em;" v-bind:class="{'grey-text': !isChecked(success_criteria._id)}">{{decodeHtml(success_criteria.text)}}</h5>
-                              </span>
-                            </p>
-                            <p v-if="evidences[success_criteria._id] && evidences[success_criteria._id].checking">
-                              <v-progress-linear indeterminate></v-progress-linear>
-                            </p>
-                        </li>
-                      </ul>
-                    </v-collapsible-body>
-                </li>
-            </v-collapsible>
-            </v-collection-item>
-        </v-collection-item>
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <div v-for="subject in cohort.subjects" class="card" v-if="isSubjectVisible(subject.name)">
+              <v-collection with-header>
+                  <v-collection-item header>
+                      <h3>{{subject.name}}</h3>
+                  </v-collection-item>
+                  <v-collection-item v-for="standard in subject.standards" v-if="isStandardVisible(standard)">
+                    <h4>
+                      <a v-on:click="toggleEditStandard(standard, $event)" class="btn-floating btn-large waves-effect waves-light" v-bind:class="performanceColors(standard.id)">
+                        <i v-if="!isEditing(standard.id)" class="material-icons">playlist_add_check</i>
+                        <i v-if="isEditing(standard.id)" class="material-icons">arrow_back</i>
+                      </a> {{standard.title}}
+                      <span style="float:right" v-bind:class="performanceTextColors(standard.id)">
+                        {{performances[standard.id]}}
+                      </span>
+                    </h4>
+                    <ul v-if="showSuccessCriteria && !isEditing(standard.id)">
+                      <li v-for="success_criteria in standard.success_criteria">
+                        <p class="grey-text center" style="flex-direction: row;cursor: not-allowed;">
+                          <v-icon v-if="isChecked(success_criteria._id)" class="green-text">check_box</v-icon>
+                          <v-icon v-if="!isChecked(success_criteria._id)">check_box_outline_blank</v-icon>
+                          <span>{{decodeHtml(success_criteria.text)}}</span>
+                          <v-progress-linear indeterminate v-if="evidences[success_criteria._id] && evidences[success_criteria._id].checking"></v-progress-linear>
+                        </p>
+                      </li>
+                    </ul>
+                    <v-collapsible collapse popout v-if="isEditing(standard.id)">
+                      <li>
+                          <v-collapsible-header class="active" style="padding:1em;">
+                            <h4>Success Criteria</h4>
+                          </v-collapsible-header>
+                          <v-collapsible-body>
+                            <ul>
+                              <li v-for="success_criteria in standard.success_criteria">
+                                  <p class="center success_criteria" style="cursor:pointer; flex-direction: row;">
+                                    <span class="center" v-on:mousedown="checkSuccessCriteria(success_criteria, $event)" style="flex-direction: row;">
+                                      <v-icon v-if="isChecked(success_criteria._id)"  v-bind:class="{'green-text': isChecked(success_criteria._id), 'grey-text': !isChecked(success_criteria._id)}">check_box</v-icon>
+                                      <v-icon v-if="!isChecked(success_criteria._id)">check_box_outline_blank</v-icon>
+                                      <h5 style="text-align:left;margin-left:1em;" v-bind:class="{'grey-text': !isChecked(success_criteria._id)}">{{decodeHtml(success_criteria.text)}}</h5>
+                                    </span>
+                                  </p>
+                                  <p v-if="evidences[success_criteria._id] && evidences[success_criteria._id].checking">
+                                    <v-progress-linear indeterminate></v-progress-linear>
+                                  </p>
+                              </li>
+                            </ul>
+                          </v-collapsible-body>
+                      </li>
+                    </v-collapsible>
+                  </v-collection-item>
+              </v-collection>
+            </div>
+          </div>
+          <div v-if="tab == 'challenge-progress'" class="col s12">
+            <h2>Challenge progress...</h2>
+          </div>
+        </div>
       </div>
     </div>
 </template>
@@ -107,6 +124,7 @@ export default {
       student: {},
       student_id: this.$route.params.student_id,
       showSuccessCriteria: true,
+      tab: 'standards',
       scoreFilter: {
         0: true,
         1: true,
@@ -139,6 +157,9 @@ export default {
     }
   },
   mounted() {
+    $(document).ready(function(){
+      $('ul.tabs').tabs();
+    });
     this.load();
   },
   methods: {
