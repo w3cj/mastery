@@ -10,7 +10,7 @@
           <a v-on:click="showImage = !showImage" class="waves btn indigo lighten-1">{{showImage ? 'Hide' : 'Show'}} Images</a>
           <a v-on:click="showScore = !showScore" class="waves btn">{{showScore ? 'Hide' : 'Show'}} Scores</a>
         </div>
-        <div class="col s12" v-if="showScore">
+        <div class="col s12" v-if="showScore && !loadingPerformances">
           <h3 v-if="scoreSubject_id > -1">Average {{cohort.subjectsById[scoreSubject_id].name}}</h3>
           <h3 v-if="scoreSubject_id == -1">Overall Average</h3>
           <v-btn v-dropdown:dropdown>Change Average Score Subject</v-btn>
@@ -54,6 +54,7 @@ export default {
   data() {
     return {
       search: '',
+      loadingPerformances: true,
       performances: {},
       averagePerformances: {},
       showImage: true,
@@ -80,22 +81,25 @@ export default {
   },
   computed: {
     orderedStudents() {
-      if(this.showScore && this.averagePerformances) {
-        return this.students.slice().sort((a, b) => {
-          if(!this.sortAccending) {
-            if(this.scoreSubject_id != -1) {
-              return this.averagePerformances[a.id][this.scoreSubject_id].average - this.averagePerformances[b.id][this.scoreSubject_id].average;
-            } else {
-              return this.averagePerformances[a.id].average - this.averagePerformances[b.id].average;
-            }
-          } else {
-            if(this.scoreSubject_id != -1) {
-              return this.averagePerformances[b.id][this.scoreSubject_id].average - this.averagePerformances[a.id][this.scoreSubject_id].average;
-            } else {
-              return this.averagePerformances[b.id].average - this.averagePerformances[a.id].average;
-            }
+      if(this.showScore && !this.loadingPerformances) {
+        const sort = (a, b) => {
+          if(!this.averagePerformances[a.id][this.scoreSubject_id] || !this.averagePerformances[b.id][this.scoreSubject_id]) {
+            return 0;
           }
 
+          if(this.scoreSubject_id != -1) {
+            return this.averagePerformances[a.id][this.scoreSubject_id].average - this.averagePerformances[b.id][this.scoreSubject_id].average;
+          } else {
+            return this.averagePerformances[a.id].average - this.averagePerformances[b.id].average;
+          }
+        }
+
+        return this.students.slice().sort((a, b) => {
+          if(!this.sortAccending) {
+            return sort(a, b);
+          } else {
+            return sort(b, a);
+          }
         });
       }
 
@@ -104,17 +108,20 @@ export default {
   },
   methods: {
     load() {
-      API
-        .getPerformances(this.cohort_id)
-        .then(performances => {
-          this.performances = performances;
-        });
-
-      API
-        .getAveragePerformances(this.cohort_id)
-        .then(averagePerformances => {
-          this.averagePerformances = averagePerformances;
-        });
+      this.loadingPerformances = true;
+      Promise.all([
+        API
+          .getPerformances(this.cohort_id),
+        API
+          .getAveragePerformances(this.cohort_id)
+      ]).then(results => {
+        this.performances = results[0];
+        this.averagePerformances = results[1];
+        this.loadingPerformances = false;
+        if(!this.cohort.subjectsById[this.scoreSubject_id]) {
+          this.scoreSubject_id = -1;
+        }
+      });
     }
   }
 }
