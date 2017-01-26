@@ -83,11 +83,12 @@ export default {
     orderedStudents() {
       if(this.showScore && !this.loadingPerformances) {
         const sort = (a, b) => {
-          if(!this.averagePerformances[a.id][this.scoreSubject_id] || !this.averagePerformances[b.id][this.scoreSubject_id]) {
-            return 0;
-          }
 
           if(this.scoreSubject_id != -1) {
+            if(this.averagePerformances[a.id][this.scoreSubject_id] == undefined || this.averagePerformances[b.id][this.scoreSubject_id] == undefined) {
+              return 0;
+            }
+            
             return this.averagePerformances[a.id][this.scoreSubject_id].average - this.averagePerformances[b.id][this.scoreSubject_id].average;
           } else {
             return this.averagePerformances[a.id].average - this.averagePerformances[b.id].average;
