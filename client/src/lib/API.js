@@ -75,6 +75,7 @@ class API {
           const subject = cohort.subjectsById[standard.subject_id];
           subject.standards = subject.standards || [];
           subject.standards.push(standard);
+          subject.text = subject.name;
         });
         return cohort;
       });

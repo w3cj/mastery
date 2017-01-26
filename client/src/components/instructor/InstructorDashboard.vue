@@ -11,17 +11,26 @@
           <a v-on:click="showScore = !showScore" class="waves btn">{{showScore ? 'Hide' : 'Show'}} Scores</a>
         </div>
         <div class="col s12" v-if="showScore && !loadingPerformances">
-          <h3 v-if="scoreSubject_id > -1">Average {{cohort.subjectsById[scoreSubject_id].name}}</h3>
-          <h3 v-if="scoreSubject_id == -1">Overall Average</h3>
-          <v-btn v-dropdown:dropdown>Change Average Score Subject</v-btn>
-          <v-dropdown id="dropdown">
+          <h3 v-if="scoreSubject_id > -1">Average {{cohort.subjectsById[scoreSubject_id].name}} Score</h3>
+          <h3 v-if="scoreSubject_id == -1">Overall Average Score</h3>
+          <div class="input-field">
+            <v-select name="select"
+              id="select"
+              select-text="Overall Average"
+              v-model="scoreSubject_id"
+              :items="cohort.subjects">
+            </v-select>
+            <label for="select">Select Subject</label>
+          </div>
+          <!-- <v-btn v-dropdown:dropdown belowOrigin alignment="left">Change Average Score Subject</v-btn>
+          <v-dropdown id="dropdown" belowOrigin>
               <li>
-                  <a v-on:click="scoreSubject_id = -1">Overall Average</a>
+                  <a v-on:click.stop="setFilteredSubject(-1)">Overall Average</a>
               </li>
               <li v-for="subject in cohort.subjects">
-                  <a v-on:click="scoreSubject_id = subject.id">{{subject.name}}</a>
+                  <a v-on:click.stop="setFilteredSubject(subject.id)">{{subject.name}}</a>
               </li>
-          </v-dropdown>
+          </v-dropdown> -->
           <a v-on:click="sortAccending = !sortAccending" class="waves btn indigo lighten-1">Sort {{sortAccending ? 'Accending' : 'Decending'}}</a>
         </div>
       </div>
@@ -74,6 +83,19 @@ export default {
   watch: {
     '$route.params.cohort_id'() {
       this.load();
+    },
+    'scoreSubject_id'(newValue) {
+      console.log(newValue);
+      if(typeof newValue == 'number') {
+        this.scoreSubject_id = newValue;
+      } else {
+        const subject = this.cohort.subjects.filter(s => s.text == newValue)[0];
+        if(subject) {
+          this.scoreSubject_id = subject.id;
+        } else {
+          this.scoreSubject_id = -1;
+        }
+      }
     }
   },
   mounted() {
@@ -88,7 +110,7 @@ export default {
             if(this.averagePerformances[a.id][this.scoreSubject_id] == undefined || this.averagePerformances[b.id][this.scoreSubject_id] == undefined) {
               return 0;
             }
-            
+
             return this.averagePerformances[a.id][this.scoreSubject_id].average - this.averagePerformances[b.id][this.scoreSubject_id].average;
           } else {
             return this.averagePerformances[a.id].average - this.averagePerformances[b.id].average;
@@ -123,6 +145,10 @@ export default {
           this.scoreSubject_id = -1;
         }
       });
+    },
+    setFilteredSubject(id) {
+      console.log(id);
+      this.scoreSubject_id = id;
     }
   }
 }
