@@ -1,4 +1,4 @@
-const {fetchCohortData, fetchPerformances} = require('./learnInterface');
+const {fetchCohortData, getUserPerformances, getAveragePerformances} = require('./learn/learnInterface');
 const {Cohort, Student, Instructor} = require('../models');
 const {resUnAuthorized} = require('./routeHelpers');
 
@@ -51,7 +51,11 @@ class CohortManager {
   }
 
   getPerformances(cohort_id, user_id) {
-    return fetchPerformances(cohort_id, user_id);
+    return getUserPerformances(cohort_id, user_id);
+  }
+
+  getAveragePerformances(cohort_id) {
+    return getAveragePerformances(cohort_id);
   }
 
   waitFindGetProperty(cohort_id, property) {

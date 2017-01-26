@@ -42,6 +42,14 @@ const routes = {
     const {cohort_id} = req.params;
     processRequest(CohortManager.getInstructors(cohort_id), res, next);
   },
+  '/:cohort_id/performances/average': (req, res, next) => {
+    const {cohort_id} = req.params;
+    if(req.user.isInstructor) {
+      processRequest(CohortManager.getAveragePerformances(cohort_id), res, next);
+    } else {
+      next(new Error('Un-Authorized'));
+    }
+  },
   '/:cohort_id/performances/:user_id': (req, res, next) => {
     const {cohort_id, user_id} = req.params;
     if(req.user.isInstructor || req.user.learn_id == user_id) {

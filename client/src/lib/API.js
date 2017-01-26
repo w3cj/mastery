@@ -88,7 +88,13 @@ class API {
         }, {});
       });
   }
-  getPerformances(cohort_id, user_id) {
+  getPerformances(cohort_id) {
+    return fetchJSON(`learn/cohorts/${cohort_id}/performances`);
+  }
+  getAveragePerformances(cohort_id) {
+    return fetchJSON(`cohorts/${cohort_id}/performances/average`);
+  }
+  getStudentPerformances(cohort_id, user_id) {
     return fetchJSON(`cohorts/${cohort_id}/performances/${user_id}`);
   }
   getStudents(cohort_id) {

@@ -2,7 +2,7 @@ const ezc = require('express-zero-config');
 const jwt = require('jsonwebtoken');
 
 const {Instructor, Student} = require('../models');
-const {getLearnUserByEmail} = require('../lib/learnInterface');
+const {getLearnUserByEmail} = require('../lib/learn/learnInterface');
 
 function resUserToken(res, user) {
   const authConfig = require('../auth-github.config');

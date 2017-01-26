@@ -6,9 +6,10 @@ const learnCache = new NodeCache();
 
 require('dotenv').config();
 
-const {fetchJSON, fetchText, getAuthHeader} = require('./fetchHelpers');
-const {Student, Instructor} = require('../models');
-const {learnURL} = require('./constants');
+const {fetchJSON, fetchText, getAuthHeader} = require('../fetchHelpers');
+const {Student, Instructor} = require('../../models');
+const {learnURL} = require('../constants');
+const {averagePerformances} = require('./analytics');
 
 function getAllCohorts() {
   return fetchJSON(`${learnURL}api/v1/cohorts`, getAuthHeader());
@@ -166,7 +167,18 @@ function getUserFromBody(body) {
   }
 }
 
-function fetchPerformances(cohort_id, user_id) {
+function getPerformances(cohort_id) {
+  return fetchJSON(`${learnURL}api/v1/cohorts/${cohort_id}/performances`, getAuthHeader());
+}
+
+function getAveragePerformances(cohort_id) {
+  return fetchJSON(`${learnURL}api/v1/cohorts/${cohort_id}/performances`, getAuthHeader())
+    .then(performances => {
+      return averagePerformances(performances);
+    });
+}
+
+function getUserPerformances(cohort_id, user_id) {
   return fetchJSON(`${learnURL}cohorts/${cohort_id}/users/${user_id}/performances.json`, getAuthHeader())
     .then(data => {
       return data.standards.reduce((performances, standard) => {
@@ -320,7 +332,9 @@ getStudentImages = cacheify(getStudentImages, 3600);
 
 module.exports = {
   getAllCohorts,
-  fetchPerformances,
+  getPerformances,
+  getAveragePerformances,
+  getUserPerformances,
   fetchCohortData,
   fetchCohortInfo,
   getLearnUser,

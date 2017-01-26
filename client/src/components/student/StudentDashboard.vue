@@ -20,7 +20,7 @@
                </div>
             </div>
             <div class="left">
-              <h4 class="white-text">wat</h4>
+              <p class="white-text">wat</p>
               <a v-on:click="hideShowSuccessCriteria()" class="waves-effect waves-light btn indigo lighten-1">{{showSuccessCriteria ? 'Hide' : 'Show'}} Success Criteria</a>
             </div>
             <div class="score-buttons">
@@ -193,7 +193,7 @@ export default {
         });
 
       API
-        .getPerformances(this.cohort_id, this.student_id)
+        .getStudentPerformances(this.cohort_id, this.student_id)
         .then(data => {
           this.performances = data;
         }).catch(error => {
@@ -258,6 +258,9 @@ export default {
       } else {
         return isVisible;
       }
+    },
+    filter(value) {
+      console.log(value);
     },
     hideShowSuccessCriteria() {
       this.showSuccessCriteria = !this.showSuccessCriteria;
