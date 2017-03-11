@@ -66,53 +66,7 @@ class CohortManager {
   }
 
   waitFindCohort(cohort_id) {
-    if(!this.fetching[cohort_id]) {
-      this.fetching[cohort_id] = true;
-      this.waiting[cohort_id] = [];
-      const waiter = new Promise((resolve, reject) => {
-        this.waiting[cohort_id].push({resolve, reject});
-      });
-
-      Cohort
-        .find(cohort_id)
-        .then(cohort => {
-          if(cohort && cohort.length > 0) {
-            this.resolveWaiting(cohort_id, cohort[0]);
-          } else {
-            return fetchCohortData(cohort_id)
-              .then(data => {
-                return Cohort
-                  .insert(data);
-              }).then(data => {
-                this.resolveWaiting(cohort_id, data);
-              });
-          }
-        }).catch(error => {
-          this.rejectWaiting(cohort_id, error);
-        });
-
-      return waiter;
-    } else {
-      return new Promise((resolve, reject) => {
-        this.waiting[cohort_id].push({resolve, reject});
-      });
-    }
-  }
-
-  clearWaiting(action, cohort_id, data) {
-    this.waiting[cohort_id].forEach(promise => {
-      promise[action](data);
-    });
-    this.waiting[cohort_id] = [];
-    this.fetching[cohort_id] = false;
-  }
-
-  resolveWaiting(cohort_id, data) {
-    this.clearWaiting('resolve', cohort_id, data);
-  }
-
-  rejectWaiting(cohort_id, error) {
-    this.clearWaiting('reject', cohort_id, error);
+    return fetchCohortData(cohort_id);
   }
 
   isInstructor(req, res, next) {

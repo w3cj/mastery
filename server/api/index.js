@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 router.use('/auth', require('./auth'));
 
 router.use((req, res, next) => {
-  if(!req.user.learn_id) {
+  if(req.user && !req.user.learn_id) {
     res.status(401);
     res.json({
       message: 'You must exchange your token before making requests.'

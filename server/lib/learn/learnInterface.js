@@ -327,6 +327,7 @@ function cacheify(fn, ttl) {
 }
 
 getAllCohorts = cacheify(getAllCohorts, 86400);
+fetchCohortData = cacheify(fetchCohortData, 86400);
 fetchCohortInfo = cacheify(fetchCohortInfo, 86400);
 getStudentImages = cacheify(getStudentImages, 3600);
 

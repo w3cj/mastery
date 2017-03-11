@@ -6,7 +6,15 @@
 	 <div class="card-content">
 		 <span class="card-title activator grey-text text-darken-4">{{formatName(student.full_name)}}<i class="material-icons right">more_vert</i></span>
 		 <h5 v-if="showScore">
-			 {{ averageScore }}
+			 <p class="green-text" v-if="getStudentScorePercent(3) > 0">3s:  {{getStudentScorePercent(3)}}%</p>
+			 <p class="orange-text" v-if="getStudentScorePercent(2) > 0">2s:  {{getStudentScorePercent(2)}}%</p>
+			 <p class="red-text" v-if="getStudentScorePercent(1) > 0">1s:  {{getStudentScorePercent(1)}}%</p>
+		 </h5>
+		 <h5 v-if="showScore">
+			 <strong>{{ electiveAverageScore > 0 ? 'Core:' : 'Average:'}}  </strong>{{ coreAverageScore }}
+		 </h5>
+		 <h5 v-if="showScore && electiveAverageScore > 0">
+			 <strong>Elective:  </strong>{{ electiveAverageScore }}
 		 </h5>
 		 <p>
 			 <router-link :to="{ name: 'student-dashboard', params: { cohort_id: cohort_id, student_id: student.id} }">View Mastery</router-link>
@@ -29,7 +37,18 @@ export default {
 		}
 	},
 	computed: {
-		averageScore() {
+		totalScores() {
+			if(this.performances.scoreTotals) {
+			  let total = 0;
+				for (var i = 1; i < 5; i++) {
+					total += this.performances.scoreTotals[i];
+				}
+				return total;
+			}
+
+			return 0;
+		},
+		coreAverageScore() {
 			if(this.performances) {
 				if(this.scoreSubject_id != -1) {
 					if(this.performances[this.scoreSubject_id] && this.performances[this.scoreSubject_id].average) {
@@ -41,9 +60,35 @@ export default {
 			}
 
 			return '...';
+		},
+		electiveAverageScore() {
+			if(this.performances) {
+				if(this.scoreSubject_id != -1) {
+					if(this.performances[this.scoreSubject_id] && this.performances[this.scoreSubject_id].elective && this.performances[this.scoreSubject_id].elective.count > 0) {
+						return this.performances[this.scoreSubject_id].elective.average.toFixed(2);
+					}
+				} else {
+					return this.performances.electiveAverage;
+				}
+			}
+
+			return '...';
 		}
 	},
 	methods: {
+		getStudentScorePercent(score) {
+			if(this.performances && this.performances.scoreTotals && this.performances.scoreTotals[score]) {
+				if(this.scoreSubject_id != -1) {
+					if(this.performances[this.scoreSubject_id]) {
+						return ((this.performances[this.scoreSubject_id][score] / this.performances[this.scoreSubject_id].count) * 100).toFixed(2);
+					}
+				} else {
+					return ((this.performances.scoreTotals[score] / this.totalScores) * 100).toFixed(2);
+				}
+			}
+
+			return '...';
+		},
 		formatName(name) {
 			if(this.search.trim() != '') {
 				return name;

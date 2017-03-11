@@ -11,8 +11,13 @@
           <a v-on:click="showScore = !showScore" class="waves btn">{{showScore ? 'Hide' : 'Show'}} Scores</a>
         </div>
         <div class="col s12" v-if="showScore && !loadingPerformances">
-          <h3 v-if="scoreSubject_id > -1">Average {{cohort.subjectsById[scoreSubject_id].name}} Score</h3>
-          <h3 v-if="scoreSubject_id == -1">Overall Average Score</h3>
+          <h3 v-if="scoreSubject_id > -1">{{cohort.subjectsById[scoreSubject_id].name}} Score</h3>
+          <h3 v-if="scoreSubject_id == -1">Overall Score</h3>
+          <h5 v-if="showScore">
+            <p class="green-text" v-if="getScorePercent(3) > 0">3s:  {{getScorePercent(3)}}%</p>
+            <p class="orange-text" v-if="getScorePercent(2) > 0">2s:  {{getScorePercent(2)}}%</p>
+            <p class="red-text" v-if="getScorePercent(1) > 0">1s:  {{getScorePercent(1)}}%</p>
+          </h5>
           <div class="input-field">
             <v-select name="select"
               id="select"
@@ -69,7 +74,8 @@ export default {
       showImage: true,
       showScore: false,
       scoreSubject_id: -1,
-      sortAccending: true
+      sortAccending: true,
+      metrics: {}
     };
   },
   props: {
@@ -85,7 +91,6 @@ export default {
       this.load();
     },
     'scoreSubject_id'(newValue) {
-      console.log(newValue);
       if(typeof newValue == 'number') {
         this.scoreSubject_id = newValue;
       } else {
@@ -140,16 +145,43 @@ export default {
       ]).then(results => {
         this.performances = results[0];
         this.averagePerformances = results[1];
+        this.calculateMetrics();
         this.loadingPerformances = false;
-        if(!this.cohort.subjectsById[this.scoreSubject_id]) {
+        if(this.cohort.subjectsById && !this.cohort.subjectsById[this.scoreSubject_id]) {
           this.scoreSubject_id = -1;
         }
       });
     },
     setFilteredSubject(id) {
-      console.log(id);
       this.scoreSubject_id = id;
-    }
+    },
+    calculateMetrics() {
+      this.metrics = Object.keys(this.averagePerformances).reduce((totals, student_id) => {
+        for (var i = 1; i < 5; i++) {
+          const count = this.averagePerformances[student_id].scoreTotals[i];
+          totals[i] += count;
+          totals.count += count;
+        }
+        return totals;
+      }, {
+        count: 0,
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0
+      });
+    },
+    getScorePercent(score) {
+      if(this.metrics[score]) {
+        if(this.scoreSubject_id != -1) {
+          return '...';
+        } else {
+          return ((this.metrics[score] / this.metrics.count) * 100).toFixed(2);
+        }
+      }
+
+      return '...';
+    },
   }
 }
 </script>

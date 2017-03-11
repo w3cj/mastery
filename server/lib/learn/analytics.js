@@ -20,19 +20,35 @@ function averagePerformances(data) {
 		const subjectTotals = subjects.reduce((subjectTotals, subject) => {
 			subjectTotals[subject.id] = {
 				total: 0,
-				count: 0
+				count: 0,
+				1: 0,
+				2: 0,
+				3: 0,
+				4: 0,
+				elective: {
+					total: 0,
+					count: 0
+				}
 			};
 			return subjectTotals;
 		}, {});
 
 		Object.keys(performances[student_id]).forEach(standard_id => {
 			const performance = performances[student_id][standard_id];
-			if(standardsById[standard_id]) {				
-				const subject_id = standardsById[standard_id].subject_id;
-				if(performance.score > 0) {
-					subjectTotals[subject_id].total += performance.score;
-					subjectTotals[subject_id].count++;
+			const standard = standardsById[standard_id];
+			if(standard && performance.score > 0) {
+				const subject_id = standard.subject_id;
+				let subjectTotal = subjectTotals[subject_id];
+
+				if (standard.standard_type == 'elective') {
+					subjectTotal = subjectTotal.elective;
+				} else {
+					subjectTotal[performance.score]++;
 				}
+
+				subjectTotal.total += performance.score;
+				subjectTotal.count++;
+
 			}
 		});
 
@@ -43,16 +59,39 @@ function averagePerformances(data) {
 		const student = studentsById[student_id];
 		let totalSum = 0;
 		let totalCount = 0;
+		let electiveSum = 0;
+		let electiveCount = 0;
+		const totals = {
+			1: 0,
+			2: 0,
+			3: 0,
+			4: 0
+		};
+
 		Object.keys(student).forEach(subject_id => {
 			const subject = student[subject_id];
+
+			totals[1] += subject[1];
+			totals[2] += subject[2];
+			totals[3] += subject[3];
+			totals[4] += subject[4];
+
 			if(subject.count > 0) {
 				subject.average = subject.total / subject.count;
 				totalSum += subject.total;
 				totalCount += subject.count;
 			}
+
+			if(subject.elective.count > 0) {
+				subject.elective.average = subject.elective.total / subject.elective.count;
+				electiveSum += subject.elective.total;
+				electiveCount += subject.elective.count;
+			}
 		});
 
+		student.scoreTotals = totals;
 		student.average = Number((totalSum / totalCount).toFixed(2));
+		student.electiveAverage = Number((electiveSum / electiveCount).toFixed(2));
 	});
 
 	return studentsById;

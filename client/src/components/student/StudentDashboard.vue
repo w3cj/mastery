@@ -49,7 +49,7 @@
                       <a v-on:click="toggleEditStandard(standard, $event)" class="btn-floating btn-large waves-effect waves-light" v-bind:class="performanceColors(standard.id)">
                         <i v-if="!isEditing(standard.id)" class="material-icons">playlist_add_check</i>
                         <i v-if="isEditing(standard.id)" class="material-icons">arrow_back</i>
-                      </a> {{standard.title}}
+                      </a> {{standard.description}}
                       <span style="float:right" v-bind:class="performanceTextColors(standard.id)">
                         {{performances[standard.id]}}
                       </span>
@@ -258,9 +258,6 @@ export default {
       } else {
         return isVisible;
       }
-    },
-    filter(value) {
-      console.log(value);
     },
     hideShowSuccessCriteria() {
       this.showSuccessCriteria = !this.showSuccessCriteria;
