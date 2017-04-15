@@ -3,17 +3,17 @@
     <v-nav>
         <a href="#!" class="brand-logo margin-left" slot="logo">Galvanize Mastery</a>
         <ul class="right">
-            <li>
-                <a href="#!" v-dropdown:v-icon-drop><v-icon>more_vert</v-icon></a>
-            </li>
+          <li>
+              <a href="#!" class="hide-on-large-only" v-dropdown:v-icon-drop><v-icon>menu</v-icon></a>
+          </li>
+        </ul>
+        <ul class="right hide-on-med-and-down">
+          <nav-links v-bind:currentUser="currentUser"></nav-links>
         </ul>
         <v-side-nav id="side2" slot="side-nav"></v-side-nav>
     </v-nav>
     <v-dropdown id="v-icon-drop">
-        <li><router-link :to="{ name: 'home' }">Home</router-link></li>
-        <li v-if="!currentUser"><router-link :to="{ name: 'login' }">Login</router-link></li>
-        <li v-if="currentUser"><router-link :to="{ name: 'dashboard' }">Dashboard</router-link></li>
-        <li v-if="currentUser"><router-link :to="{ name: 'logout' }">Logout</router-link></li>
+      <nav-links v-bind:currentUser="currentUser"></nav-links>
     </v-dropdown>
     <main class="container">
       <router-view class="view"></router-view>
@@ -41,9 +41,13 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import * as actionTypes from './store/action-types';
+import NavLinks from './components/NavLinks';
 
 export default {
   name: 'app',
+  components: {
+    'nav-links': NavLinks
+  },
   data() {
     return {
       currentUser: null
@@ -85,7 +89,11 @@ main {
   align-items: center;
   flex-direction: column;
 }
-.margin-left {
-  margin-left: 10%;
+
+@media (min-width: 993px) {
+  .margin-left {
+    margin-left: 10%;
+  }
 }
+
 </style>

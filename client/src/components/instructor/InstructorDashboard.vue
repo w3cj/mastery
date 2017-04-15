@@ -14,9 +14,9 @@
           <h3 v-if="scoreSubject_id > -1">{{cohort.subjectsById[scoreSubject_id].name}} Score</h3>
           <h3 v-if="scoreSubject_id == -1">Overall Score</h3>
           <h5 v-if="showScore">
-            <p class="green-text" v-if="getScorePercent(3) > 0">3s:  {{getScorePercent(3)}}%</p>
-            <p class="orange-text" v-if="getScorePercent(2) > 0">2s:  {{getScorePercent(2)}}%</p>
-            <p class="red-text" v-if="getScorePercent(1) > 0">1s:  {{getScorePercent(1)}}%</p>
+            <p class="green-text"><span v-if="getScorePercent(3) > 0">3s:  {{getScorePercent(3)}}%</span></p>
+            <p class="orange-text"><span v-if="getScorePercent(2) > 0">2s:  {{getScorePercent(2)}}%</span></p>
+            <p class="red-text"><span v-if="getScorePercent(1) > 0">1s:  {{getScorePercent(1)}}%</span></p>
           </h5>
           <div class="input-field">
             <v-select name="select"
@@ -75,7 +75,8 @@ export default {
       showScore: false,
       scoreSubject_id: -1,
       sortAccending: true,
-      metrics: {}
+      metrics: {},
+      selectedTab: ''
     };
   },
   props: {
@@ -158,9 +159,11 @@ export default {
     calculateMetrics() {
       this.metrics = Object.keys(this.averagePerformances).reduce((totals, student_id) => {
         for (var i = 1; i < 5; i++) {
-          const count = this.averagePerformances[student_id].scoreTotals[i];
-          totals[i] += count;
-          totals.count += count;
+          if(this.averagePerformances[student_id].scoreTotals) {            
+            const count = this.averagePerformances[student_id].scoreTotals[i];
+            totals[i] += count;
+            totals.count += count;
+          }
         }
         return totals;
       }, {

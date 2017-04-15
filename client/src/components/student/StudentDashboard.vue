@@ -4,7 +4,7 @@
       <center>
         <v-progress-circular v-if="loadingStandards" active red red-flash></v-progress-circular>
       </center>
-      <div v-if="!loadingStandards">
+      <div v-if="!loading && !loadingStandards">
         <div class="row">
           <!-- <div class="col s12">
             <ul class="tabs">

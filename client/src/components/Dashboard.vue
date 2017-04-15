@@ -7,7 +7,7 @@
           <div class="row" v-bind:class="{ show: (!loading && user.isInstructor && Object.keys(cohorts).length > 1), hide:  (loading || !(user.isInstructor && Object.keys(cohorts).length > 1)) }">
             <cohort-search :cohorts="cohort_array" :onCohortChange="changeCohort"></cohort-search>
           </div>
-          <div v-if="!user.isInstructor && student_id && Object.keys(cohorts).length > 1">
+          <div v-if="!loading && !user.isInstructor && student_id && Object.keys(cohorts).length > 1">
             <v-btn v-dropdown:dropdown>Change Cohort</v-btn>
             <v-dropdown id="dropdown">
                 <li v-for="cohort in cohorts">
@@ -15,12 +15,6 @@
                 </li>
             </v-dropdown>
           </div>
-        </div>
-      </div>
-      <div class="col s12 m6">
-        <div class="right" v-if="!loading">
-          <router-link v-if="user.isInstructor && $route.params.student_id" :to="{ name: 'dashboard', params: { cohort_id: cohort.cohort_id}}" class="waves btn indigo lighten-1">{{cohort.badge}} Students</router-link>
-          <router-link v-if="user.isInstructor" :to="{ name: 'cohort', params: { id: cohort_id }}" class="waves btn green">Assign Standards</router-link>
         </div>
       </div>
     </div>
@@ -144,12 +138,8 @@ export default {
         .then(cohorts => {
           this.cohort_array = cohorts;
           this.cohorts = cohorts.reduce((byId, cohort) => {
-            cohort.badge = this.getCohortBadge(cohort);
-            try {
-              cohort.badgeNumber = cohort.badge.split('[')[1].split(']')[0];
-            } catch (e) {
-              cohort.badgeNumber = -1;
-            }
+            this.setCohortBadge(cohort);
+
             byId[cohort.cohort_id] = cohort;
             return byId;
           }, {});
@@ -162,18 +152,23 @@ export default {
       ]).then(results => {
         const cohort = results[0];
         const students = results[1];
-        cohort.badge = this.getCohortBadge(cohort);
-        try {
-          cohort.badgeNumber = cohort.badge.split('[')[1].split(']')[0];
-        } catch (e) {
-          cohort.badgeNumber = -1;
-        }
+        this.setCohortBadge(cohort);
+
         this.cohort = cohort;
         this.students = students;
       });
     },
-    getCohortBadge(cohort) {
-      return !cohort.name || cohort.name.trim() == '' ? cohort.label : cohort.name.split(' ')[0];
+    setCohortBadge(cohort) {
+      cohort.badge = !cohort.name || cohort.name.trim() == '' ? cohort.label : cohort.name.split(' ')[0];
+      try {
+        if(cohort.badge.startsWith('g') && !isNaN(cohort.badge.substring(1).replace(/WD|DS/gi, ''))) {
+          cohort.badgeNumber = cohort.badge.substring(1).replace(/WD|DS/gi, '');
+        } else {
+          cohort.badgeNumber = cohort.badge.split('[')[1].split(']')[0];
+        }
+      } catch (e) {
+        cohort.badgeNumber = -1;
+      }
     },
     loadStudents(cohort_id) {
       return API.getStudentImages(cohort_id)

@@ -4332,10 +4332,11 @@ readable-stream@^1.0.27-1, readable-stream@^1.0.33, readable-stream@^1.1.13, rea
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
-"readable-stream@^2.0.0 || ^1.1.13", readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@~2.0.0:
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.0.6.tgz#8f90341e68a53ccc928788dacfcd11b36eb9b78e"
+"readable-stream@^2.0.0 || ^1.1.13", readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.1.5, readable-stream@~2.1.4:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.1.5.tgz#66fa8b720e1438b364681f2ad1a63c618448c9d0"
   dependencies:
+    buffer-shims "^1.0.0"
     core-util-is "~1.0.0"
     inherits "~2.0.1"
     isarray "~1.0.0"
@@ -4343,11 +4344,10 @@ readable-stream@^1.0.27-1, readable-stream@^1.0.33, readable-stream@^1.1.13, rea
     string_decoder "~0.10.x"
     util-deprecate "~1.0.1"
 
-readable-stream@^2.1.5, readable-stream@~2.1.4:
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.1.5.tgz#66fa8b720e1438b364681f2ad1a63c618448c9d0"
+readable-stream@~2.0.0:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.0.6.tgz#8f90341e68a53ccc928788dacfcd11b36eb9b78e"
   dependencies:
-    buffer-shims "^1.0.0"
     core-util-is "~1.0.0"
     inherits "~2.0.1"
     isarray "~1.0.0"
@@ -5197,9 +5197,9 @@ vue-loader@^10.0.0:
     vue-style-loader "^1.0.0"
     vue-template-es2015-compiler "^1.2.2"
 
-vue-materials@^1.0.3-rc.5:
-  version "1.0.3-rc.5"
-  resolved "https://registry.yarnpkg.com/vue-materials/-/vue-materials-1.0.3-rc.5.tgz#2069c2542e70adc9db84ae642a8697d260e6a8e4"
+vue-materials@^1.0.7-rc.7:
+  version "1.0.7-rc.7"
+  resolved "https://registry.yarnpkg.com/vue-materials/-/vue-materials-1.0.7-rc.7.tgz#8dedddb0738461cf6790983f35276f2436e80b77"
   dependencies:
     vue "^2.0.1"
 

@@ -6,9 +6,9 @@
 	 <div class="card-content">
 		 <span class="card-title activator grey-text text-darken-4">{{formatName(student.full_name)}}<i class="material-icons right">more_vert</i></span>
 		 <h5 v-if="showScore">
-			 <p class="green-text" v-if="getStudentScorePercent(3) > 0">3s:  {{getStudentScorePercent(3)}}%</p>
-			 <p class="orange-text" v-if="getStudentScorePercent(2) > 0">2s:  {{getStudentScorePercent(2)}}%</p>
-			 <p class="red-text" v-if="getStudentScorePercent(1) > 0">1s:  {{getStudentScorePercent(1)}}%</p>
+			 <p class="green-text"><span v-if="getStudentScorePercent(3) > 0">3s:  {{getStudentScorePercent(3)}}%</span><span class="white-text">.</span></p>
+			 <p class="orange-text"><span v-if="getStudentScorePercent(2) > 0">2s:  {{getStudentScorePercent(2)}}%</span><span class="white-text">.</span></p>
+			 <p class="red-text"><span v-if="getStudentScorePercent(1) > 0">1s:  {{getStudentScorePercent(1)}}%</span><span class="white-text">.</span></p>
 		 </h5>
 		 <h5 v-if="showScore">
 			 <strong>{{ electiveAverageScore > 0 ? 'Core:' : 'Average:'}}  </strong>{{ coreAverageScore }}
