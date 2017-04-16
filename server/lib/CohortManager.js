@@ -1,15 +1,11 @@
 const {fetchCohortData, getUserPerformances, getAveragePerformances} = require('./learn/learnInterface');
-const {Cohort, Student, Instructor} = require('../models');
+const {Student, Instructor} = require('../models');
 const {resUnAuthorized} = require('./routeHelpers');
 
 class CohortManager {
   constructor() {
     this.fetching = {};
     this.waiting = {};
-  }
-
-  getCohorts(github_id) {
-    return Cohort.findByGithubId(github_id);
   }
 
   getCohort(cohort_id) {

@@ -6,6 +6,7 @@ import {
   deleteJSON,
   fetchWithBody
 } from './fetch';
+import {setCohortBadge} from './utils';
 
 class API {
   constructor() {
@@ -77,6 +78,7 @@ class API {
           subject.standards.push(standard);
           subject.text = subject.name;
         });
+        setCohortBadge(cohort);
         return cohort;
       });
   }
@@ -111,14 +113,17 @@ class API {
   checkSuccessCriteria(user_id, cohort_id, success_criteria_id, checked) {
     return postJSON(`evidence/${user_id}`, {cohort_id, success_criteria_id, checked});
   }
-  assignStandard(cohort_id, standard_id, assign = true) {
-    return postJSON(`cohorts/${cohort_id}/standards/${standard_id}/assign`, {assign});
+  getStandardCollections(cohort_id) {
+    return fetchJSON(`cohorts/${cohort_id}/standards/collections`);
   }
-  addStandardTag(cohort_id, standard_id, tagName, value) {
-    return postJSON(`cohorts/${cohort_id}/standards/${standard_id}/tag`, { tagName, value });
+  getStandardCollection(cohort_id, collection_name) {
+    return fetchJSON(`cohorts/${cohort_id}/standards/collections/${collection_name}`);
   }
-  removeStandardTag(cohort_id, standard_id, tagName, value) {
-    return deleteJSON(`cohorts/${cohort_id}/standards/${standard_id}/tag`, { tagName, value });
+  addStandardToCollection(cohort_id, collection_name, standard_id) {
+    return postJSON(`cohorts/${cohort_id}/standards/collections/${collection_name}/${standard_id}`);
+  }
+  removeStandardFromCollection(cohort_id, collection_name, standard_id) {
+    return deleteJSON(`cohorts/${cohort_id}/standards/collections/${collection_name}/${standard_id}`);
   }
 }
 

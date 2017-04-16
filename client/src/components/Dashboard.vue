@@ -51,6 +51,7 @@
 <script>
 import Auth from '../lib/Auth';
 import API from '../lib/API';
+import {setCohortBadge} from '../lib/utils';
 import CohortSearch from './CohortSearch';
 import InstructorDashboard from './instructor/InstructorDashboard';
 import StudentDashboard from './student/StudentDashboard';
@@ -138,7 +139,7 @@ export default {
         .then(cohorts => {
           this.cohort_array = cohorts;
           this.cohorts = cohorts.reduce((byId, cohort) => {
-            this.setCohortBadge(cohort);
+            setCohortBadge(cohort);
 
             byId[cohort.cohort_id] = cohort;
             return byId;
@@ -152,23 +153,10 @@ export default {
       ]).then(results => {
         const cohort = results[0];
         const students = results[1];
-        this.setCohortBadge(cohort);
 
         this.cohort = cohort;
         this.students = students;
       });
-    },
-    setCohortBadge(cohort) {
-      cohort.badge = !cohort.name || cohort.name.trim() == '' ? cohort.label : cohort.name.split(' ')[0];
-      try {
-        if(cohort.badge.startsWith('g') && !isNaN(cohort.badge.substring(1).replace(/WD|DS/gi, ''))) {
-          cohort.badgeNumber = cohort.badge.substring(1).replace(/WD|DS/gi, '');
-        } else {
-          cohort.badgeNumber = cohort.badge.split('[')[1].split(']')[0];
-        }
-      } catch (e) {
-        cohort.badgeNumber = -1;
-      }
     },
     loadStudents(cohort_id) {
       return API.getStudentImages(cohort_id)

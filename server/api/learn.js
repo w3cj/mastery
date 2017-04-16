@@ -1,5 +1,4 @@
 const ezc = require('express-zero-config');
-const jwt = require('jsonwebtoken');
 
 const {
   getLearnUser,
@@ -10,7 +9,7 @@ const {
 } = require('../lib/learn/learnInterface');
 
 const routes = {
-    '/cohorts': (req, res, next) => {
+    '/cohorts': (req, res) => {
         const user = req.user;
 
         getLearnUser(user.learn_id).then(learnUser => {
@@ -30,7 +29,7 @@ const routes = {
             res.json(cohorts);
         });
     },
-    '/cohorts/:user_id': (req, res, next) => {
+    '/cohorts/:user_id': (req, res) => {
         const {user_id} = req.params;
 
         getLearnUser(user_id).then(learnUser => {
@@ -41,14 +40,14 @@ const routes = {
             });
         });
     },
-    '/cohorts/:cohort_id/student-images': (req, res, next) => {
+    '/cohorts/:cohort_id/student-images': (req, res) => {
         const {cohort_id} = req.params;
 
         getStudentImages(cohort_id).then(students => {
             res.json(students);
         });
     },
-    '/cohorts/:cohort_id/performances': (req, res, next) => {
+    '/cohorts/:cohort_id/performances': (req, res) => {
         const {cohort_id} = req.params;
 
         getPerformances(cohort_id).then(performances => {

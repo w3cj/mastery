@@ -2,7 +2,7 @@ const ezc = require('express-zero-config');
 
 const {resJSON, nextError} = require('../lib/routeHelpers');
 const CohortManager = require('../lib/CohortManager');
-const {Cohort, Student} = require('../models');
+const {Student, StandardCollection} = require('../models');
 
 function processRequest(promise, res, next) {
   promise
@@ -11,9 +11,6 @@ function processRequest(promise, res, next) {
 }
 
 const routes = {
-  '/': (req, res, next) => {
-    processRequest(CohortManager.getCohorts(req.user.github_id), res, next);
-  },
   '/:cohort_id': (req, res, next) => {
     const {cohort_id} = req.params;
     processRequest(CohortManager.getCohort(cohort_id), res, next);
@@ -29,6 +26,10 @@ const routes = {
   '/:cohort_id/standards': (req, res, next) => {
     const {cohort_id} = req.params;
     processRequest(CohortManager.getStandards(cohort_id), res, next);
+  },
+  '/:cohort_id/standards/collections': (req, res, next) => {
+    const {cohort_id} = req.params;
+    processRequest(StandardCollection.getAll(cohort_id), res, next);
   },
   '/:cohort_id/standards/:standard_id': (req, res, next) => {
     const {cohort_id, standard_id} = req.params;
@@ -70,22 +71,19 @@ router.post('/:cohort_id/evidences', (req, res, next) => {
   processRequest(Student.checkSuccessCriteria(req.user.github_id, cohort_id, success_criteria_id, checked), res, next);
 });
 
-router.post('/:cohort_id/standards/:standard_id/assign', CohortManager.isInstructor, (req, res, next) => {
-  const {cohort_id, standard_id} = req.params;
-  const assign = req.body.assign ? true : false;
-  processRequest(Cohort.assignStandard(cohort_id, standard_id, assign), res, next);
+router.get('/:cohort_id/standards/collections/:collection_name', (req, res, next) => {
+  const {cohort_id, collection_name} = req.params;
+  processRequest(StandardCollection.find(cohort_id, collection_name), res, next);
 });
 
-router.post('/:cohort_id/standards/:standard_id/tag', CohortManager.isInstructor, (req, res, next) => {
-  const {cohort_id, standard_id} = req.params;
-  const { tagName, value } = req.body;
-  processRequest(Cohort.addStandardTag(cohort_id, standard_id, tagName, value), res, next);
+router.post('/:cohort_id/standards/collections/:collection_name/:standard_id', CohortManager.isInstructor, (req, res, next) => {
+  const {cohort_id, collection_name, standard_id} = req.params;
+  processRequest(StandardCollection.addStandard(cohort_id, collection_name, standard_id), res, next);
 });
 
-router.delete('/:cohort_id/standards/:standard_id/tag', CohortManager.isInstructor, (req, res, next) => {
-  const {cohort_id, standard_id} = req.params;
-  const { tagName, value } = req.body;
-  processRequest(Cohort.removeStandardTag(cohort_id, standard_id, tagName, value), res, next);
+router.delete('/:cohort_id/standards/collections/:collection_name/:standard_id', CohortManager.isInstructor, (req, res, next) => {
+  const {cohort_id, collection_name, standard_id} = req.params;
+  processRequest(StandardCollection.removeStandard(cohort_id, collection_name, standard_id), res, next);
 });
 
 module.exports = router;
