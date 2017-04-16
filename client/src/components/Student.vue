@@ -13,8 +13,9 @@
 		 <h5 v-if="showScore">
 			 <strong>{{ electiveAverageScore > 0 ? 'Core:' : 'Average:'}}  </strong>{{ coreAverageScore }}
 		 </h5>
-		 <h5 v-if="showScore && electiveAverageScore > 0">
-			 <strong>Elective:  </strong>{{ electiveAverageScore }}
+		 <h5>
+			 <span v-if="showScore && electiveAverageScore > 0"><strong>Elective:  </strong>{{ electiveAverageScore }}</span>
+			 <strong class="white-text" v-if="showScore && electiveAverageScore <= 0">wat</strong>
 		 </h5>
 		 <p>
 			 <router-link :to="{ name: 'student-dashboard', params: { cohort_id: cohort_id, student_id: student.id} }">View Mastery</router-link>
@@ -22,7 +23,17 @@
 	 </div>
 	 <div class="card-reveal">
 		 <span class="card-title grey-text text-darken-4">{{formatName(student.full_name)}}<i class="material-icons right">close</i></span>
-		 <p>Charts and metrics and other cool stuff coming soon...</p>
+		 <h5>
+			 <p class="green-text"><span v-if="getStudentScorePercent(3) > 0">3s:  {{getStudentScorePercent(3)}}%</span><span class="white-text">.</span></p>
+			 <p class="orange-text"><span v-if="getStudentScorePercent(2) > 0">2s:  {{getStudentScorePercent(2)}}%</span><span class="white-text">.</span></p>
+			 <p class="red-text"><span v-if="getStudentScorePercent(1) > 0">1s:  {{getStudentScorePercent(1)}}%</span><span class="white-text">.</span></p>
+		 </h5>
+		 <h5>
+			 <strong>{{ electiveAverageScore > 0 ? 'Core:' : 'Average:'}}  </strong>{{ coreAverageScore }}
+		 </h5>
+		 <h5 v-if="electiveAverageScore > 0">
+			 <strong>Elective:  </strong>{{ electiveAverageScore }}
+		 </h5>
 	 </div>
  </div>
 </template>

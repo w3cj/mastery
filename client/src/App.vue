@@ -4,17 +4,16 @@
         <a href="#!" class="brand-logo margin-left" slot="logo">Galvanize Mastery</a>
         <ul class="right">
           <li>
-              <a href="#!" class="hide-on-large-only" v-dropdown:v-icon-drop><v-icon>menu</v-icon></a>
+              <a href="#!" class="hide-on-large-only" v-side-nav:menu="nav"><v-icon>menu</v-icon></a>
           </li>
         </ul>
         <ul class="right hide-on-med-and-down">
           <nav-links v-bind:currentUser="currentUser"></nav-links>
         </ul>
-        <v-side-nav id="side2" slot="side-nav"></v-side-nav>
+        <v-side-nav id="menu">
+            <nav-links v-bind:currentUser="currentUser"></nav-links>
+        </v-side-nav>
     </v-nav>
-    <v-dropdown id="v-icon-drop">
-      <nav-links v-bind:currentUser="currentUser"></nav-links>
-    </v-dropdown>
     <main class="container">
       <router-view class="view"></router-view>
     </main>
@@ -50,6 +49,9 @@ export default {
   },
   data() {
     return {
+      nav: {
+        edge: 'right'
+      },
       currentUser: null
     };
   },

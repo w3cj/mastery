@@ -97,6 +97,9 @@ class API {
   getAveragePerformances(cohort_id) {
     return fetchJSON(`cohorts/${cohort_id}/performances/average`);
   }
+  getAverageStudentPerformances(cohort_id, user_id) {
+    return fetchJSON(`cohorts/${cohort_id}/performances/${user_id}/average`);
+  }
   getStudentPerformances(cohort_id, user_id) {
     return fetchJSON(`cohorts/${cohort_id}/performances/${user_id}`);
   }

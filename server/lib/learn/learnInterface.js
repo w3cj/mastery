@@ -9,7 +9,7 @@ require('dotenv').config();
 const {fetchJSON, fetchText, getAuthHeader} = require('../fetchHelpers');
 const {Student, Instructor} = require('../../models');
 const {learnURL} = require('../constants');
-const {averagePerformances} = require('./analytics');
+const {averagePerformances, averageStudentPerformances} = require('./analytics');
 
 function getAllCohorts() {
   return fetchJSON(`${learnURL}api/v1/cohorts`, getAuthHeader());
@@ -178,6 +178,27 @@ function getAveragePerformances(cohort_id) {
     });
 }
 
+function getAverageStudentPerformances(cohort_id, user_id) {
+  return fetchJSON(`${learnURL}cohorts/${cohort_id}/users/${user_id}/performances.json`, getAuthHeader())
+    .then(data => {
+      const scores = data.standards.reduce((performances, standard) => {
+        standard.performances.forEach(s => {
+          if(s.standard_type == 'core') {
+            performances['core'][s.id] = s.score
+          } else {
+            performances['elective'][s.id] = s.score
+          }
+        });
+        return performances;
+      }, {
+        core: {},
+        elective: {}
+      });
+
+      return averageStudentPerformances(scores);
+    });
+}
+
 function getUserPerformances(cohort_id, user_id) {
   return fetchJSON(`${learnURL}cohorts/${cohort_id}/users/${user_id}/performances.json`, getAuthHeader())
     .then(data => {
@@ -335,6 +356,7 @@ module.exports = {
   getAllCohorts,
   getPerformances,
   getAveragePerformances,
+  getAverageStudentPerformances,
   getUserPerformances,
   fetchCohortData,
   fetchCohortInfo,

@@ -97,7 +97,39 @@ function averagePerformances(data) {
 	return studentsById;
 }
 
+function averageStudentPerformances(performances) {
+	const coreStandards = Object.keys(performances.core);
+
+	const coreTotals = {
+		1: 0,
+		2: 0,
+		3: 0,
+		4: 0
+	};
+
+	let coreSum = 0;
+	let totalScores = 0;
+
+	coreStandards.forEach(standard => {
+		const score = performances.core[standard];
+		if(score != 0) {
+			coreTotals[score]++;
+			coreSum += score;
+			totalScores++;
+		}
+	});
+
+	Object.keys(coreTotals).forEach(score => {
+		coreTotals[score] = Number(((coreTotals[score]/totalScores) * 100).toFixed(2))
+	});
+
+	return {
+		mastery: coreTotals,
+		average: Number((coreSum / totalScores).toFixed(2))
+	};
+}
 
 module.exports = {
-	averagePerformances
+	averagePerformances,
+	averageStudentPerformances
 }

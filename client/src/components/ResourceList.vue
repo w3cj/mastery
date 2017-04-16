@@ -8,6 +8,7 @@
           <ul>
             <li v-for="resource in byType[type]">
               <a v-bind:href="resource.url" target="_blank">{{resource.title}}</a>
+              <p class="resource-description">{{resource.description}}</p>
             </li>
           </ul>
         </li>
@@ -55,5 +56,9 @@ export default {
   }
   .resource-list h5 {
     margin-left: 1em;
+  }
+  .resource-description {
+    margin: 0.25em !important;
+    padding: 0em !important;
   }
 </style>

@@ -6,6 +6,16 @@
       </center>
       <div v-if="!loading && !loadingStandards">
         <div class="row">
+          <div class="text-center">
+            <h4>
+              <p class="green-text" v-if="mastery['3']">3s:  {{mastery['3']}}%</p>
+              <p class="orange-text" v-if="mastery['2']">2s:  {{mastery['2']}}%</p>
+              <p class="red-text" v-if="mastery['1']">1s:  {{mastery['1']}}%</p>
+            </h4>
+            <h5>
+              <strong>Average: </strong>{{ average }}
+            </h5>
+          </div>
           <router-link class="btn waves" :to="{ name: 'standard-collections', params: { cohort_id: $route.params.cohort_id} }"><i class="material-icons left">group_work</i>View Standard Collections</router-link>
           <br>
           <br>
@@ -38,7 +48,11 @@
             <br />
             <div v-for="subject in cohort.subjects" class="card" v-if="isSubjectVisible(subject.name)">
               <v-collection>
-                  <v-collection-item v-for="standard in subject.standards" v-if="isStandardVisible(standard)">
+                  <v-collection-item v-for="standard in subject.standards" v-if="isStandardVisible(standard)"
+                    v-bind:class="{
+                      yellow: standard && standard.standard_type == 'elective',
+                      'lighten-4': standard && standard.standard_type == 'elective'
+                    }">
                     <standard-checklist
                       :standard="standard"
                       :performance="performances[standard.id]"
@@ -94,7 +108,9 @@ export default {
         1: true,
         2: true,
         3: true
-      }
+      },
+      average: 0,
+      mastery: {}
     };
   },
   props: {
@@ -165,6 +181,13 @@ export default {
           console.log('error!');
         }).then(() => {
           this.loadingStandards = false;
+        });
+
+      API
+        .getAverageStudentPerformances(this.cohort_id, this.student_id)
+        .then(data => {
+          this.average = data.average;
+          this.mastery = data.mastery;
         });
     },
     filterScore(score) {
