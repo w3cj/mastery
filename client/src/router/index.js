@@ -8,6 +8,7 @@ import Login from '../components/auth/Login';
 import Logout from '../components/auth/Logout';
 import AuthCallback from '../components/auth/Callback';
 import Standards from '../components/instructor/Standards';
+import StandardCollections from '../components/StandardCollections';
 import StandardsCollection from '../components/StandardsCollection';
 import Dashboard from '../components/Dashboard';
 
@@ -31,6 +32,7 @@ const router = new VueRouter({
     { path: '/dashboard/:cohort_id?', name: 'dashboard', component: Dashboard, beforeEnter: requireAuth },
     { path: '/dashboard/:cohort_id/student/:student_id', name: 'student-dashboard', component: Dashboard, beforeEnter: requireAuth },
     { path: '/cohort/:cohort_id/standards', name: 'standards', component: Standards, beforeEnter: requireAuth },
+    { path: '/cohort/:cohort_id/standards/collections', name: 'standard-collections', component: StandardCollections, beforeEnter: requireAuth },
     { path: '/cohort/:cohort_id/standards/:collection_name', name: 'standards-collection', component: StandardsCollection, beforeEnter: requireAuth },
     { path: '/cohort/:cohort_id/standards/:collection_name/student/:student_id', name: 'standards-collection-student', component: StandardsCollection, beforeEnter: requireAuth },
     { path: '/auth/login', name: 'login', component: Login },

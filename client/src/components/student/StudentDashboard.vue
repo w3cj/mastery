@@ -6,6 +6,9 @@
       </center>
       <div v-if="!loading && !loadingStandards">
         <div class="row">
+          <router-link class="btn waves" :to="{ name: 'standard-collections', params: { cohort_id: $route.params.cohort_id} }"><i class="material-icons left">group_work</i>View Standard Collections</router-link>
+          <br>
+          <br>
           <div class="col s12" v-if="tab == 'standards'">
             <div>
               <div class="input-field">
