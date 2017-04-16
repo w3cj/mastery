@@ -125,6 +125,17 @@ class API {
   removeStandardFromCollection(cohort_id, collection_name, standard_id) {
     return deleteJSON(`cohorts/${cohort_id}/standards/collections/${collection_name}/${standard_id}`);
   }
+  getAllResources(cohort_id) {
+    return fetchJSON(`cohorts/${cohort_id}/standards/resources`).then(resources => {
+      return resources.reduce((byId, standard) => {
+        byId[standard._id] = standard.resources;
+        return byId;
+      }, {});
+    });
+  }
+  addResource(cohort_id, standard_id, resource) {
+    return postJSON(`cohorts/${cohort_id}/standards/${standard_id}/resources`, resource);
+  }
 }
 
 export default new API();

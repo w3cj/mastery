@@ -1,11 +1,20 @@
 class Resource {
   constructor(db) {
     this.resources = db.get('resources');
+    this.resources.index('cohort_id');
     this.resources.index('standard_id');
   }
-  find(standard_id) {
+  getAll(cohort_id) {
     return this.resources
-      .findOne({
+      .aggregate([
+        { $match: { cohort_id } },
+        { $group : { _id : "$standard_id", resources: { $push: "$$ROOT" } } }
+      ]);
+  }
+  find(cohort_id, standard_id) {
+    return this.resources
+      .find({
+        cohort_id,
         standard_id
       });
   }

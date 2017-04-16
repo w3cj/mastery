@@ -21,18 +21,29 @@
             </v-collection-item>
             <v-collection-item>
               <v-collapsible v-bind:expand="true">
-                  <li v-for="standard in subject.standards" v-if="isStandardVisible(standard)">
+                  <li v-for="standard in subject.standards" v-if="isStandardVisible(standard)" class="standard">
                       <v-collapsible-header>
-                        <h5>{{standard.description}}</h5>
+                        <h4>{{standard.description}}</h4>
                       </v-collapsible-header>
                       <v-collapsible-body>
-                        <p>
+                        <h5>Success Criteria</h5>
+                        <p class="circle-list">
                           <ul>
                             <li v-for="success_criteria in standard.success_criteria">
-                              {{success_criteria.text}}
+                              {{decodeHtml(success_criteria.text)}}
                             </li>
                           </ul>
                         </p>
+                        <div v-if="resources[standard.id]">
+                          <resource-list
+                            :resources="resources[standard.id]">
+                          </resource-list>
+                        </div>
+                        <add-resource
+                          :cohort_id="cohort_id"
+                          :standard="standard"
+                          :onAddResource="onAddResource"
+                          ></add-resource>
                       </v-collapsible-body>
                   </li>
               </v-collapsible>
@@ -45,16 +56,23 @@
 
 <script>
 import API from '../../lib/API';
-import {isSubjectVisible, isStandardVisible} from '../../lib/utils';
+import {decodeHtml, isSubjectVisible, isStandardVisible} from '../../lib/utils';
+import AddResource from '../AddResource';
+import ResourceList from '../ResourceList';
 
 export default {
   name: 'standards',
+  components: {
+    'add-resource': AddResource,
+    'resource-list': ResourceList
+  },
   data() {
     return {
       search: '',
       cohort: {},
       loading: true,
       cohort_id: this.$route.cohort_id,
+      resources: {}
     };
   },
   created() {
@@ -66,13 +84,28 @@ export default {
         this.cohort = cohort;
         this.loading = false;
       });
+
+    API
+      .getAllResources(this.cohort_id)
+      .then(resources => {
+        this.resources = resources;
+      });
   },
   methods: {
+    onAddResource(standard, resource) {
+      if(!this.resources[standard.id]) {
+        this.$set(this.resources, standard.id, []);
+      }
+      this.resources[standard.id].push(resource);
+    },
     isSubjectVisible(subject) {
       return isSubjectVisible(this.search, subject, this.cohort, this.performances, this.scoreFilter);
     },
     isStandardVisible(standard) {
       return isStandardVisible(this.search, standard, this.performances, this.scoreFilter)
+    },
+    decodeHtml(html) {
+      return decodeHtml(html);
     }
   }
 }
@@ -81,11 +114,14 @@ export default {
   .card {
     margin: 0.25em;
   }
-  .margin {
-    margin: 3em;
+  .circle-list ul li {
+    list-style-type: circle !important;
+    margin: 1em;
   }
-  .margin-left-top {
+  .collection {
+    overflow: visible !important;
+  }
+  .standard h5 {
     margin-left: 1em;
-    margin-top: 1em;
   }
 </style>

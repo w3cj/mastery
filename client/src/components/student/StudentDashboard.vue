@@ -40,13 +40,14 @@
               <v-collection>
                   <v-collection-item v-for="standard in subject.standards" v-if="isStandardVisible(standard)">
                     <standard-checklist
-                      v-bind:standard="standard"
-                      v-bind:performance="performances[standard.id]"
-                      v-bind:showSuccessCriteria="showSuccessCriteria"
-                      v-bind:evidences="evidences"
-                      v-bind:student_id="student_id"
-                      v-bind:cohort="cohort"
-                      v-bind:showScore="true">
+                      :standard="standard"
+                      :performance="performances[standard.id]"
+                      :showSuccessCriteria="showSuccessCriteria"
+                      :evidences="evidences"
+                      :student_id="student_id"
+                      :cohort="cohort"
+                      :resources="resources[standard.id] || []"
+                      :showScore="true">
                     </standard-checklist>
                   </v-collection-item>
               </v-collection>
@@ -84,6 +85,7 @@ export default {
       performances: {},
       evidences: {},
       student: {},
+      resources: {},
       student_id: this.$route.params.student_id,
       showSuccessCriteria: true,
       tab: 'standards',
@@ -139,6 +141,12 @@ export default {
       } else {
         this.getStudentAndPerformances();
       }
+
+      API
+        .getAllResources(this.cohort_id)
+        .then(resources => {
+          this.resources = resources;
+        });
     },
     getStudentAndPerformances() {
       API.getStudent(this.cohort_id, this.student_id)

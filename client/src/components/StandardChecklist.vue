@@ -39,6 +39,7 @@
                   </p>
               </li>
             </ul>
+            <resource-list v-if="resources.length > 0" :resources="resources"></resource-list>
           </v-collapsible-body>
       </li>
     </v-collapsible>
@@ -47,11 +48,16 @@
 
 <script>
 import API from '../lib/API';
+import ResourceList from './ResourceList';
 import getEncouragement from '../lib/encouragement';
+import {decodeHtml} from '../lib/utils';
 
 export default {
   name: 'standard-checklist',
-  props: ['standard', 'performance', 'showSuccessCriteria', 'evidences', 'student_id', 'cohort', 'showScore'],
+  props: ['standard', 'performance', 'showSuccessCriteria', 'evidences', 'student_id', 'cohort', 'showScore', 'resources'],
+  components: {
+    'resource-list': ResourceList
+  },
 	data() {
 		return {
       isEditing: false
@@ -113,9 +119,7 @@ export default {
       }
     },
     decodeHtml(html) {
-      var txt = document.createElement("textarea");
-      txt.innerHTML = html;
-      return txt.value;
+      return decodeHtml(html);
     }
 	}
 }

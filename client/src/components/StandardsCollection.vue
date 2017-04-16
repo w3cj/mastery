@@ -29,13 +29,14 @@
         <v-collection>
             <v-collection-item v-for="standard in standards">
               <standard-checklist
-                v-bind:standard="standard"
-                v-bind:performance="performances[standard.id]"
-                v-bind:showSuccessCriteria="showSuccessCriteria"
-                v-bind:evidences="evidences"
-                v-bind:student_id="student_id"
-                v-bind:cohort="cohort"
-                v-bind:showScore="$route.params.student_id">
+                :standard="standard"
+                :performance="performances[standard.id]"
+                :showSuccessCriteria="showSuccessCriteria"
+                :evidences="evidences"
+                :student_id="student_id"
+                :cohort="cohort"
+                :resources="resources[standard.id] || []"
+                :showScore="$route.params.student_id">
               </standard-checklist>
               <div v-if="user.isInstructor && !$route.params.student_id">
                 <a v-on:click="removeStandard(standard)" class="waves btn">Remove</a>
@@ -74,6 +75,7 @@ export default {
       loading: true,
       standards: [],
       evidences: {},
+      resources: {},
       performances: {},
       showSuccessCriteria: true,
       removing: false,
@@ -126,6 +128,11 @@ export default {
             this.$router.go('/');
           }).then(() => {
             this.loadingStandards = false;
+          }),
+        API
+          .getAllResources(this.cohort_id)
+          .then(resources => {
+            this.resources = resources;
           })
       ]).then(() => {
         API

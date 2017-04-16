@@ -7,6 +7,7 @@
           <v-text-input v-model="search" name="search" id="search" placeholder="Search students..."></v-text-input>
         </div>
         <div class="col s12">
+          <a v-on:click="showName = !showName" class="waves btn green lighten-1">{{showName ? 'Hide' : 'Show'}} Names</a>
           <a v-on:click="showImage = !showImage" class="waves btn indigo lighten-1">{{showImage ? 'Hide' : 'Show'}} Images</a>
           <a v-on:click="showScore = !showScore" class="waves btn">{{showScore ? 'Hide' : 'Show'}} Scores</a>
         </div>
@@ -27,15 +28,6 @@
             </v-select>
             <label for="select">Select Subject</label>
           </div>
-          <!-- <v-btn v-dropdown:dropdown belowOrigin alignment="left">Change Average Score Subject</v-btn>
-          <v-dropdown id="dropdown" belowOrigin>
-              <li>
-                  <a v-on:click.stop="setFilteredSubject(-1)">Overall Average</a>
-              </li>
-              <li v-for="subject in cohort.subjects">
-                  <a v-on:click.stop="setFilteredSubject(subject.id)">{{subject.name}}</a>
-              </li>
-          </v-dropdown> -->
           <a v-on:click="sortAccending = !sortAccending" class="waves btn indigo lighten-1">Sort {{sortAccending ? 'Accending' : 'Decending'}}</a>
         </div>
       </div>
@@ -45,6 +37,7 @@
           :student="student"
           :cohort_id="cohort_id"
           :performances="averagePerformances[student.id] ? averagePerformances[student.id] : {}"
+          :showName="showName"
           :showImage="showImage"
           :showScore="showScore"
           :scoreSubject_id="scoreSubject_id"
@@ -71,6 +64,7 @@ export default {
       loadingPerformances: true,
       performances: {},
       averagePerformances: {},
+      showName: true,
       showImage: true,
       showScore: false,
       scoreSubject_id: -1,
@@ -159,7 +153,7 @@ export default {
     calculateMetrics() {
       this.metrics = Object.keys(this.averagePerformances).reduce((totals, student_id) => {
         for (var i = 1; i < 5; i++) {
-          if(this.averagePerformances[student_id].scoreTotals) {            
+          if(this.averagePerformances[student_id].scoreTotals) {
             const count = this.averagePerformances[student_id].scoreTotals[i];
             totals[i] += count;
             totals.count += count;
