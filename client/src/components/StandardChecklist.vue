@@ -25,7 +25,6 @@
             <!-- <h4>Success Criteria</h4> -->
           </v-collapsible-header>
           <v-collapsible-body>
-            <resource-list v-if="resources.length > 0" :resources="resources"></resource-list>
             <h5 class="success-criteria-title">Success Criteria</h5>
             <ul>
               <li v-for="success_criteria in standard.success_criteria">
@@ -41,6 +40,7 @@
                   </p>
               </li>
             </ul>
+            <resource-list v-if="resources.length > 0" :resources="resources"></resource-list>
           </v-collapsible-body>
       </li>
     </v-collapsible>
