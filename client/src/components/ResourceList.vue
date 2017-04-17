@@ -36,13 +36,23 @@ export default {
       }
 		}
 	},
+  watch: {
+    resources() {
+      this.load();  
+    }
+  },
   mounted() {
-    this.byType = this.resources.reduce((byType, resource) => {
-      byType[resource.type] = byType[resource.type] || [];
-      byType[resource.type].push(resource);
-      return byType;
-    }, {});
-    this.types = Object.keys(this.byType);
+    this.load();
+  },
+  methods: {
+    load() {
+      this.byType = this.resources.reduce((byType, resource) => {
+        byType[resource.type] = byType[resource.type] || [];
+        byType[resource.type].push(resource);
+        return byType;
+      }, {});
+      this.types = Object.keys(this.byType);
+    }
   }
 }
 </script>
