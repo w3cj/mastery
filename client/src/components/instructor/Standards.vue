@@ -22,7 +22,11 @@
             <v-collection-item>
               <v-collapsible v-bind:expand="true">
                   <li v-for="standard in subject.standards" v-if="isStandardVisible(standard)" class="standard">
-                      <v-collapsible-header>
+                      <v-collapsible-header
+                        v-bind:class="{
+                          yellow: standard && standard.standard_type == 'elective',
+                          'lighten-4': standard && standard.standard_type == 'elective'
+                        }">
                         <h4>{{standard.description}}</h4>
                       </v-collapsible-header>
                       <v-collapsible-body>

@@ -6,6 +6,7 @@
       <li v-if="$route.params.cohort_id"><router-link :to="{ name: 'standards', params: { id: $route.params.cohort_id } }"><i class="material-icons left">list</i>Standards</router-link></li>
     </span>
     <li v-if="currentUser && $route.params.cohort_id"><router-link :to="{ name: 'standard-collections', params: { cohort_id: $route.params.cohort_id} }"><i class="material-icons left">group_work</i>Standard Collections</router-link></li>
+    <li v-if="currentUser && $route.params.cohort_id == 149"><router-link :to="{ name: 'standards-skill-tree', params: { cohort_id: $route.params.cohort_id} }"><i class="material-icons left">nature</i>Skill Tree</router-link></li>
     <li v-if="currentUser"><router-link :to="{ name: 'logout' }">Logout</router-link></li>
   </div>
 </template>

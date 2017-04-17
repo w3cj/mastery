@@ -12,6 +12,7 @@
     "flow": "flow; test $? -eq 0 -o $? -eq 2"
   },
   "dependencies": {
+    "d3": "3.5.17",
     "emoji-favicon": "^0.3.0",
     "flexboxgrid": "^6.3.1",
     "flow-bin": "^0.36.0",
