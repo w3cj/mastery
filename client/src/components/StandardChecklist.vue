@@ -14,8 +14,8 @@
         <p class="grey-text center" style="flex-direction: row;cursor: not-allowed;">
           <v-icon v-if="isChecked(success_criteria._id)"
             v-bind:class="{
-              'green-text': !evidences[success_criteria._id].approved,
-              'yellow-text': evidences[success_criteria._id].approved
+              'green-text': evidences[success_criteria._id].approved,
+              'yellow-text': !evidences[success_criteria._id].approved
             }">check_box</v-icon>
           <v-icon v-if="!isChecked(success_criteria._id)">check_box_outline_blank</v-icon>
           <span>{{decodeHtml(success_criteria.text)}}</span>
