@@ -139,6 +139,12 @@ class API {
   addResource(cohort_id, standard_id, resource) {
     return postJSON(`cohorts/${cohort_id}/standards/${standard_id}/resources`, resource);
   }
+  approveSuccessCriteria(user_id, cohort_id, success_criteria_id, approved) {
+    return postJSON(`evidence/${user_id}/success_criteria/${success_criteria_id}/approve`, {
+      cohort_id,
+      approved
+    });
+  }
 }
 
 export default new API();

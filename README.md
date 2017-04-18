@@ -10,7 +10,7 @@ A tool for self assessed mastery tracking of a standards based curriculum.
 * [x] Add resources (articles, exercises, slides, videos etc.) to a standard
 * [x] View and check success criteria
 	* [x] Student can check success criteria as completed (self assessment)
-	* [ ] Instructor can approve/deny checked success criteria
+	* [x] Instructor can approve/deny checked success criteria
 	* [ ] All approved success criteria on a standard is automatic 3
 * [ ] Students can add "Evidence of Success" to standards and success criteria
 	* [ ] Write a short answer

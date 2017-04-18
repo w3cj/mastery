@@ -2,6 +2,7 @@ const ezc = require('express-zero-config');
 
 const {resJSON, nextError} = require('../lib/routeHelpers');
 const {Evidence, Student, Instructor} = require('../models');
+const CohortManager = require('../lib/CohortManager');
 
 function processRequest(promise, res, next) {
   promise
@@ -55,7 +56,17 @@ router.post('/:user_id', authorize, (req, res, next) => {
   processRequest(
     findUser(user_id)
       .then(user => {
-        return Evidence.update(user.github_id, cohort_id, success_criteria_id, checked);
+        return Evidence.update(user.github_id, cohort_id, success_criteria_id, checked, req.user.isInstructor);
+      }), res, next);
+});
+
+router.post('/:user_id/success_criteria/:success_criteria_id/approve', authorize, CohortManager.isInstructor, (req, res, next) => {
+  const {cohort_id, approved} = req.body;
+  const {user_id, success_criteria_id} = req.params;
+  processRequest(
+    findUser(user_id)
+      .then(user => {
+        return Evidence.approve(user.github_id, cohort_id, success_criteria_id, approved);
       }), res, next);
 });
 

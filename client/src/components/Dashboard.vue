@@ -120,7 +120,7 @@ export default {
           .getDefaultCohort()
           .then(cohort_id => {
             this.cohort_id = cohort_id;
-            return this.loadCohort(cohort_id);
+            this.$router.push({ name: 'dashboard', params: { cohort_id: this.cohort_id }});
           }).then(() => {
             this.loading = false;
           });

@@ -9,7 +9,7 @@ class Evidence {
         github_id
       });
   }
-  update(github_id, cohort_id, success_criteria_id, checked) {
+  update(github_id, cohort_id, success_criteria_id, checked, approved) {
     return this.evidences
       .findOneAndUpdate({
         github_id,
@@ -19,10 +19,23 @@ class Evidence {
         github_id,
         cohort_id,
         success_criteria_id,
-        checked
+        checked,
+        approved
       }, {
         upsert: true
       });
+  }
+  approve(github_id, cohort_id, success_criteria_id, approved) {
+    return this.evidences
+    .update({
+      github_id,
+      cohort_id,
+      success_criteria_id
+    }, {
+      $set: {
+        approved
+      }
+    })
   }
 }
 

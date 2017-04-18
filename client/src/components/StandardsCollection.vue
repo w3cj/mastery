@@ -29,6 +29,8 @@
         <v-collection>
             <v-collection-item v-for="standard in standards">
               <standard-checklist
+                :user="user"
+                :student="student"
                 :standard="standard"
                 :performance="performances[standard.id]"
                 :showSuccessCriteria="showSuccessCriteria"

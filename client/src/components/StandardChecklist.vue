@@ -12,7 +12,11 @@
     <ul v-if="showSuccessCriteria && !isEditing">
       <li v-for="success_criteria in standard.success_criteria">
         <p class="grey-text center" style="flex-direction: row;cursor: not-allowed;">
-          <v-icon v-if="isChecked(success_criteria._id)" class="green-text">check_box</v-icon>
+          <v-icon v-if="isChecked(success_criteria._id)"
+            v-bind:class="{
+              'green-text': !evidences[success_criteria._id].approved,
+              'yellow-text': evidences[success_criteria._id].approved
+            }">check_box</v-icon>
           <v-icon v-if="!isChecked(success_criteria._id)">check_box_outline_blank</v-icon>
           <span>{{decodeHtml(success_criteria.text)}}</span>
           <v-progress-linear indeterminate v-if="evidences[success_criteria._id] && evidences[success_criteria._id].checking"></v-progress-linear>
@@ -32,7 +36,7 @@
                 }"><i class="material-icons left">playlist_add_check</i>Success Criteria</a>
               <a v-on:click="tab = 'resources'" class="waves-effect waves-light btn orange"
                 v-bind:class="{
-                  disabled: tab == 'resources'  
+                  disabled: tab == 'resources'
                 }"><i class="material-icons left">library_books</i>Resources</a>
             </div>
             <div v-if="tab == 'success_criteria'">
@@ -40,12 +44,27 @@
                 <li v-for="success_criteria in standard.success_criteria">
                   <p class="center success_criteria" style="cursor:pointer; flex-direction: row;">
                     <span class="center" v-on:mousedown="checkSuccessCriteria(success_criteria, $event)" style="flex-direction: row;">
-                      <v-icon v-if="isChecked(success_criteria._id)"  v-bind:class="{'green-text': isChecked(success_criteria._id), 'grey-text': !isChecked(success_criteria._id)}">check_box</v-icon>
+                      <v-icon v-if="isChecked(success_criteria._id)"
+                        v-bind:class="{
+                          'green-text': isChecked(success_criteria._id) && evidences[success_criteria._id].approved,
+                          'yellow-text': isChecked(success_criteria._id) && !evidences[success_criteria._id].approved,
+                          'grey-text': !isChecked(success_criteria._id)
+                        }">check_box</v-icon>
                       <v-icon v-if="!isChecked(success_criteria._id)">check_box_outline_blank</v-icon>
                       <h5 style="text-align:left;margin-left:1em;" v-bind:class="{'grey-text': !isChecked(success_criteria._id)}">{{decodeHtml(success_criteria.text)}}</h5>
                     </span>
+                    <a
+                      v-if="user.isInstructor && isChecked(success_criteria._id)"
+                      v-on:click="approve(success_criteria._id, !evidences[success_criteria._id].approved)"
+                      class="btn-floating waves-effect waves-light"
+                      v-bind:class="{
+                        'green': !evidences[success_criteria._id].approved,
+                        'yellow': evidences[success_criteria._id].approved
+                      }">
+                      <i class="material-icons">done</i>
+                    </a>
                   </p>
-                  <p v-if="evidences[success_criteria._id] && evidences[success_criteria._id].checking">
+                  <p v-if="evidences[success_criteria._id] && (evidences[success_criteria._id].checking || evidences[success_criteria._id].approving)">
                     <v-progress-linear indeterminate></v-progress-linear>
                   </p>
                 </li>
@@ -71,7 +90,7 @@ import {decodeHtml} from '../lib/utils';
 
 export default {
   name: 'standard-checklist',
-  props: ['standard', 'performance', 'showSuccessCriteria', 'evidences', 'student_id', 'cohort', 'showScore', 'resources'],
+  props: ['student', 'user', 'standard', 'performance', 'showSuccessCriteria', 'evidences', 'student_id', 'cohort', 'showScore', 'resources'],
   components: {
     'resource-list': ResourceList
   },
@@ -105,12 +124,31 @@ export default {
           setTimeout(() => {
             this.evidences[id].checking = false;
             this.evidences[id].checked = result.checked;
+            this.$set(this.evidences[id], 'approved', result.approved);
             if(result.checked) {
               Materialize.toast(getEncouragement(), 3000);
             }
           }, 500);
         });
 
+    },
+    approve(success_criteria_id, approved) {
+      if(!this.evidences[success_criteria_id]) {
+        this.$set(this.evidences, success_criteria_id, {
+          approving: true
+        });
+      } else {
+        this.$set(this.evidences[success_criteria_id], 'approving', true);
+      }
+
+      const user_id = this.student.id ? this.student.id : this.student.learn_id;
+
+      API
+        .approveSuccessCriteria(user_id, this.cohort.cohort_id, success_criteria_id, approved)
+        .then(() => {
+          this.evidences[success_criteria_id].approving = false;
+          this.$set(this.evidences[success_criteria_id], 'approved', approved);
+        });
     },
     toggleEditStandard(event) {
       event.stopPropagation();
@@ -143,10 +181,11 @@ export default {
 }
 </script>
 <style>
-  .success-criteria-title {
-    margin-left: 1em;
-  }
   .buttons {
     margin: 1em;
+  }
+  .approve-button {
+    margin-left: 1em;
+    padding-left: 2em;
   }
 </style>

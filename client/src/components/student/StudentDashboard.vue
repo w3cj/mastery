@@ -54,6 +54,8 @@
                       'lighten-4': standard && standard.standard_type == 'elective'
                     }">
                     <standard-checklist
+                      :user="user"
+                      :student="student"
                       :standard="standard"
                       :performance="performances[standard.id]"
                       :showSuccessCriteria="showSuccessCriteria"
