@@ -25,9 +25,19 @@
             <!-- <h4>Success Criteria</h4> -->
           </v-collapsible-header>
           <v-collapsible-body>
-            <h5 class="success-criteria-title">Success Criteria</h5>
-            <ul>
-              <li v-for="success_criteria in standard.success_criteria">
+            <div class="buttons">
+              <a v-on:click="tab = 'success_criteria'" class="waves-effect waves-light btn green"
+                v-bind:class="{
+                  disabled: tab == 'success_criteria'
+                }"><i class="material-icons left">playlist_add_check</i>Success Criteria</a>
+              <a v-on:click="tab = 'resources'" class="waves-effect waves-light btn orange"
+                v-bind:class="{
+                  disabled: tab == 'resources'  
+                }"><i class="material-icons left">library_books</i>Resources</a>
+            </div>
+            <div v-if="tab == 'success_criteria'">
+              <ul>
+                <li v-for="success_criteria in standard.success_criteria">
                   <p class="center success_criteria" style="cursor:pointer; flex-direction: row;">
                     <span class="center" v-on:mousedown="checkSuccessCriteria(success_criteria, $event)" style="flex-direction: row;">
                       <v-icon v-if="isChecked(success_criteria._id)"  v-bind:class="{'green-text': isChecked(success_criteria._id), 'grey-text': !isChecked(success_criteria._id)}">check_box</v-icon>
@@ -38,9 +48,15 @@
                   <p v-if="evidences[success_criteria._id] && evidences[success_criteria._id].checking">
                     <v-progress-linear indeterminate></v-progress-linear>
                   </p>
-              </li>
-            </ul>
-            <resource-list v-if="resources.length > 0" :resources="resources"></resource-list>
+                </li>
+              </ul>
+            </div>
+            <div v-if="tab == 'resources'">
+              <resource-list  v-if="resources.length > 0" :resources="resources"></resource-list>
+              <blockquote  v-if="!resources || resources.length == 0 ">
+                No resources found.
+              </blockquote>
+            </div>
           </v-collapsible-body>
       </li>
     </v-collapsible>
@@ -61,7 +77,8 @@ export default {
   },
 	data() {
 		return {
-      isEditing: false
+      isEditing: false,
+      tab: 'success_criteria'
 		}
 	},
 	mounted() {
@@ -128,5 +145,8 @@ export default {
 <style>
   .success-criteria-title {
     margin-left: 1em;
+  }
+  .buttons {
+    margin: 1em;
   }
 </style>

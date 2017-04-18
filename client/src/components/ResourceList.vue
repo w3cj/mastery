@@ -1,6 +1,5 @@
 <template>
   <div class="resource-list">
-    <h5>Resources</h5>
     <p>
       <ul class="circle-list" v-for="type in types">
         <li>
@@ -38,7 +37,7 @@ export default {
 	},
   watch: {
     resources() {
-      this.load();  
+      this.load();
     }
   },
   mounted() {
