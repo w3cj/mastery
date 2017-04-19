@@ -5,8 +5,21 @@
         <i v-if="!isEditing" class="material-icons">playlist_add_check</i>
         <i v-if="isEditing" class="material-icons">arrow_back</i>
       </a> {{standard.description}}
-      <span v-if="showScore" style="float:right" v-bind:class="performanceTextColors(standard.id)">
+      <span v-if="showScore && !user.isInstructor" style="float:right" v-bind:class="performanceTextColors(standard.id)">
         {{performance}}
+      </span>
+      <span v-if="showScore && user.isInstructor" style="float:right">
+        <div class="input-field inline">
+            <input
+              :id="'performance' + standard.id"
+              :value="performance"
+              v-model="standard.setScore"
+              type="number"
+              class="validate performance-input"
+              v-bind:class="performanceTextColors(standard.setScore)"
+              v-on:keyup.enter="setPerformance(standard)">
+        </div>
+        <v-progress-linear v-if="standard.settingPerformance" indeterminate class="performance-progress"></v-progress-linear>
       </span>
     </h4>
     <ul v-if="showSuccessCriteria && !isEditing">
@@ -101,6 +114,9 @@ export default {
 		}
 	},
 	mounted() {
+    if(this.user.isInstructor && !this.standard.setScore) {
+      this.$set(this.standard, 'setScore', this.performance);
+    }
 	},
 	methods: {
     isChecked(id) {
@@ -154,8 +170,17 @@ export default {
       event.stopPropagation();
       this.isEditing = !this.isEditing;
     },
+    setPerformance(standard) {
+      this.$set(standard, 'settingPerformance', true);
+      API
+        .setPerformance(this.cohort.cohort_id, this.student.id, standard.id, standard.setScore)
+        .then(result => {
+          standard.settingPerformance = false;
+          console.log(result);
+        });
+    },
     performanceColors(standard_id) {
-      const score = this.performance;
+      const score = this.user.isInstructor ? this.standard.setScore : this.performance;
       return {
         'grey': score == 0,
         'red': score == 1,
@@ -187,5 +212,12 @@ export default {
   .approve-button {
     margin-left: 1em;
     padding-left: 2em;
+  }
+  .performance-input {
+    font-size: 1.5em !important;
+    max-width: 1.25em;
+  }
+  .performance-progress {
+    max-width: 2em;
   }
 </style>

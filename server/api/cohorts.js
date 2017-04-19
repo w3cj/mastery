@@ -95,6 +95,11 @@ router.post('/:cohort_id/evidences', validCohortId, (req, res, next) => {
   processRequest(Student.checkSuccessCriteria(req.user.github_id, cohort_id, success_criteria_id, checked), res, next);
 });
 
+router.post('/:cohort_id/students/:user_id/performances/:standard_id', validCohortId, CohortManager.isInstructor, (req, res, next) => {
+  const {cohort_id, user_id, standard_id} = req.params;
+  processRequest(CohortManager.setPerformance(cohort_id, user_id, standard_id, req.body.score), res, next);
+})
+
 router.get('/:cohort_id/standards/collections/:collection_name', validCohortId, (req, res, next) => {
   const {cohort_id, collection_name} = req.params;
   processRequest(StandardCollection.find(cohort_id, collection_name), res, next);

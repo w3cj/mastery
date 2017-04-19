@@ -103,6 +103,9 @@ class API {
   getStudentPerformances(cohort_id, user_id) {
     return fetchJSON(`cohorts/${cohort_id}/performances/${user_id}`);
   }
+  setPerformance(cohort_id, student_id, standard_id, score) {
+    return postJSON(`cohorts/${cohort_id}/students/${student_id}/performances/${standard_id}`, {score});
+  }
   getStudents(cohort_id) {
     return fetchJSON(`cohorts/${cohort_id}/students`);
   }

@@ -10,6 +10,17 @@ function getAuthHeader() {
   };
 }
 
+function postJSON(url, options, body) {
+  options.method = 'POST';
+  options.headers = options.headers || {};
+  options.headers['Content-Type'] = 'application/json';
+  options.body = JSON.stringify(body);
+  return fetch(url, options)
+    .then(response => {
+      return response.json();
+    });
+}
+
 function fetchJSON(url, options) {
   return fetch(url, options)
     .then(response => {
@@ -24,4 +35,4 @@ function fetchText(url, options) {
     });
 }
 
-module.exports = {fetchJSON, fetchText, getAuthHeader};
+module.exports = {fetchJSON, fetchText, postJSON, getAuthHeader};

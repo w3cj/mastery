@@ -6,7 +6,7 @@ const learnCache = new NodeCache();
 
 require('dotenv').config();
 
-const {fetchJSON, fetchText, getAuthHeader} = require('../fetchHelpers');
+const {postJSON, fetchJSON, fetchText, getAuthHeader} = require('../fetchHelpers');
 const {Student, Instructor} = require('../../models');
 const {learnURL} = require('../constants');
 const {averagePerformances, averageStudentPerformances} = require('./analytics');
@@ -209,6 +209,18 @@ function getUserPerformances(cohort_id, user_id) {
     });
 }
 
+function setUserPerformance(cohort_id, user_id, standard_id, score) {
+  const options = getAuthHeader();
+  options.body = JSON.stringify(options.body)
+
+  return postJSON(`${learnURL}api/v1/cohorts/${cohort_id}/users/${user_id}/performances`, options, {
+    performance: {
+      score,
+      standard_ids: [standard_id]
+    }
+  });
+}
+
 function fetchCohortInfo(cohort_id) {
   return fetchJSON(`${learnURL}api/v1/cohorts/${cohort_id}`, getAuthHeader())
           .then(json => {
@@ -347,10 +359,12 @@ function cacheify(fn, ttl) {
   return cacheified;
 }
 
+/* es-lint-disable */
 getAllCohorts = cacheify(getAllCohorts, 86400);
 fetchCohortData = cacheify(fetchCohortData, 86400);
 fetchCohortInfo = cacheify(fetchCohortInfo, 86400);
 getStudentImages = cacheify(getStudentImages, 3600);
+/* es-lint-enable */
 
 module.exports = {
   getAllCohorts,
@@ -358,6 +372,7 @@ module.exports = {
   getAveragePerformances,
   getAverageStudentPerformances,
   getUserPerformances,
+  setUserPerformance,
   fetchCohortData,
   fetchCohortInfo,
   getLearnUser,
