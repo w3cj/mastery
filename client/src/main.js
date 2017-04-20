@@ -6,8 +6,8 @@ import { sync } from 'vuex-router-sync';
 window.d3 = require('d3/d3.js');
 /* eslint-enable */
 
-if(localStorage.version != '1.19.0') {
-  localStorage.version = '1.19.0';
+if(localStorage.version != '1.19.1') {
+  localStorage.version = '1.19.1';
   window.location.reload(true);
 }
 
