@@ -16,7 +16,6 @@
               <strong>Average: </strong>{{ average }}
             </h5>
           </div>
-          <router-link class="btn waves" :to="{ name: 'standard-collections', params: { cohort_id: $route.params.cohort_id} }"><i class="material-icons left">group_work</i>View Standard Collections</router-link>
           <br>
           <br>
           <div class="col s12" v-if="tab == 'standards'">
@@ -82,7 +81,7 @@ import { mapGetters } from 'vuex';
 import Auth from '../../lib/Auth';
 import API from '../../lib/API';
 import {requireType, isSubjectVisible, isStandardVisible} from '../../lib/utils';
-import EvidenceButtons from '../EvidenceButtons';
+import StudentSearch from '../StudentSearch';
 import StandardChecklist from '../StandardChecklist';
 import * as actionTypes from '../../store/action-types';
 import * as mutationTypes from '../../store/mutation-types';
@@ -90,8 +89,8 @@ import * as mutationTypes from '../../store/mutation-types';
 export default {
   name: 'student-dashboard',
   components: {
-    'evidence-buttons': EvidenceButtons,
-    'standard-checklist': StandardChecklist
+    'standard-checklist': StandardChecklist,
+    'student-search': StudentSearch
   },
   data() {
     return {
@@ -130,16 +129,19 @@ export default {
     '$route.params.student_id'(newId, oldId) {
       const cohort_id = this.$route.params.cohort_id;
       this.load();
+    },
+    '$route.params.student_id'(newId, oldId) {
+      console.log('student_id changed', this.$route.params.student_id);
+      const cohort_id = this.$route.params.cohort_id;
+      this.load();
     }
   },
   mounted() {
-    $(document).ready(function(){
-      $('ul.tabs').tabs();
-    });
     this.load();
   },
   methods: {
     load() {
+      this.loadingStandards = true;
       this.student_id = this.$route.params.student_id ? this.$route.params.student_id : this.user.learn_id;
 
       API.getEvidences(this.student_id)
@@ -212,6 +214,9 @@ export default {
     },
     hideShowSuccessCriteria() {
       this.showSuccessCriteria = !this.showSuccessCriteria;
+    },
+    selectStudent(student) {
+      this.$router.push({ name: 'student-dashboard', params: { cohort_id: this.cohort_id, student_id: student.id }})
     }
   }
 }

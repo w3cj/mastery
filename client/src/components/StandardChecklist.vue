@@ -1,22 +1,21 @@
 <template>
   <div>
     <h4>
-      <a v-on:click="toggleEditStandard($event)" class="btn-floating btn-large waves-effect waves-light" v-bind:class="performanceColors(standard.id)">
+      <a v-on:click="toggleEditStandard($event)" class="btn-floating btn-large waves-effect waves-light" v-bind:class="performanceColors">
         <i v-if="!isEditing" class="material-icons">playlist_add_check</i>
         <i v-if="isEditing" class="material-icons">arrow_back</i>
       </a> {{standard.description}}
-      <span v-if="showScore && !user.isInstructor" style="float:right" v-bind:class="performanceTextColors(standard.id)">
+      <span v-if="showScore && !user.isInstructor" style="float:right" v-bind:class="performanceTextColors">
         {{performance}}
       </span>
       <span v-if="showScore && user.isInstructor" style="float:right">
         <div class="input-field inline">
             <input
               :id="'performance' + standard.id"
-              :value="performance"
               v-model="standard.setScore"
               type="number"
               class="validate performance-input"
-              v-bind:class="performanceTextColors(standard.setScore)"
+              v-bind:class="performanceTextColors"
               v-on:keyup.enter="setPerformance(standard)">
         </div>
         <v-progress-linear v-if="standard.settingPerformance" indeterminate class="performance-progress"></v-progress-linear>
@@ -110,14 +109,37 @@ export default {
 	data() {
 		return {
       isEditing: false,
-      tab: 'success_criteria'
+      tab: 'success_criteria',
+      performanceColors: {},
+      performanceTextColors: {}
 		}
 	},
-	mounted() {
-    if(this.user.isInstructor && !this.standard.setScore) {
+  watch: {
+    '$route.params.student_id'() {
+      this.performanceColors = this.getPerformanceColors();
+      this.performanceTextColors = this.getPerformanceTextColors();
+    },
+    'student'() {
+      this.performanceColors = this.getPerformanceColors();
+      this.performanceTextColors = this.getPerformanceTextColors();
+    },
+    'standard.setScore'() {
+      this.performanceColors = this.getPerformanceColors();
+      this.performanceTextColors = this.getPerformanceTextColors();
+    },
+    performance() {
+      if(this.user.isInstructor) {
+        this.$set(this.standard, 'setScore', this.performance);
+      }
+      this.performanceColors = this.getPerformanceColors();
+      this.performanceTextColors = this.getPerformanceTextColors();
+    }
+  },
+  mounted() {
+    if(this.user.isInstructor) {
       this.$set(this.standard, 'setScore', this.performance);
     }
-	},
+  },
 	methods: {
     isChecked(id) {
       return this.evidences[id] && this.evidences[id].checked;
@@ -179,7 +201,7 @@ export default {
           console.log(result);
         });
     },
-    performanceColors(standard_id) {
+    getPerformanceColors() {
       const score = this.user.isInstructor ? this.standard.setScore : this.performance;
       return {
         'grey': score == 0,
@@ -189,8 +211,8 @@ export default {
         'accent-4': score == 2
       }
     },
-    performanceTextColors(standard_id) {
-      const performanceColors = this.performanceColors(standard_id);
+    getPerformanceTextColors() {
+      const performanceColors = this.getPerformanceColors();
       return {
         'grey-text': performanceColors.grey,
         'red-text': performanceColors.red,
