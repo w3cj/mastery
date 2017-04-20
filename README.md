@@ -12,12 +12,12 @@ A tool for self assessed mastery tracking of a standards based curriculum.
 	* [x] Student can check success criteria as completed (self assessment)
 	* [x] Instructor can approve/deny checked success criteria
 	* [ ] All approved success criteria on a standard is automatic 3
-* [ ] Students can add "Evidence of Success" to standards and success criteria
-	* [ ] Write a short answer
-	* [ ] A link to a code sample or write up
+* [x] Students can add notes to standards and success criteria
+	* [x] Write a short answer
+	* [x] A link to a code sample or write up
 	* [ ] An audio recording
 	* [ ] A screen recording/video
-* [ ] Students and instructors can comment on attached evidences
+* [x] Students and instructors can comment on attached evidences
 
 ### Getting Started
 
