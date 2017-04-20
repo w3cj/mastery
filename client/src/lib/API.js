@@ -11,6 +11,9 @@ import {setCohortBadge} from './utils';
 class API {
   constructor() {
     this.cache = {};
+    this.waitingNotes = {};
+    this.notes = {};
+    this.cacheify('getUser');
     this.cacheify('getCohorts');
     this.cacheify('getCohort');
     this.cacheify('getStudent');
@@ -91,6 +94,9 @@ class API {
         }, {});
       });
   }
+  getUser(user_id) {
+    return fetchJSON(`learn/users/${user_id}`);
+  }
   getPerformances(cohort_id) {
     return fetchJSON(`learn/cohorts/${cohort_id}/performances`);
   }
@@ -147,6 +153,38 @@ class API {
       cohort_id,
       approved
     });
+  }
+  getNotes(cohort_id, student_id, standard_id) {
+    if(this.waitingNotes[cohort_id+student_id]) {
+      return new Promise((resolve, reject) => {
+        this.waitingNotes[cohort_id+student_id].push({resolve, standard_id});
+      });
+    } else if(this.notes[cohort_id+student_id]) {
+      this.notes[cohort_id+student_id][standard_id] = this.notes[cohort_id+student_id][standard_id] || [];
+
+      return Promise.resolve(this.notes[cohort_id+student_id][standard_id]);
+    } else {
+      this.waitingNotes[cohort_id+student_id] = [];
+      return fetchJSON(`cohorts/${cohort_id}/students/${student_id}/notes`)
+        .then(notes => {
+          this.notes[cohort_id+student_id] = notes.reduce((notes, note) => {
+            notes[note.standard_id] = notes[note.standard_id] || [];
+            notes[note.standard_id].push(note);
+            return notes;
+          }, {});
+
+          this.waitingNotes[cohort_id+student_id].forEach(waiting => {
+            waiting.resolve(this.notes[cohort_id+student_id][waiting.standard_id] || []);
+          });
+          this.waitingNotes[cohort_id+student_id] = null;
+
+          this.notes[cohort_id+student_id][standard_id] = this.notes[cohort_id+student_id][standard_id] || [];
+          return this.notes[cohort_id+student_id][standard_id];
+        });
+    }
+  }
+  addNote(cohort_id, student_id, newNote) {
+    return postJSON(`cohorts/${cohort_id}/students/${student_id}/notes`, newNote);
   }
 }
 

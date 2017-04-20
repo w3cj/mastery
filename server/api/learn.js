@@ -9,6 +9,11 @@ const {
 } = require('../lib/learn/learnInterface');
 
 const routes = {
+    '/users/:user_id': (req, res) => {
+        getLearnUser(req.params.user_id).then(learnUser => {
+            res.json(learnUser);
+        });
+    },
     '/cohorts': (req, res) => {
         const user = req.user;
 

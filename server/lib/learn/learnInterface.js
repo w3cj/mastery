@@ -139,8 +139,9 @@ function getLearnUserByEmail(email) {
 
 function getUserFromBody(body) {
   const $ = cheerio.load(body);
-  const full_name = $('ol.breadcrumb li.active').text();
+  const full_name = $($('div.page-header h1')[0]).text().replace('(active)', '').trim();
   const github_username = $($('dl.dl-horizontal dd')[1]).text();
+  const image = $($('div.col-md-3 img')[0]).attr('src');
   const cohorts = [];
 
   $('div.container ul li a[href*="/cohorts/"]').each(function() {
@@ -152,6 +153,7 @@ function getUserFromBody(body) {
 
   const user = {
     full_name,
+    image,
     cohorts,
     admin
   };
@@ -360,6 +362,7 @@ function cacheify(fn, ttl) {
 }
 
 /* es-lint-disable */
+getLearnUser = cacheify(getLearnUser, 86400);
 getAllCohorts = cacheify(getAllCohorts, 86400);
 fetchCohortData = cacheify(fetchCohortData, 86400);
 fetchCohortInfo = cacheify(fetchCohortInfo, 86400);
