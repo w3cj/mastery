@@ -54,7 +54,7 @@
             <div v-if="tab == 'success_criteria'">
               <ul>
                 <li v-for="success_criteria in standard.success_criteria">
-                  <p class="center success_criteria" style="cursor:pointer; flex-direction: row;">
+                  <div class="center success-criteria-check" style="cursor:pointer; flex-direction: row;">
                     <span class="center" v-on:mousedown="checkSuccessCriteria(success_criteria, $event)" style="flex-direction: row;">
                       <v-icon v-if="isChecked(success_criteria._id)"
                         v-bind:class="{
@@ -65,6 +65,7 @@
                       <v-icon v-if="!isChecked(success_criteria._id)">check_box_outline_blank</v-icon>
                       <h5 style="text-align:left;margin-left:1em;" v-bind:class="{'grey-text': !isChecked(success_criteria._id)}">{{decodeHtml(success_criteria.text)}}</h5>
                     </span>
+                    <span class="white-text">w</span>
                     <a
                       v-if="user.isInstructor && isChecked(success_criteria._id)"
                       v-on:click="approve(success_criteria._id, !evidences[success_criteria._id].approved)"
@@ -75,7 +76,16 @@
                       }">
                       <i class="material-icons">done</i>
                     </a>
-                  </p>
+                  </div>
+                  <div class="success-criteria-notes">
+                    <success-criteria-notes
+                      :cohort_id="cohort_id"
+                      :student_id="student_id"
+                      :notes="notes[success_criteria._id] || []"
+                      :standard_id="standard.id"
+                      :success_criteria_id="success_criteria._id">
+                    </success-criteria-notes>
+                  </div>
                   <p v-if="evidences[success_criteria._id] && (evidences[success_criteria._id].checking || evidences[success_criteria._id].approving)">
                     <v-progress-linear indeterminate></v-progress-linear>
                   </p>
@@ -97,6 +107,7 @@
 <script>
 import API from '../lib/API';
 import ResourceList from './ResourceList';
+import SuccessCriteriaNotes from './SuccessCriteriaNotes';
 import getEncouragement from '../lib/encouragement';
 import {decodeHtml} from '../lib/utils';
 
@@ -104,7 +115,8 @@ export default {
   name: 'standard-checklist',
   props: ['student', 'user', 'standard', 'performance', 'showSuccessCriteria', 'evidences', 'student_id', 'cohort', 'showScore', 'resources'],
   components: {
-    'resource-list': ResourceList
+    'resource-list': ResourceList,
+    'success-criteria-notes': SuccessCriteriaNotes
   },
 	data() {
 		return {
@@ -116,12 +128,7 @@ export default {
 	},
   watch: {
     '$route.params.student_id'() {
-      this.performanceColors = this.getPerformanceColors();
-      this.performanceTextColors = this.getPerformanceTextColors();
-    },
-    'student'() {
-      this.performanceColors = this.getPerformanceColors();
-      this.performanceTextColors = this.getPerformanceTextColors();
+      this.load();
     },
     'standard.setScore'() {
       this.performanceColors = this.getPerformanceColors();
@@ -136,11 +143,29 @@ export default {
     }
   },
   mounted() {
-    if(this.user.isInstructor) {
-      this.$set(this.standard, 'setScore', this.performance);
-    }
+    this.load();
   },
 	methods: {
+    load() {
+      this.cohort_id = this.cohort.cohort_id;
+
+      if(this.user.isInstructor && !this.standard.setScore) {
+        this.$set(this.standard, 'setScore', this.performance);
+      }
+
+      this.performanceColors = this.getPerformanceColors();
+      this.performanceTextColors = this.getPerformanceTextColors();
+
+      API
+        .getNotes(this.cohort_id, this.student_id, this.standard.id)
+        .then(notes => {
+          this.notes = notes.reduce((all, note) => {
+            all[note.success_criteria_id] = all[note.success_criteria_id] || [];
+            all[note.success_criteria_id].push(note);
+            return all;
+          }, {});
+        });
+    },
     isChecked(id) {
       return this.evidences[id] && this.evidences[id].checked;
     },
@@ -198,7 +223,6 @@ export default {
         .setPerformance(this.cohort.cohort_id, this.student.id, standard.id, standard.setScore)
         .then(result => {
           standard.settingPerformance = false;
-          console.log(result);
         });
     },
     getPerformanceColors() {
@@ -241,5 +265,11 @@ export default {
   }
   .performance-progress {
     max-width: 2em;
+  }
+  .success-criteria-check {
+    margin: 1.5em;
+  }
+  .success-criteria-notes {
+    margin: 1em;
   }
 </style>

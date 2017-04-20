@@ -2,7 +2,7 @@ const ezc = require('express-zero-config');
 
 const {resJSON, nextError} = require('../lib/routeHelpers');
 const CohortManager = require('../lib/CohortManager');
-const {Student, StandardCollection, Resource} = require('../models');
+const {Student, StandardCollection, Resource, Note} = require('../models');
 
 function processRequest(promise, res, next) {
   promise
@@ -74,6 +74,15 @@ const routes = {
     } else {
       next(new Error('Un-Authorized'));
     }
+  },
+  '/:cohort_id/students/:student_id/notes': (req, res, next) => {
+    const {cohort_id, student_id} = req.params;
+
+    if(req.user.isInstructor || req.user.learn_id == student_id) {
+      processRequest(Note.getAll(cohort_id, student_id), res, next);
+    } else {
+      next(new Error('Un-Authorized'));
+    }
   }
 };
 
@@ -95,10 +104,25 @@ router.post('/:cohort_id/evidences', validCohortId, (req, res, next) => {
   processRequest(Student.checkSuccessCriteria(req.user.github_id, cohort_id, success_criteria_id, checked), res, next);
 });
 
-router.post('/:cohort_id/students/:user_id/performances/:standard_id', validCohortId, CohortManager.isInstructor, (req, res, next) => {
-  const {cohort_id, user_id, standard_id} = req.params;
-  processRequest(CohortManager.setPerformance(cohort_id, user_id, standard_id, req.body.score), res, next);
-})
+router.post('/:cohort_id/students/:student_id/performances/:standard_id', validCohortId, CohortManager.isInstructor, (req, res, next) => {
+  const {cohort_id, student_id, standard_id} = req.params;
+  processRequest(CohortManager.setPerformance(cohort_id, student_id, standard_id, req.body.score), res, next);
+});
+
+router.post('/:cohort_id/students/:student_id/notes', validCohortId, (req, res, next) => {
+  const {cohort_id, student_id} = req.params;
+  const note = req.body;
+  note.cohort_id = cohort_id;
+  note.student_id = student_id;
+  note.creator_id = req.user.learn_id;
+  note.created = new Date();
+
+  if(req.user.isInstructor || req.user.learn_id == student_id) {
+    processRequest(Note.insert(note), res, next);
+  } else {
+    next(new Error('Un-Authorized'));
+  }
+});
 
 router.get('/:cohort_id/standards/collections/:collection_name', validCohortId, (req, res, next) => {
   const {cohort_id, collection_name} = req.params;

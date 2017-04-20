@@ -70,5 +70,6 @@ export default {
     margin: 0.25em !important;
     padding: 0em !important;
     font-family: sans-serif !important;
+    white-space: pre-wrap;
   }
 </style>

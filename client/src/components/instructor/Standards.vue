@@ -44,6 +44,7 @@
                           </resource-list>
                         </div>
                         <add-resource
+                          v-if="user.isInstructor"
                           :cohort_id="cohort_id"
                           :standard="standard"
                           :onAddResource="onAddResource"
@@ -59,6 +60,7 @@
 </template>
 
 <script>
+import Auth from '../../lib/Auth';
 import API from '../../lib/API';
 import {decodeHtml, isSubjectVisible, isStandardVisible} from '../../lib/utils';
 import AddResource from '../AddResource';
@@ -72,6 +74,7 @@ export default {
   },
   data() {
     return {
+      user: Auth.getCurrentUser(),
       search: '',
       cohort: {},
       loading: true,
