@@ -301,4 +301,14 @@ var SkillTree = function(svg, nodes, edges){
     svg.attr("width", x).attr("height", y);
   };
 
+  SkillTree.prototype.setColors = function(performances) {
+    d3.selectAll('g.conceptG circle').attr('class', function(d) {
+      if(performances[d.standards[0]] != undefined) {
+        return 'conceptG-' + performances[d.standards[0]];
+      } else {
+        return 'conceptG-0';
+      }
+    });
+  }
+
 export default SkillTree;

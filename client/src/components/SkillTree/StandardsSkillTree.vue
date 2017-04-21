@@ -1,8 +1,21 @@
 <template>
   <div id="skill-tree">
+    <br />
+    <br />
+    <div v-if="!loading && user.isInstructor">
+      <student-search
+        v-bind:cohort_id="cohort_id"
+        v-bind:onSelectStudent="selectStudent">
+      </student-search>
+      <br>
+    </div>
+    <center>
+      <h1 v-if="!loading && student">{{student.full_name}}</h1>
+      <v-progress-circular v-if="loading" active green green-flash></v-progress-circular>
+    </center>
     <blockquote>Click a node to see the associated standards.</blockquote>
     <div>
-      <v-collection>
+      <v-collection v-if="!loading">
           <v-collection-item v-for="standard in selectedStandards">
             <standard-checklist
               :user="user"
@@ -14,7 +27,7 @@
               :student_id="student_id"
               :cohort="cohort"
               :resources="resources[standard.id] || []"
-              :showScore="student_id">
+              :showScore="true">
             </standard-checklist>
           </v-collection-item>
         </v-collection>
@@ -29,11 +42,13 @@
 import API from '../../lib/API';
 import Auth from '../../lib/Auth';
 import SkillTree from './SkillTree';
+import StudentSearch from '../StudentSearch';
 import StandardChecklist from '../StandardChecklist';
 
 export default {
   name: 'standards-skill-tree',
   components: {
+    'student-search': StudentSearch,
     'standard-checklist': StandardChecklist
   },
   data() {
@@ -55,13 +70,7 @@ export default {
     };
   },
   watch: {
-    '$route.params.cohort_id'(newId, oldId) {
-      this.load();
-    },
-    '$route.params.student_id'(newId, oldId) {
-      this.load();
-    },
-    '$route.params.collection_name'(newId, oldId) {
+    '$route.params.student_id'() {
       this.load();
     }
   },
@@ -73,6 +82,7 @@ export default {
       this.selectedStandards = this.standards.filter(s => standards.includes(s.id));
     },
     load() {
+      this.loading = true;
       fetch('./static/quarter1.json')
         .then(res => res.json())
         .then(quarter1 => {
@@ -99,8 +109,11 @@ export default {
           graph.showStandards = this.showStandards;
 
           graph.loadGraph(quarter1);
-        });
 
+          this.getData(graph);
+        });
+    },
+    getData(graph) {
       this.user = Auth.getCurrentUser();
       this.cohort_id = this.$route.params.cohort_id;
       this.student_id = this.$route.params.student_id ? this.$route.params.student_id : this.user.learn_id;
@@ -126,6 +139,7 @@ export default {
         API
           .getStudentPerformances(this.cohort_id, this.student_id)
           .then(data => {
+            graph.setColors(data);
             this.performances = data;
           }).catch(error => {
             this.$router.go('/');
@@ -149,6 +163,19 @@ export default {
       }).catch(() => {
         this.$router.go('/');
       });
+    },
+    selectStudent(student) {
+      document.querySelector('#graph').innerHTML = '';
+      this.$router.push({
+        name: 'standards-skill-tree-student',
+        params: {
+          cohort_id: this.cohort_id,
+          student_id: student.id
+        },
+        query: {
+          t: + new Date()
+        }
+      })
     }
   }
 }
@@ -176,16 +203,36 @@ export default {
 
 .conceptG text{
   pointer-events: none;
+  fill: white;
 }
 
 marker{
   fill: #333;
 }
 
+circle {
+  fill: rgb(158, 158, 158);
+}
+
 g.conceptG circle{
-  fill: #F6FBFF;
   stroke: #333;
   stroke-width: 2px;
+}
+
+.conceptG-0 {
+  fill: rgb(158, 158, 158);
+}
+
+.conceptG-1 {
+  fill: rgb(244, 67, 54);
+}
+
+.conceptG-2 {
+  fill: rgb(255, 214, 0);
+}
+
+.conceptG-3 {
+  fill: rgb(76, 175, 80);
 }
 
 g.conceptG:hover circle{
