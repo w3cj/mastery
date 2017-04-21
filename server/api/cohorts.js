@@ -124,6 +124,16 @@ router.post('/:cohort_id/students/:student_id/notes', validCohortId, (req, res, 
   }
 });
 
+router.delete('/:cohort_id/students/:student_id/notes/:note_id', validCohortId, (req, res, next) => {
+  const {cohort_id, student_id, note_id} = req.params;
+
+  if(req.user.isInstructor || req.user.learn_id == student_id) {
+    processRequest(Note.delete(cohort_id, student_id, note_id), res, next);
+  } else {
+    next(new Error('Un-Authorized'));
+  }
+});
+
 router.get('/:cohort_id/standards/collections/:collection_name', validCohortId, (req, res, next) => {
   const {cohort_id, collection_name} = req.params;
   processRequest(StandardCollection.find(cohort_id, collection_name), res, next);

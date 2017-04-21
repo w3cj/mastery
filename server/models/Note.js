@@ -1,3 +1,5 @@
+const monk = require('monk');
+
 class Note {
   constructor(db) {
     this.notes = db.get('notes');
@@ -11,6 +13,13 @@ class Note {
     return this.notes.find({
       cohort_id,
       student_id
+    });
+  }
+  delete(cohort_id, student_id, note_id) {
+    return this.notes.remove({
+      cohort_id,
+      student_id,
+      _id: monk.id(note_id)
     });
   }
 }

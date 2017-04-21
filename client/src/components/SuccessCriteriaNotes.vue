@@ -7,7 +7,7 @@
       <div class="col s8 row">
         <div class="col s6">
           <button
-            v-if="notes.length > 0"
+            v-if="notes.filter(n => !n.deleted).length > 0"
             v-on:click="showNotes = !showNotes"
             class="waves-effect waves-light btn blue">
               <v-icon prefix class="left">comment</v-icon>
@@ -54,11 +54,20 @@
       </div>
     </form>
     <v-collection v-if="showNotes && notes.length > 0">
-      <v-collection-avatar v-for="note in notes" v-bind:src="users[note.creator_id].image">
+      <v-collection-avatar v-for="note in notes" v-bind:src="users[note.creator_id].image" v-if="!note.deleted">
           <span class="title">{{note.title}}</span>
           <p v-if="note.type != 'link'">{{note.content}}</p>
           <p v-if="note.type == 'link'"><a v-bind:href="note.content" target="_blank">{{note.title}}</a></p>
-          <blockquote>Added by {{users[note.creator_id].full_name}} {{note.created | moment}}</blockquote>
+          <blockquote>
+            Added by {{users[note.creator_id].full_name}} {{note.created | moment}}
+            <a
+              v-on:click="showDeleteModal(note)"
+              v-if="!note.deleting && (user.isInstructor || note.creator_id == student_id)"
+              class="btn-floating btn waves-effect waves-light red">
+                <i class="material-icons">delete</i>
+            </a>
+          </blockquote>
+          <v-progress-linear v-if="note.deleting" indeterminate></v-progress-linear>
           <a
             v-bind:href="note.type == 'link' ? note.content : '#' + $route.fullPath"
             v-bind:target="note.type == 'link' ? '_blank' : ''"
@@ -67,10 +76,21 @@
           </a>
       </v-collection-avatar>
     </v-collection>
+    <div v-bind:id="'deleteModal' + success_criteria_id" class="modal">
+      <div class="modal-content">
+        <h4>Delete Note</h4>
+        <p v-if="selectedNote">Are you sure you want to delete the note <strong>{{selectedNote.title}}</strong>?</p>
+      </div>
+     <div class="modal-footer">
+       <a class="modal-action modal-close waves-effect waves-green btn grey">No</a>
+       <a v-on:click="confirmDelete" class="modal-action modal-close waves-effect waves-green btn red">Yes</a>
+     </div>
+    </div>
   </div>
 </template>
 
 <script>
+import Auth from '../lib/Auth';
 import API from '../lib/API';
 import moment from 'moment';
 
@@ -90,6 +110,8 @@ export default {
     }];
 
     return {
+      user: Auth.getCurrentUser(),
+      selectedNote: null,
       users: {},
       showNotes: false,
       showForm: false,
@@ -115,6 +137,7 @@ export default {
   },
   methods: {
     load() {
+      $('.modal').modal();
       const users = this.notes.reduce((users, note) => {
         users[note.creator_id] = users[note.creator_id] || {
           image: `https://api.adorable.io/avatars/100/${note.creator_id}.png`,
@@ -160,6 +183,18 @@ export default {
         .getUser(user_id)
         .then(user => {
           this.$set(this.users, user_id, user);
+        });
+    },
+    showDeleteModal(note) {
+      this.selectedNote = note;
+      $('#deleteModal' + this.success_criteria_id).modal('open');
+    },
+    confirmDelete() {
+      this.$set(this.selectedNote, 'deleting', true);
+      API
+        .deleteNote(this.cohort_id, this.student_id, this.selectedNote._id)
+        .then((result) => {
+          this.$set(this.selectedNote, 'deleted', true);
         });
     }
   }

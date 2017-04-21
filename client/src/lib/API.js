@@ -190,6 +190,9 @@ class API {
   addNote(cohort_id, student_id, newNote) {
     return postJSON(`cohorts/${cohort_id}/students/${student_id}/notes`, newNote);
   }
+  deleteNote(cohort_id, student_id, note_id) {
+    return deleteJSON(`cohorts/${cohort_id}/students/${student_id}/notes/${note_id}`);
+  }
 }
 
 export default new API();
