@@ -1,5 +1,13 @@
 <template>
     <div>
+      <div v-if="!loading && user.isInstructor">
+        <student-search
+          v-bind:cohort_id="cohort_id"
+          v-bind:onSelectStudent="selectStudent">
+        </student-search>
+        <br>
+        <br>
+      </div>
       <h1 class="text-center">{{student.full_name}}</h1>
       <center>
         <v-progress-circular v-if="loadingStandards" active red red-flash></v-progress-circular>
@@ -127,11 +135,6 @@ export default {
       this.load();
     },
     '$route.params.student_id'(newId, oldId) {
-      const cohort_id = this.$route.params.cohort_id;
-      this.load();
-    },
-    '$route.params.student_id'(newId, oldId) {
-      console.log('student_id changed', this.$route.params.student_id);
       const cohort_id = this.$route.params.cohort_id;
       this.load();
     }

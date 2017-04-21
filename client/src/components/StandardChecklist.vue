@@ -127,17 +127,7 @@ export default {
 		}
 	},
   watch: {
-    '$route.params.student_id'() {
-      this.load();
-    },
     'standard.setScore'() {
-      this.performanceColors = this.getPerformanceColors();
-      this.performanceTextColors = this.getPerformanceTextColors();
-    },
-    performance() {
-      if(this.user.isInstructor) {
-        this.$set(this.standard, 'setScore', this.performance);
-      }
       this.performanceColors = this.getPerformanceColors();
       this.performanceTextColors = this.getPerformanceTextColors();
     }
@@ -149,7 +139,7 @@ export default {
     load() {
       this.cohort_id = this.cohort.cohort_id;
 
-      if(this.user.isInstructor && !this.standard.setScore) {
+      if(this.user.isInstructor) {
         this.$set(this.standard, 'setScore', this.performance);
       }
 

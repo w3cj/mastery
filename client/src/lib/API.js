@@ -11,8 +11,8 @@ import {setCohortBadge} from './utils';
 class API {
   constructor() {
     this.cache = {};
+    this.waitingCache = {};
     this.waitingNotes = {};
-    this.notes = {};
     this.cacheify('getUser');
     this.cacheify('getCohorts');
     this.cacheify('getCohort');
@@ -27,10 +27,17 @@ class API {
       const cacheName = `${name}-${Array.prototype.join.call(arguments, ',')}`;
       if(this.cache[cacheName]) {
         return Promise.resolve(this.cache[cacheName]);
+      } else if (this.waitingCache[cacheName]) {
+        return new Promise((resolve, reject) => {
+          this.waitingCache[cacheName].push({resolve});
+        });
       } else {
+        this.waitingCache[cacheName] = [];
         return original.apply(this, arguments)
           .then(data => {
             this.cache[cacheName] = data;
+            this.waitingCache[cacheName].forEach(w => w.resolve(data));
+            this.waitingCache[cacheName] = null;
             return data;
           });
       }
@@ -159,27 +166,24 @@ class API {
       return new Promise((resolve, reject) => {
         this.waitingNotes[cohort_id+student_id].push({resolve, standard_id});
       });
-    } else if(this.notes[cohort_id+student_id]) {
-      this.notes[cohort_id+student_id][standard_id] = this.notes[cohort_id+student_id][standard_id] || [];
-
-      return Promise.resolve(this.notes[cohort_id+student_id][standard_id]);
     } else {
       this.waitingNotes[cohort_id+student_id] = [];
       return fetchJSON(`cohorts/${cohort_id}/students/${student_id}/notes`)
         .then(notes => {
-          this.notes[cohort_id+student_id] = notes.reduce((notes, note) => {
+          notes = notes.reduce((notes, note) => {
             notes[note.standard_id] = notes[note.standard_id] || [];
             notes[note.standard_id].push(note);
             return notes;
           }, {});
 
+          notes[standard_id] = notes[standard_id] || [];
+
           this.waitingNotes[cohort_id+student_id].forEach(waiting => {
-            waiting.resolve(this.notes[cohort_id+student_id][waiting.standard_id] || []);
+            waiting.resolve(notes[waiting.standard_id] || []);
           });
           this.waitingNotes[cohort_id+student_id] = null;
 
-          this.notes[cohort_id+student_id][standard_id] = this.notes[cohort_id+student_id][standard_id] || [];
-          return this.notes[cohort_id+student_id][standard_id];
+          return notes[standard_id];
         });
     }
   }

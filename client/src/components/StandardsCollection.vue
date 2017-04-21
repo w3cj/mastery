@@ -85,13 +85,7 @@ export default {
     };
   },
   watch: {
-    '$route.params.cohort_id'(newId, oldId) {
-      this.load();
-    },
     '$route.params.student_id'(newId, oldId) {
-      this.load();
-    },
-    '$route.params.collection_name'(newId, oldId) {
       this.load();
     }
   },
@@ -100,6 +94,7 @@ export default {
   },
   methods: {
     load() {
+      this.loading = true;
       this.user = Auth.getCurrentUser();
       this.cohort_id = this.$route.params.cohort_id;
       this.student_id = this.$route.params.student_id ? this.$route.params.student_id : this.user.learn_id;

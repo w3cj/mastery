@@ -59,7 +59,12 @@
           <p v-if="note.type != 'link'">{{note.content}}</p>
           <p v-if="note.type == 'link'"><a v-bind:href="note.content" target="_blank">{{note.title}}</a></p>
           <blockquote>Added by {{users[note.creator_id].full_name}} {{note.created | moment}}</blockquote>
-          <span slot="secondary"><v-icon>{{note.type}}</v-icon></span>
+          <a
+            v-bind:href="note.type == 'link' ? note.content : '#' + $route.fullPath"
+            v-bind:target="note.type == 'link' ? '_blank' : ''"
+            slot="secondary">
+            <v-icon>{{note.type}}</v-icon>
+          </a>
       </v-collection-avatar>
     </v-collection>
   </div>
