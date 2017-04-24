@@ -17,8 +17,6 @@
     <div>
       <v-collection v-if="!loading">
           <v-collection-item v-for="standard in selectedStandards">
-            Performance: {{performances[standard.id]}}
-            <br>
             <standard-checklist
               :user="user"
               :student="student"
