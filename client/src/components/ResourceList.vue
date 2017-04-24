@@ -1,7 +1,7 @@
 <template>
   <div class="resource-list">
     <p>
-      <a class="waves btn resource-btn" v-bind:class="colors[type]" v-for="type in types" v-on:click="selectedType = type"><span class="emoji">{{typeEmojis[type]}}</span>{{type}} <span class="resource-count">{{byType[type].length}}</span></a>
+      <a class="waves btn resource-btn" v-bind:class="colors[type]" v-for="type in types" v-on:click="selectedType = type" v-bind:disabled="selectedType == type"><span class="emoji">{{typeEmojis[type]}}</span>{{type}} <span class="resource-count">{{byType[type].length}}</span></a>
       <ul class="circle-list" v-for="type in types" v-if="selectedType == type">
         <li>
           <h5 class="type-title"><span class="emoji">{{typeEmojis[type]}}</span>{{type}}</h5>
