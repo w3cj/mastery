@@ -17,6 +17,8 @@
     <div>
       <v-collection v-if="!loading">
           <v-collection-item v-for="standard in selectedStandards">
+            Performance: {{performances[standard.id]}}
+            <br>
             <standard-checklist
               :user="user"
               :student="student"
@@ -66,7 +68,7 @@ export default {
       showSuccessCriteria: true,
       removing: false,
       adding: false,
-      selectedStandards: []
+      selectedStandardIds: []
     };
   },
   watch: {
@@ -74,12 +76,17 @@ export default {
       this.load();
     }
   },
+  computed: {
+    selectedStandards() {
+      return this.standards.filter(s => this.selectedStandardIds.includes(s.id));
+    }
+  },
   mounted() {
     this.load();
   },
   methods: {
     showStandards(standards) {
-      this.selectedStandards = this.standards.filter(s => standards.includes(s.id));
+      this.selectedStandardIds = standards;
     },
     load() {
       this.loading = true;

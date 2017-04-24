@@ -56,7 +56,7 @@
     <v-collection v-if="showNotes && notes.length > 0">
       <v-collection-avatar v-for="note in notes" v-bind:src="users[note.creator_id].image" v-if="!note.deleted">
           <span class="title">{{note.title}}</span>
-          <p v-if="note.type != 'link'">{{note.content}}</p>
+          <pre class="note-content" v-if="note.type != 'link'">{{note.content}}</pre>
           <p v-if="note.type == 'link'"><a v-bind:href="note.content" target="_blank">{{note.title}}</a></p>
           <blockquote>
             Added by {{users[note.creator_id].full_name}} {{note.created | moment}}
@@ -200,3 +200,12 @@ export default {
   }
 }
 </script>
+
+<style>
+  .note-content {
+    font-family: inherit;
+    margin: 0.25em !important;
+    padding: 0em !important;
+    white-space: pre-wrap;
+  }
+</style>

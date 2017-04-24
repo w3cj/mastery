@@ -123,13 +123,20 @@ export default {
       isEditing: false,
       tab: 'success_criteria',
       performanceColors: {},
-      performanceTextColors: {}
+      performanceTextColors: {},
+      loading: false
 		}
 	},
   watch: {
     'standard.setScore'() {
       this.performanceColors = this.getPerformanceColors();
       this.performanceTextColors = this.getPerformanceTextColors();
+    },
+    performance() {
+      this.load();
+    },
+    standard() {
+      this.load();
     }
   },
   mounted() {
@@ -137,6 +144,9 @@ export default {
   },
 	methods: {
     load() {
+      if(this.loading) return;
+
+      this.loading = true;
       this.cohort_id = this.cohort.cohort_id;
 
       if(this.user.isInstructor) {
@@ -154,6 +164,7 @@ export default {
             all[note.success_criteria_id].push(note);
             return all;
           }, {});
+          this.loading = false;
         });
     },
     isChecked(id) {

@@ -113,7 +113,7 @@ export default {
       showSuccessCriteria: true,
       tab: 'standards',
       scoreFilter: {
-        0: true,
+        0: false,
         1: true,
         2: true,
         3: true
