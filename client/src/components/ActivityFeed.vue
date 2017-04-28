@@ -5,6 +5,14 @@
       <v-progress-circular v-if="loading" active green green-flash></v-progress-circular>
     </center>
     <div v-if="!loading">
+      <center v-if="Math.ceil(notes.length / count) > 1">
+        <v-pagination
+        color="blue"
+        waves
+        :length="Math.ceil(notes.length / count)"
+        v-model="page"
+        ></v-pagination>
+      </center>
       <v-collection v-if="visibleNotes.length > 0">
         <v-collection-avatar v-for="note in visibleNotes" v-bind:src="users[note.creator_id].image">
             <span class="title">
@@ -47,7 +55,9 @@ export default {
       user: Auth.getCurrentUser(),
       cohort_id: this.$route.params.cohort_id,
       cohort: null,
-      loading: false
+      loading: false,
+      count: 10,
+      page: 1
     }
   },
   mounted() {
@@ -55,9 +65,12 @@ export default {
   },
   computed: {
     visibleNotes() {
-      return this.notes.filter(note => {
-        return note.created && note.creator_id != this.user.learn_id;
-      });
+      const start = (this.page - 1) * this.count;
+      let end = start + this.count;
+      if(end > this.notes.length) {
+        end = this.notes.length;
+      }
+      return this.notes.slice(start, end);
     }
   },
   methods: {
@@ -78,7 +91,9 @@ export default {
       }
 
       getNotes.then(notes => {
-        this.notes = notes.sort((a, b) => {
+        this.notes = notes.filter(note => {
+          return note.created && note.creator_id != this.user.learn_id;
+        }).sort((a, b) => {
           return moment(b.created).unix() - moment(a.created).unix();
         });
 
