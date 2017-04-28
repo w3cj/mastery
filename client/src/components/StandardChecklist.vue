@@ -113,7 +113,7 @@ import {decodeHtml} from '../lib/utils';
 
 export default {
   name: 'standard-checklist',
-  props: ['student', 'user', 'standard', 'performance', 'showSuccessCriteria', 'evidences', 'student_id', 'cohort', 'showScore', 'resources'],
+  props: ['student', 'user', 'standard', 'performance', 'showSuccessCriteria', 'evidences', 'student_id', 'cohort', 'showScore', 'resources', 'onSetPerformance'],
   components: {
     'resource-list': ResourceList,
     'success-criteria-notes': SuccessCriteriaNotes
@@ -135,8 +135,10 @@ export default {
     performance() {
       this.load();
     },
-    standard() {
-      this.load();
+    standard(newVal, oldVal) {
+      if(newVal.id != oldVal.id) {
+        this.load();
+      }
     }
   },
   mounted() {
@@ -224,15 +226,16 @@ export default {
         .setPerformance(this.cohort.cohort_id, this.student.id, standard.id, standard.setScore)
         .then(result => {
           standard.settingPerformance = false;
+          if (this.onSetPerformance) this.onSetPerformance(standard.id, standard.setScore);
         });
     },
     getPerformanceColors() {
       const score = this.user.isInstructor ? this.standard.setScore : this.performance;
       return {
-        'grey': score == 0,
+        'grey': score == 0 || score > 4,
         'red': score == 1,
         'yellow': score == 2,
-        'green': score == 3,
+        'green': score == 3 || score == 4,
         'accent-4': score == 2
       }
     },

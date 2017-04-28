@@ -27,6 +27,7 @@
               :student_id="student_id"
               :cohort="cohort"
               :resources="resources[standard.id] || []"
+              :onSetPerformance="onSetPerformance"
               :showScore="true">
             </standard-checklist>
           </v-collection-item>
@@ -181,6 +182,10 @@ export default {
           t: + new Date()
         }
       })
+    },
+    onSetPerformance() {
+      document.querySelector('#graph').innerHTML = '';
+      this.load();
     }
   }
 }
