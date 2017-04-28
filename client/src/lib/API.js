@@ -92,6 +92,9 @@ class API {
         return cohort;
       });
   }
+  getCohortEvidences(cohort_id) {
+    return fetchJSON(`evidence/cohort/${cohort_id}`);
+  }
   getEvidences(student_id) {
     return fetchJSON(`evidence/${student_id}`)
       .then(evidences => {
@@ -160,6 +163,12 @@ class API {
       cohort_id,
       approved
     });
+  }
+  getCohortNotes(cohort_id) {
+    return fetchJSON(`cohorts/${cohort_id}/notes`);
+  }
+  getStudentNotes(cohort_id, student_id) {
+    return fetchJSON(`cohorts/${cohort_id}/students/${student_id}/notes`);
   }
   getNotes(cohort_id, student_id, standard_id) {
     if(this.waitingNotes[cohort_id+student_id]) {

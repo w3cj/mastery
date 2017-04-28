@@ -8,6 +8,7 @@ import Login from '../components/auth/Login';
 import Logout from '../components/auth/Logout';
 import AuthCallback from '../components/auth/Callback';
 import Standards from '../components/instructor/Standards';
+import ActivityFeed from '../components/ActivityFeed.vue';
 import StandardsSkillTree from '../components/SkillTree/StandardsSkillTree';
 import StandardCollections from '../components/StandardCollections';
 import StandardsCollection from '../components/StandardsCollection';
@@ -33,6 +34,7 @@ const router = new VueRouter({
     { path: '/dashboard/:cohort_id?', name: 'dashboard', component: Dashboard, beforeEnter: requireAuth },
     { path: '/dashboard/:cohort_id/student/:student_id', name: 'student-dashboard', component: Dashboard, beforeEnter: requireAuth },
     { path: '/cohort/:cohort_id/standards', name: 'standards', component: Standards, beforeEnter: requireAuth },
+    { path: '/cohort/:cohort_id/activity-feed', name: 'activity-feed', component: ActivityFeed, beforeEnter: requireAuth },
     { path: '/cohort/:cohort_id/standards/skill-tree', name: 'standards-skill-tree', component: StandardsSkillTree, beforeEnter: requireAuth },
     { path: '/cohort/:cohort_id/standards/skill-tree/student/:student_id', name: 'standards-skill-tree-student', component: StandardsSkillTree, beforeEnter: requireAuth },
     { path: '/cohort/:cohort_id/standards/collections', name: 'standard-collections', component: StandardCollections, beforeEnter: requireAuth },

@@ -45,18 +45,25 @@ router.get('/:user_id', authorize, (req, res, next) => {
     }), res, next);
 });
 
+router.get('/cohort/:cohort_id', authorize, CohortManager.isInstructor, (req, res, next) => {
+  const {cohort_id} = req.params;
+  processRequest(Evidence.getAll(cohort_id), res, next);
+});
+
 router.post('/', (req, res, next) => {
   const {cohort_id, success_criteria_id, checked} = req.body;
-  processRequest(Evidence.update(req.user.github_id, cohort_id, success_criteria_id, checked), res, next);
+  const approver_id = req.user.isInstructor ? req.user.learn_id : null;
+  processRequest(Evidence.update(req.user.github_id, cohort_id, success_criteria_id, checked, req.user.isInstructor, approver_id), res, next);
 });
 
 router.post('/:user_id', authorize, (req, res, next) => {
   const {cohort_id, success_criteria_id, checked} = req.body;
   const {user_id} = req.params;
+  const approver_id = req.user.isInstructor ? req.user.learn_id : null;
   processRequest(
     findUser(user_id)
       .then(user => {
-        return Evidence.update(user.github_id, cohort_id, success_criteria_id, checked, req.user.isInstructor);
+        return Evidence.update(user.github_id, cohort_id, success_criteria_id, checked, req.user.isInstructor, approver_id);
       }), res, next);
 });
 
@@ -66,7 +73,7 @@ router.post('/:user_id/success_criteria/:success_criteria_id/approve', authorize
   processRequest(
     findUser(user_id)
       .then(user => {
-        return Evidence.approve(user.github_id, cohort_id, success_criteria_id, approved);
+        return Evidence.approve(user.github_id, cohort_id, success_criteria_id, approved, req.user.learn_id);
       }), res, next);
 });
 

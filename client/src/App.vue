@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-nav>
-        <a href="#!" class="brand-logo margin-left" slot="logo">Galvanize Mastery</a>
+        <a href="#!" class="brand-logo margin-left logo-small" slot="logo">Galvanize Mastery</a>
         <ul class="right">
           <li>
               <a href="#!" class="hide-on-large-only" v-side-nav:menu="nav"><v-icon>menu</v-icon></a>
@@ -77,6 +77,7 @@ export default {
   flex-direction: column;
   min-height: 100vh;
 }
+
 main {
   flex: 1;
 }
@@ -95,6 +96,12 @@ main {
 @media (min-width: 993px) {
   .margin-left {
     margin-left: 10%;
+  }
+}
+
+@media (min-width: 993px) {
+  .logo-small {
+    font-size: 1.4rem !important;
   }
 }
 

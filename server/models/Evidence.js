@@ -9,7 +9,13 @@ class Evidence {
         github_id
       });
   }
-  update(github_id, cohort_id, success_criteria_id, checked, approved) {
+  getAll(cohort_id) {
+    return this.evidences
+      .find({
+        cohort_id
+      });
+  }
+  update(github_id, cohort_id, success_criteria_id, checked, approved, approver_id) {
     return this.evidences
       .findOneAndUpdate({
         github_id,
@@ -20,12 +26,14 @@ class Evidence {
         cohort_id,
         success_criteria_id,
         checked,
-        approved
+        approved,
+        approver_id,
+        approve_date: approved ? new Date() : null
       }, {
         upsert: true
       });
   }
-  approve(github_id, cohort_id, success_criteria_id, approved) {
+  approve(github_id, cohort_id, success_criteria_id, approved, approver_id) {
     return this.evidences
     .update({
       github_id,
@@ -33,7 +41,9 @@ class Evidence {
       success_criteria_id
     }, {
       $set: {
-        approved
+        approved,
+        approver_id,
+        approve_date: approved ? new Date() : null
       }
     })
   }

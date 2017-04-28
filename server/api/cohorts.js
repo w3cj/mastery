@@ -83,6 +83,15 @@ const routes = {
     } else {
       next(new Error('Un-Authorized'));
     }
+  },
+  '/:cohort_id/notes': (req, res, next) => {
+    const {cohort_id} = req.params;
+
+    if(req.user.isInstructor) {
+      processRequest(Note.getAll(cohort_id), res, next);
+    } else {
+      next(new Error('Un-Authorized'));
+    }
   }
 };
 
