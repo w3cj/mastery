@@ -31,10 +31,6 @@
                    <v-text-input v-model="search" name="search" id="search" placeholder="Filter standards"></v-text-input>
                </div>
             </div>
-            <div class="left">
-              <p class="white-text">wat</p>
-              <a v-on:click="hideShowSuccessCriteria()" class="waves-effect waves-light btn indigo lighten-1">{{showSuccessCriteria ? 'Hide' : 'Show'}} Success Criteria</a>
-            </div>
             <div class="score-buttons">
               <h4>Filter Score</h4>
               <a v-on:click="filterScore()" class="waves-effect waves-light btn">All</a>
@@ -49,6 +45,13 @@
             <br />
             <br />
             <br />
+            <div class="left">
+              <v-switch
+                checked
+                on="Show Success Criteria"
+                off="Hide Success Criteria"
+                v-model="showSuccessCriteria"></v-switch>
+            </div>
             <br />
             <br />
             <div v-for="subject in cohort.subjects" class="card" v-if="isSubjectVisible(subject.name)">
@@ -212,9 +215,6 @@ export default {
     },
     isStandardVisible(standard) {
       return isStandardVisible(this.search, standard, this.performances, this.scoreFilter)
-    },
-    hideShowSuccessCriteria() {
-      this.showSuccessCriteria = !this.showSuccessCriteria;
     },
     selectStudent(student) {
       this.$router.push({ name: 'student-dashboard', params: { cohort_id: this.cohort_id, student_id: student.id }})

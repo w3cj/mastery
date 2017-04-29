@@ -7,9 +7,23 @@
           <v-text-input v-model="search" name="search" id="search" placeholder="Search students..."></v-text-input>
         </div>
         <div class="col s12">
-          <a v-on:click="showName = !showName" class="waves btn green lighten-1">{{showName ? 'Hide' : 'Show'}} Names</a>
-          <a v-on:click="showImage = !showImage" class="waves btn indigo lighten-1">{{showImage ? 'Hide' : 'Show'}} Images</a>
-          <a v-on:click="showScore = !showScore" class="waves btn">{{showScore ? 'Hide' : 'Show'}} Scores</a>
+          <v-switch
+            checked
+            on="Show Names"
+            off="Hide Names"
+            class="inline"
+            v-model="showName"></v-switch>
+          <v-switch
+            checked
+            on="Show Images"
+            off="Hide Images"
+            class="inline"
+            v-model="showImage"></v-switch>
+          <v-switch
+            on="Show Scores"
+            off="Hide Scores"
+            class="inline"
+            v-model="showScore"></v-switch>
         </div>
         <div class="col s12" v-if="showScore && !loadingPerformances">
           <h3 v-if="scoreSubject_id > -1">{{cohort.subjectsById[scoreSubject_id].name}} Score</h3>
@@ -86,9 +100,7 @@ export default {
       this.load();
     },
     'scoreSubject_id'(newValue) {
-      if(typeof newValue == 'number') {
-        this.scoreSubject_id = newValue;
-      } else {
+      if(isNaN(newValue)) {
         const subject = this.cohort.subjects.filter(s => s.text == newValue)[0];
         if(subject) {
           this.scoreSubject_id = subject.id;
