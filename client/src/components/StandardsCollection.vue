@@ -1,20 +1,14 @@
 <template>
-  <div class="">
-    <br />
-    <br />
-    <div v-if="!loading && user.isInstructor">
+  <div>
+    <cohort-badge :cohort="cohort"></cohort-badge>
+    <div v-if="user.isInstructor">
       <student-search
         v-bind:cohort_id="cohort_id"
         v-bind:onSelectStudent="selectStudent">
       </student-search>
-      <br>
     </div>
     <center>
-      <h1 v-if="!loading">
-        <span v-if="!cohort.badgeNumber || cohort.badgeNumber == -1">{{cohort.badge}}</span>
-        <img v-if="cohort.badgeNumber && cohort.badgeNumber != -1" v-bind:src="'https://badge.galvanize.network/' + cohort.badgeNumber + '.png'" alt="" style="height:175px;">
-      </h1>
-      <h2 v-if="!loading && student">{{student.full_name}}</h2>
+      <h2 v-if="!loading && student" id="student-name">{{student.full_name}}</h2>
       <h3 v-if="!loading">{{$route.params.collection_name}} Standards</h3>
       <v-progress-circular v-if="loading" active green green-flash></v-progress-circular>
     </center>
@@ -59,13 +53,15 @@ import Auth from '../lib/Auth';
 import StandardSearch from './StandardSearch';
 import StudentSearch from './StudentSearch';
 import StandardChecklist from './StandardChecklist';
+import CohortBadge from './CohortBadge';
 
 export default {
   name: 'standards-collection',
   components: {
     'standard-search': StandardSearch,
     'student-search': StudentSearch,
-    'standard-checklist': StandardChecklist
+    'standard-checklist': StandardChecklist,
+    'cohort-badge': CohortBadge
   },
   data() {
     return {

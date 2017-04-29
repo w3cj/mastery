@@ -1,12 +1,7 @@
 <template>
-  <div class="">
-    <br />
-    <br />
+  <div>
+    <cohort-badge :cohort="cohort"></cohort-badge>
     <center>
-      <h1 v-if="!loading">
-        <span v-if="!cohort.badgeNumber || cohort.badgeNumber == -1">{{cohort.badge}}</span>
-        <img v-if="cohort.badgeNumber && cohort.badgeNumber != -1" v-bind:src="'https://badge.galvanize.network/' + cohort.badgeNumber + '.png'" alt="" style="height:175px;">
-      </h1>
       <v-progress-circular v-if="loading" active green green-flash></v-progress-circular>
     </center>
     <div v-if="!loading">
@@ -50,9 +45,13 @@
 <script>
 import API from '../lib/API';
 import Auth from '../lib/Auth';
+import CohortBadge from './CohortBadge';
 
 export default {
   name: 'standard-collections',
+  components: {
+    'cohort-badge': CohortBadge
+  },
   data() {
     return {
       user: Auth.getCurrentUser(),

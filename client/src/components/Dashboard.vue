@@ -18,15 +18,10 @@
         </div>
       </div>
     </div>
-    <!-- <div> -->
-      <center>
-        <h1 v-if="!loading">
-          <span v-if="!cohort.badgeNumber || cohort.badgeNumber == -1">{{cohort.badge}}</span>
-          <img v-if="cohort.badgeNumber && cohort.badgeNumber != -1" v-bind:src="'https://badge.galvanize.network/' + cohort.badgeNumber + '.png'" alt="" style="height:175px;">
-        </h1>
-        <v-progress-circular v-if="loading" active green green-flash></v-progress-circular>
-      </center>
-    <!-- </div> -->
+    <cohort-badge :cohort="cohort"></cohort-badge>
+    <center>
+      <v-progress-circular v-if="loading" active green green-flash></v-progress-circular>
+    </center>
     <instructor-dashboard
       v-if="user.isInstructor && !$route.params.student_id"
       v-bind:user="user"
@@ -53,6 +48,7 @@ import Auth from '../lib/Auth';
 import API from '../lib/API';
 import {setCohortBadge} from '../lib/utils';
 import CohortSearch from './CohortSearch';
+import CohortBadge from './CohortBadge';
 import InstructorDashboard from './instructor/InstructorDashboard';
 import StudentDashboard from './student/StudentDashboard';
 
@@ -62,6 +58,7 @@ export default {
     'cohort-search': CohortSearch,
     'instructor-dashboard': InstructorDashboard,
     'student-dashboard': StudentDashboard,
+    'cohort-badge': CohortBadge
   },
   data() {
     const user = Auth.getCurrentUser();

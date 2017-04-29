@@ -1,14 +1,12 @@
 <template>
     <div>
-      <div v-if="!loading && user.isInstructor">
+      <div v-if="user.isInstructor">
         <student-search
           v-bind:cohort_id="cohort_id"
           v-bind:onSelectStudent="selectStudent">
         </student-search>
-        <br>
-        <br>
       </div>
-      <h1 class="text-center">{{student.full_name}}</h1>
+      <h1 class="text-center" id="student-name">{{student.full_name}}</h1>
       <center>
         <v-progress-circular v-if="loadingStandards" active red red-flash></v-progress-circular>
       </center>

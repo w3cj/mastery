@@ -1,16 +1,14 @@
 <template>
   <div id="skill-tree">
-    <br />
-    <br />
-    <div v-if="!loading && user.isInstructor">
+    <cohort-badge :cohort="cohort"></cohort-badge>
+    <div v-if="user.isInstructor">
       <student-search
         v-bind:cohort_id="cohort_id"
         v-bind:onSelectStudent="selectStudent">
       </student-search>
-      <br>
     </div>
     <center>
-      <h1 v-if="!loading && student">{{student.full_name}}</h1>
+      <h1 v-if="student" id="student-name">{{student.full_name}}</h1>
       <v-progress-circular v-if="loading" active green green-flash></v-progress-circular>
     </center>
     <blockquote>Click a node to see the associated standards.</blockquote>
@@ -45,12 +43,14 @@ import Auth from '../../lib/Auth';
 import SkillTree from './SkillTree';
 import StudentSearch from '../StudentSearch';
 import StandardChecklist from '../StandardChecklist';
+import CohortBadge from '../CohortBadge';
 
 export default {
   name: 'standards-skill-tree',
   components: {
     'student-search': StudentSearch,
-    'standard-checklist': StandardChecklist
+    'standard-checklist': StandardChecklist,
+    'cohort-badge': CohortBadge
   },
   data() {
     return {
