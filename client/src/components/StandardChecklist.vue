@@ -55,17 +55,6 @@
               <ul>
                 <li v-for="success_criteria in standard.success_criteria">
                   <div class="center success-criteria-check" style="cursor:pointer; flex-direction: row;">
-                    <span class="center" v-on:mousedown="checkSuccessCriteria(success_criteria, $event)" style="flex-direction: row;">
-                      <v-icon v-if="isChecked(success_criteria._id)"
-                        v-bind:class="{
-                          'green-text': isChecked(success_criteria._id) && evidences[success_criteria._id].approved,
-                          'yellow-text': isChecked(success_criteria._id) && !evidences[success_criteria._id].approved,
-                          'grey-text': !isChecked(success_criteria._id)
-                        }">check_box</v-icon>
-                      <v-icon v-if="!isChecked(success_criteria._id)">check_box_outline_blank</v-icon>
-                      <h5 style="text-align:left;margin-left:1em;" v-bind:class="{'grey-text': !isChecked(success_criteria._id)}">{{decodeHtml(success_criteria.text)}}</h5>
-                    </span>
-                    <span class="white-text">w</span>
                     <a
                       v-if="user.isInstructor && isChecked(success_criteria._id)"
                       v-on:click="approve(success_criteria._id, !evidences[success_criteria._id].approved)"
@@ -76,6 +65,27 @@
                       }">
                       <i class="material-icons">done</i>
                     </a>
+                    <a
+                      v-if="user.isInstructor"
+                      v-on:click="toggleSuccessCriteria(success_criteria._id)"
+                      class="btn-floating waves-effect waves-light"
+                      v-bind:class="{
+                        'red': !disabledSuccessCriteria[success_criteria._id],
+                        'indigo': disabledSuccessCriteria[success_criteria._id]
+                      }">
+                      <i class="material-icons">remove_red_eye</i>
+                    </a>
+                    <span class="white-text">.</span>
+                    <span class="center" v-on:mousedown="checkSuccessCriteria(success_criteria, $event)" style="flex-direction: row;">
+                      <v-icon v-if="isChecked(success_criteria._id)"
+                        v-bind:class="{
+                          'green-text': isChecked(success_criteria._id) && evidences[success_criteria._id].approved,
+                          'yellow-text': isChecked(success_criteria._id) && !evidences[success_criteria._id].approved,
+                          'grey-text': !isChecked(success_criteria._id)
+                        }">check_box</v-icon>
+                      <v-icon v-if="!isChecked(success_criteria._id)">check_box_outline_blank</v-icon>
+                      <h5 style="text-align:left;margin-left:1em;" v-bind:class="{'grey-text': !isChecked(success_criteria._id), 'hidden': disabledSuccessCriteria[success_criteria._id]}">{{decodeHtml(success_criteria.text)}}</h5>
+                    </span>
                   </div>
                   <div class="success-criteria-notes">
                     <success-criteria-notes
@@ -93,8 +103,8 @@
               </ul>
             </div>
             <div v-if="tab == 'resources'">
-              <resource-list  v-if="resources.length > 0" :resources="resources"></resource-list>
-              <blockquote  v-if="!resources || resources.length == 0 ">
+              <resource-list v-if="resources.length > 0" :resources="resources"></resource-list>
+              <blockquote v-if="!resources || resources.length == 0 ">
                 No resources found.
               </blockquote>
             </div>
@@ -113,7 +123,7 @@ import {decodeHtml} from '../lib/utils';
 
 export default {
   name: 'standard-checklist',
-  props: ['student', 'user', 'standard', 'performance', 'showSuccessCriteria', 'evidences', 'student_id', 'cohort', 'showScore', 'resources'],
+  props: ['student', 'user', 'standard', 'performance', 'showSuccessCriteria', 'evidences', 'student_id', 'cohort', 'showScore', 'resources', 'hidden'],
   components: {
     'resource-list': ResourceList,
     'success-criteria-notes': SuccessCriteriaNotes
@@ -124,7 +134,8 @@ export default {
       tab: 'success_criteria',
       performanceColors: {},
       performanceTextColors: {},
-      loading: false
+      loading: false,
+      disabledSuccessCriteria: {}
 		}
 	},
   watch: {
@@ -165,6 +176,17 @@ export default {
             return all;
           }, {});
           this.loading = false;
+        });
+
+      API
+        .getDisabledSuccessCriteria(this.cohort_id)
+        .then(disabledSuccessCriteria => {
+          this.disabledSuccessCriteria = disabledSuccessCriteria.reduce((all, sc) => {
+            if(sc.standard_id == this.standard.id) {
+              all[sc.success_criteria_id] = sc;
+            }
+            return all;
+          }, {});
         });
     },
     isChecked(id) {
@@ -246,6 +268,21 @@ export default {
         'accent-4': performanceColors.yellow
       }
     },
+    toggleSuccessCriteria(success_criteria_id) {
+      if(!this.disabledSuccessCriteria[success_criteria_id]) {
+        API
+          .disableSuccessCriteria(this.cohort_id, this.standard.id, success_criteria_id)
+          .then(() => {
+            this.$set(this.disabledSuccessCriteria, success_criteria_id, true);
+          });
+      } else {
+        API
+          .enableSuccessCriteria(this.cohort_id, this.standard.id, success_criteria_id)
+          .then(() => {
+            this.$set(this.disabledSuccessCriteria, success_criteria_id, false);
+          });
+      }
+    },
     decodeHtml(html) {
       return decodeHtml(html);
     }
@@ -272,5 +309,8 @@ export default {
   }
   .success-criteria-notes {
     margin: 1em;
+  }
+  .hidden {
+    text-decoration: line-through;
   }
 </style>

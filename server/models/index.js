@@ -13,6 +13,7 @@ const Evidence = require('./Evidence');
 const Resource = require('./Resource');
 const Note = require('./Note');
 const StandardCollection = require('./StandardCollection');
+const SuccessCriteria = require('./SuccessCriteria');
 
 module.exports = {
   User: new User(db),
@@ -22,5 +23,6 @@ module.exports = {
   Evidence: new Evidence(db),
   Resource: new Resource(db),
   Note: new Note(db),
-  StandardCollection: new StandardCollection(db)
+  StandardCollection: new StandardCollection(db),
+  SuccessCriteria: new SuccessCriteria(db)
 };

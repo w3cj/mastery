@@ -37,8 +37,7 @@
                 :evidences="evidences"
                 :student_id="student_id"
                 :cohort="cohort"
-                :resources="resources[standard.id] || []"
-                :showScore="true">
+                :resources="resources[standard.id] || []">
               </standard-checklist>
               <div v-if="user.isInstructor && !$route.params.student_id">
                 <a v-on:click="removeStandard(standard)" class="waves btn">Remove</a>
