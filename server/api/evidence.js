@@ -60,10 +60,12 @@ router.post('/:user_id', authorize, (req, res, next) => {
   const {cohort_id, success_criteria_id, checked} = req.body;
   const {user_id} = req.params;
   const approver_id = req.user.isInstructor ? req.user.learn_id : null;
+  const approved = req.user.isInstructor ? true : undefined;
+
   processRequest(
     findUser(user_id)
       .then(user => {
-        return Evidence.update(user.github_id, cohort_id, success_criteria_id, checked, req.user.isInstructor, approver_id);
+        return Evidence.update(user.github_id, cohort_id, success_criteria_id, checked, approver_id, approved);
       }), res, next);
 });
 
@@ -73,7 +75,7 @@ router.post('/:user_id/success_criteria/:success_criteria_id/approve', authorize
   processRequest(
     findUser(user_id)
       .then(user => {
-        return Evidence.approve(user.github_id, cohort_id, success_criteria_id, approved, req.user.learn_id);
+        return Evidence.approve(user.github_id, cohort_id, success_criteria_id, req.user.learn_id, approved);
       }), res, next);
 });
 

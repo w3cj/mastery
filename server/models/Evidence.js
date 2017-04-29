@@ -15,36 +15,44 @@ class Evidence {
         cohort_id
       });
   }
-  update(github_id, cohort_id, success_criteria_id, checked, approved, approver_id) {
+  update(github_id, cohort_id, success_criteria_id, checked, approver_id, approved) {
+    const update = {
+      github_id,
+      cohort_id,
+      success_criteria_id,
+      checked,
+      approver_id
+    };
+
+    if(typeof approved == 'boolean') {
+      update.approved = approved;
+      update.approve_date = approved ? new Date() : null;
+    }
+
     return this.evidences
       .findOneAndUpdate({
         github_id,
         cohort_id,
         success_criteria_id
-      }, {
-        github_id,
-        cohort_id,
-        success_criteria_id,
-        checked,
-        approved,
-        approver_id,
-        approve_date: approved ? new Date() : null
-      }, {
+      }, update, {
         upsert: true
       });
   }
-  approve(github_id, cohort_id, success_criteria_id, approved, approver_id) {
+  approve(github_id, cohort_id, success_criteria_id, approver_id, approved) {
+    const $set = {
+      approver_id,
+      approve_date: approved ? new Date() : null
+    };
+
+    if(typeof approved == 'boolean') $set.approved = approved;
+
     return this.evidences
     .update({
       github_id,
       cohort_id,
       success_criteria_id
     }, {
-      $set: {
-        approved,
-        approver_id,
-        approve_date: approved ? new Date() : null
-      }
+      $set
     })
   }
 }

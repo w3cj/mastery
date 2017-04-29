@@ -38,7 +38,6 @@
     <v-collapsible collapse popout v-if="isEditing">
       <li>
           <v-collapsible-header class="active" style="padding:1em;">
-            <!-- <h4>Success Criteria</h4> -->
           </v-collapsible-header>
           <v-collapsible-body>
             <div class="buttons">
@@ -176,6 +175,7 @@ export default {
       event.stopPropagation();
       const id = success_criteria._id;
       let checked = this.evidences[id] ? !this.evidences[id].checked : true;
+      if(this.evidences[id].approved) return;
 
       if(!this.evidences[id]) {
         this.$set(this.evidences, id, {
