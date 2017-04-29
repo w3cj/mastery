@@ -2,7 +2,7 @@ const ezc = require('express-zero-config');
 
 const {resJSON, nextError} = require('../lib/routeHelpers');
 const CohortManager = require('../lib/CohortManager');
-const {Student, StandardCollection, Resource, Note} = require('../models');
+const {Student, StandardCollection, Resource, Note, SuccessCriteria} = require('../models');
 
 function processRequest(promise, res, next) {
   promise
@@ -92,6 +92,10 @@ const routes = {
     } else {
       next(new Error('Un-Authorized'));
     }
+  },
+  '/:cohort_id/disabledSuccessCriteria': (req, res, next) => {
+    const {cohort_id} = req.params;
+    processRequest(SuccessCriteria.getAll(cohort_id), res, next);
   }
 };
 
@@ -141,6 +145,16 @@ router.delete('/:cohort_id/students/:student_id/notes/:note_id', validCohortId, 
   } else {
     next(new Error('Un-Authorized'));
   }
+});
+
+router.post('/:cohort_id/standards/:standard_id/disable/:success_criteria_id', validCohortId, CohortManager.isInstructor, (req, res, next) => {
+  const {cohort_id, standard_id, success_criteria_id} = req.params;
+  processRequest(SuccessCriteria.disable(cohort_id, standard_id, success_criteria_id), res, next);
+});
+
+router.post('/:cohort_id/standards/:standard_id/enable/:success_criteria_id', validCohortId, CohortManager.isInstructor, (req, res, next) => {
+  const {cohort_id, standard_id, success_criteria_id} = req.params;
+  processRequest(SuccessCriteria.enable(cohort_id, standard_id, success_criteria_id), res, next);
 });
 
 router.get('/:cohort_id/standards/collections/:collection_name', validCohortId, (req, res, next) => {

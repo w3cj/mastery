@@ -20,6 +20,7 @@ class API {
     this.cacheify('getStudents');
     this.cacheify('getStudentImages');
     this.cacheify('getAllCohorts');
+    this.cacheify('getDisabledSuccessCriteria');
   }
   cacheify(name) {
     const original = this[name];
@@ -201,6 +202,15 @@ class API {
   }
   deleteNote(cohort_id, student_id, note_id) {
     return deleteJSON(`cohorts/${cohort_id}/students/${student_id}/notes/${note_id}`);
+  }
+  getDisabledSuccessCriteria(cohort_id) {
+    return fetchJSON(`cohorts/${cohort_id}/disabledSuccessCriteria`);
+  }
+  disableSuccessCriteria(cohort_id, standard_id, success_criteria_id) {
+    return postJSON(`cohorts/${cohort_id}/standards/${standard_id}/disable/${success_criteria_id}`);
+  }
+  enableSuccessCriteria(cohort_id, standard_id, success_criteria_id) {
+    return postJSON(`cohorts/${cohort_id}/standards/${standard_id}/enable/${success_criteria_id}`);
   }
 }
 
