@@ -70,22 +70,23 @@ function averagePerformances(data) {
 
 		Object.keys(student).forEach(subject_id => {
 			const subject = student[subject_id];
+			if(subject) {
+				totals[1] += subject[1];
+				totals[2] += subject[2];
+				totals[3] += subject[3];
+				totals[4] += subject[4];
 
-			totals[1] += subject[1];
-			totals[2] += subject[2];
-			totals[3] += subject[3];
-			totals[4] += subject[4];
+				if(subject.count > 0) {
+					subject.average = subject.total / subject.count;
+					totalSum += subject.total;
+					totalCount += subject.count;
+				}
 
-			if(subject.count > 0) {
-				subject.average = subject.total / subject.count;
-				totalSum += subject.total;
-				totalCount += subject.count;
-			}
-
-			if(subject.elective.count > 0) {
-				subject.elective.average = subject.elective.total / subject.elective.count;
-				electiveSum += subject.elective.total;
-				electiveCount += subject.elective.count;
+				if(subject.elective && subject.elective.count > 0) {
+					subject.elective.average = subject.elective.total / subject.elective.count;
+					electiveSum += subject.elective.total;
+					electiveCount += subject.elective.count;
+				}
 			}
 		});
 

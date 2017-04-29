@@ -51,7 +51,7 @@ export default {
         if(findCohort.length > 0) {
           const {cohort_id} = findCohort[0];
           if(cohort_id) {
-						this.onCohortChange(cohort_id);
+						this.onCohortChange(findCohort[0]);
           }
         }
       }

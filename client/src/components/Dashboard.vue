@@ -18,7 +18,7 @@
         </div>
       </div>
     </div>
-    <cohort-badge :cohort="cohort"></cohort-badge>
+    <cohort-badge :cohort="cohortInfo"></cohort-badge>
     <center>
       <v-progress-circular v-if="loading" active green green-flash></v-progress-circular>
     </center>
@@ -69,6 +69,7 @@ export default {
       cohort_id: this.$route.params.cohort_id || localStorage.defaultCohort,
       student_id,
       cohort: {},
+      cohortInfo: {},
       cohorts: {},
       cohort_array: [],
       cohort_search: '',
@@ -106,6 +107,7 @@ export default {
   methods: {
     load(cohort_id) {
       this.loading = true;
+      this.cohortInfo = {};
       this.loadCohorts();
 
       if(!isNaN(cohort_id)) {
@@ -152,6 +154,7 @@ export default {
         const students = results[1];
 
         this.cohort = cohort;
+        this.cohortInfo = cohort;
         this.students = students;
       });
     },
@@ -161,11 +164,12 @@ export default {
           this.students = students;
         });
     },
-    changeCohort(cohort_id) {
+    changeCohort(cohortInfo) {
+      this.cohortInfo = cohortInfo;
       this.$router.push({
         name: 'dashboard',
         params: {
-          cohort_id,
+          cohort_id: cohortInfo.cohort_id,
           student_id: this.$route.params.student_id
         }
       });
