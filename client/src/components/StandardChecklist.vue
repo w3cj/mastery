@@ -201,7 +201,7 @@ export default {
       event.stopPropagation();
       const id = success_criteria._id;
       let checked = this.evidences[id] ? !this.evidences[id].checked : true;
-      if(this.evidences[id] && this.evidences[id].approved) return;
+      if(this.evidences[id] && this.evidences[id].approved && this.evidences[id].checked) return;
 
       if(!this.evidences[id]) {
         this.$set(this.evidences, id, {
