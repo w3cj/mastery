@@ -204,9 +204,6 @@ export default {
   .padding-left {
     margin-left: 20em;
   }
-  .score-buttons {
-    float: right;
-  }
   .clear {
     float: clear;
   }

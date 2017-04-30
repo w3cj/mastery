@@ -18,20 +18,6 @@ module.exports = {
     $: true,
     Materialize: true
   },
-  "rules": {
-    "no-console": 0,
-    "comma-dangle": 2,
-    "no-unreachable": 2,
-    "no-unused-vars": 2,
-    "no-var": 2,
-    "semi": 2,
-    "object-shorthand": 2,
-    "prefer-arrow-callback": 2,
-    "prefer-const": 2,
-    "prefer-spread": 2,
-    "prefer-template": 2,
-    "require-yield": 2
-  },
   // required to lint *.vue files
   plugins: [
     'html'
@@ -39,6 +25,7 @@ module.exports = {
   // add your custom rules here
   'rules': {
     // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+    "no-console": 1
   }
 }

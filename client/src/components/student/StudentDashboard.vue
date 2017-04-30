@@ -6,45 +6,43 @@
       </center>
       <div v-if="!loading && !loadingAverage">
         <div class="row">
-          <div class="text-center">
-            <h4>
-              <p class="green-text" v-if="mastery['3']">3s:  {{mastery['3']}}%</p>
-              <p class="orange-text" v-if="mastery['2']">2s:  {{mastery['2']}}%</p>
-              <p class="red-text" v-if="mastery['1']">1s:  {{mastery['1']}}%</p>
-            </h4>
-            <h5>
+          <div class="text-center row">
+            <h5 class="col s12">
               <strong>Average: </strong>{{ average }}
             </h5>
+            <div class="col s12 m6">
+              <h4>
+                <p class="green-text" v-if="mastery['3']">3s:  {{mastery['3']}}%</p>
+                <p class="orange-text" v-if="mastery['2']">2s:  {{mastery['2']}}%</p>
+                <p class="red-text" v-if="mastery['1']">1s:  {{mastery['1']}}%</p>
+              </h4>
+            </div>
+            <div class="col s12 m6">
+              <pie-chart :chart-data="chartData"></pie-chart>
+            </div>
           </div>
-          <br>
-          <br>
           <div class="input-field">
             <v-icon prefix>search</v-icon>
             <v-text-input v-model="search" name="search" id="search" placeholder="Filter standards"></v-text-input>
           </div>
-          <div class="score-buttons">
-            <h4>Filter Score</h4>
-            <a v-on:click="filterScore()" class="waves-effect waves-light btn">All</a>
-            <a v-on:click="filterScore(0)" class="waves-effect waves-light btn grey" v-bind:class="{'lighten-5': !scoreFilter[0]}">0</a>
-            <a v-on:click="filterScore(1)" class="waves-effect waves-light btn red" v-bind:class="{'lighten-5': !scoreFilter[1]}">1</a>
-            <a v-on:click="filterScore(2)" class="waves-effect waves-light btn yellow" v-bind:class="{'lighten-5': !scoreFilter[2], 'accent-4': scoreFilter[2]}">2</a>
-            <a v-on:click="filterScore(3)" class="waves-effect waves-light btn green" v-bind:class="{'lighten-5': !scoreFilter[3]}">3</a>
-          </div>
-          <div class="clear">
-
-          </div>
-          <br />
-          <br />
-          <br />
-          <div class="left">
-            <v-switch
+          <br>
+          <div class="row">
+            <div class="col s12 m6">
+              <v-switch
               checked
               on="Show Success Criteria"
               off="Hide Success Criteria"
               v-model="showSuccessCriteria"></v-switch>
+            </div>
+            <div class="col s12 m6">
+              <h4>Filter Score</h4>
+              <a v-on:click="filterScore()" class="waves-effect waves-light btn">All</a>
+              <a v-on:click="filterScore(0)" class="waves-effect waves-light btn grey" v-bind:class="{'lighten-5': !scoreFilter[0]}">0</a>
+              <a v-on:click="filterScore(1)" class="waves-effect waves-light btn red" v-bind:class="{'lighten-5': !scoreFilter[1]}">1</a>
+              <a v-on:click="filterScore(2)" class="waves-effect waves-light btn yellow" v-bind:class="{'lighten-5': !scoreFilter[2], 'accent-4': scoreFilter[2]}">2</a>
+              <a v-on:click="filterScore(3)" class="waves-effect waves-light btn green" v-bind:class="{'lighten-5': !scoreFilter[3]}">3</a>
+            </div>
           </div>
-          <br />
-          <br />
           <div v-for="subject in cohort.subjects" class="card" v-if="isSubjectVisible(subject.name)">
             <v-collection>
                 <v-collection-item v-for="standard in subject.standards" v-if="isStandardVisible(standard)"
@@ -77,11 +75,13 @@ import API from '../../lib/API';
 import data from '../../data';
 import {requireType, isSubjectVisible, isStandardVisible} from '../../lib/utils';
 import StandardChecklist from '../StandardChecklist';
+import PieChart from '../charts/PieChart';
 
 export default {
   name: 'student-dashboard',
   components: {
-    'standard-checklist': StandardChecklist
+    'standard-checklist': StandardChecklist,
+    PieChart
   },
   data() {
     return {
@@ -98,7 +98,8 @@ export default {
         3: true
       },
       average: 0,
-      mastery: {}
+      mastery: {},
+      chartData: {}
     };
   },
   props: {
@@ -132,6 +133,16 @@ export default {
         }).then(data => {
           this.average = data.average;
           this.mastery = data.mastery;
+          this.chartData = {
+            labels: ['1s', '2s', '3s'],
+            datasets: [
+              {
+                backgroundColor: ['#F44336', '#ff9800', '#4CAF50'],
+                data: [this.mastery[1], this.mastery[2], this.mastery[3]]
+              }
+            ]
+          };
+
           this.loadingAverage = false;
         });
     },
@@ -165,9 +176,6 @@ export default {
   }
   .padding-left {
     margin-left: 20em;
-  }
-  .score-buttons {
-    float: right;
   }
   .clear {
     float: clear;

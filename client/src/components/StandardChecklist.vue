@@ -23,7 +23,7 @@
     </h4>
     <ul v-if="showSuccessCriteria && !isEditing">
       <li v-for="success_criteria in standard.success_criteria">
-        <p class="center" style="flex-direction: row;cursor: not-allowed;">
+        <p style="flex-direction: row;cursor: not-allowed;">
           <v-icon v-if="isChecked(success_criteria._id)"
             v-bind:class="{
               'green-text': evidences[success_criteria._id].approved,
