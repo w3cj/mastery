@@ -12,12 +12,10 @@ A tool for self assessed mastery tracking of a standards based curriculum.
 	* [x] Student can check success criteria as completed (self assessment)
 	* [x] Instructor can approve/deny checked success criteria
 	* [ ] All approved success criteria on a standard is automatic 3
-* [x] Students can add notes to standards and success criteria
+* [x] Students and instructors can add notes to success criteria
 	* [x] Write a short answer
 	* [x] A link to a code sample or write up
-	* [ ] An audio recording
-	* [ ] A screen recording/video
-* [x] Students and instructors can comment on attached evidences
+* [ ] Students and instructors can add notes to standards
 
 ### Getting Started
 
@@ -34,7 +32,7 @@ npm run dev # Start nodemon
 
 #### Client
 
-* Vue.js/Vuex
+* Vue.js
 * Webpack
 * [Vue Materials](http://johnleider.com/vue-materials-docs/)
 
