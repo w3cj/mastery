@@ -13,7 +13,7 @@
     <br>
     <br>
     <div class="row" v-show="showStudents">
-      <div class="col s2 tooltipped" v-for="student in filteredStudents" :data-tooltip="student.full_name" data-position="top">
+      <div class="col s3 m2 tooltipped" v-for="student in filteredStudents" :data-tooltip="student.full_name" data-position="top">
         <img :src="student.img" :alt="student.full_name" class="student-image" @click="selectStudent(student)">
       </div>
     </div>

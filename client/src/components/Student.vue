@@ -1,5 +1,5 @@
 <template>
-	<div class="card col s12 m4 l3" v-if="studentVisible(student)">
+	<div class="card col s6 m4 l3" v-if="studentVisible(student)">
 	 <div class="card-image waves-effect waves-block waves-light">
 		 <img v-if="showImage"  class="activator" v-bind:src="student.img.replace('http://', 'https://')">
 	 </div>
