@@ -7,19 +7,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import data from '../data';
 import Auth from '../lib/Auth';
 
 export default {
   name: 'home',
   data() {
     return {
-      currentUser: null
-    };
+      ...data.data
+    }
   },
-  computed: mapGetters({
-    currentUser: 'currentUser'
-  }),
   methods: {
     login() {
       Auth.loginRedirect();

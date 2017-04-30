@@ -27,19 +27,20 @@ export default {
 	},
 	methods: {
 		loadAutocomplete() {
-			const loaded = document.querySelector('#search-container ul') ? true : false;
+			const searchContainer = document.querySelector('#search-container ul');
+      if(searchContainer) {
+        searchContainer.remove();
+      }
 
-			if(!loaded) {
-				const input = $('input.autocomplete');
-				if(input.autocomplete) {
-					const data = this.cohorts.reduce((data, cohort) => {
-						data[cohort.name] = null;
-						return data;
-					}, {});
-					$('input.autocomplete').autocomplete({
-						data
-					});
-				}
+			const input = $('input.autocomplete');
+			if(input.autocomplete) {
+				const data = this.cohorts.reduce((data, cohort) => {
+					data[cohort.name] = null;
+					return data;
+				}, {});
+				$('input.autocomplete').autocomplete({
+					data
+				});
 			}
     },
     changeCohort() {

@@ -15,7 +15,8 @@ function getCollections(connectionURI){
     Evidence: db.get('evidences'),
     Resource: db.get('resources'),
     Note: db.get('notes'),
-    StandardCollection: db.get('standard_collection')
+    StandardCollection: db.get('standard_collection'),
+    SuccessCriteria: db.get('disabled_success_criteria')
   }
 }
 

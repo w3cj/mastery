@@ -1,6 +1,6 @@
 <template>
   <div>
-    <cohort-badge :cohort="cohort"></cohort-badge>
+    <cohort-badge :cohort="data.cohort"></cohort-badge>
     <center>
       <v-progress-circular v-if="loading" active green green-flash></v-progress-circular>
     </center>
@@ -45,6 +45,7 @@
 <script>
 import API from '../lib/API';
 import Auth from '../lib/Auth';
+import data from '../data';
 import CohortBadge from './CohortBadge';
 
 export default {
@@ -56,7 +57,7 @@ export default {
     return {
       user: Auth.getCurrentUser(),
       search: '',
-      cohort: {},
+      data: data.data,
       loading: true,
       collections: [],
       cohort_id: this.$route.cohort_id,
@@ -66,18 +67,15 @@ export default {
   created() {
     this.cohort_id = this.$route.params.cohort_id;
 
-    API
-      .getCohort(this.cohort_id)
-      .then(cohort => {
-        this.cohort = cohort;
+    data
+      .methods
+      .setCohort(this.cohort_id)
+      .then(() => {
+        return API.getStandardCollections(this.cohort_id);
+      }).then(collections => {
+        this.collections = collections;
         this.loading = false;
       });
-
-    API
-      .getStandardCollections(this.cohort_id)
-      .then(collections => {
-        this.collections = collections;
-      })
   },
   methods: {
     collectionFiltered(collection) {

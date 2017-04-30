@@ -13,7 +13,7 @@
     <br>
     <br>
     <div class="row" v-show="showStudents">
-      <div class="col s2 tooltipped" v-for="student in studentList" :data-tooltip="student.full_name" data-position="top">
+      <div class="col s2 tooltipped" v-for="student in filteredStudents" :data-tooltip="student.full_name" data-position="top">
         <img :src="student.img" :alt="student.full_name" class="student-image" @click="selectStudent(student)">
       </div>
     </div>
@@ -35,6 +35,16 @@ export default {
       studentList: []
 		}
 	},
+  computed: {
+    filteredStudents() {
+      const search = this.student_search.trim();
+      if(!search) return this.studentList;
+      const studentMatch = new RegExp(search, 'gi');
+      return this.studentList.filter(student => {
+        return student.full_name.match(studentMatch);
+      });
+    }
+  },
 	mounted() {
 		this.loadAutocomplete();
 	},
@@ -43,21 +53,22 @@ export default {
       API.getStudentImages(this.cohort_id)
         .then(students => {
           this.studentList = students;
-          const loaded = document.querySelector('#student-search-container ul') ? true : false;
-
-    			if(!loaded) {
-    				const input = $('#student_search');
-    				if(input.autocomplete) {
-    					const data = students.reduce((data, student) => {
-                data[student.full_name] = student.img.replace('http://', 'https://');
-                this.students[student.full_name] = student;
-    						return data;
-    					}, {});
-    					$('#student_search').autocomplete({
-    						data
-    					});
-    				}
+          const searchContainer = document.querySelector('#student-search-container ul');
+          if(searchContainer) {
+            searchContainer.remove();
           }
+
+  				const input = $('#student_search');
+  				if(input.autocomplete) {
+  					const data = students.reduce((data, student) => {
+              data[student.full_name] = student.img.replace('http://', 'https://');
+              this.students[student.full_name] = student;
+  						return data;
+  					}, {});
+  					$('#student_search').autocomplete({
+  						data
+  					});
+  				}
 
           const waitForTooltip = setInterval(function() {
             const tooltips = $('.tooltipped');
@@ -99,5 +110,8 @@ export default {
     width: 100%;
     height: auto;
     cursor: pointer;
+  }
+  #student-search-container {
+    margin-bottom: 0.5em;
   }
 </style>

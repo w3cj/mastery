@@ -8,10 +8,10 @@
           </li>
         </ul>
         <ul class="right hide-on-med-and-down">
-          <nav-links v-bind:currentUser="currentUser"></nav-links>
+          <nav-links v-bind:currentUser="data.currentUser"></nav-links>
         </ul>
         <v-side-nav id="menu">
-            <nav-links v-bind:currentUser="currentUser"></nav-links>
+            <nav-links v-bind:currentUser="data.currentUser"></nav-links>
         </v-side-nav>
     </v-nav>
     <main class="container">
@@ -38,8 +38,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-import * as actionTypes from './store/action-types';
+import data from './data';
 import NavLinks from './components/NavLinks';
 
 export default {
@@ -52,22 +51,16 @@ export default {
       nav: {
         edge: 'right'
       },
-      currentUser: null
+      data: data.data
     };
   },
   watch: {
     $route() {
-      this.GET_CURRENT_USER();
+      data.methods.setCurrentUser();
     }
   },
-  computed: mapGetters({
-    currentUser: 'currentUser'
-  }),
-  methods: mapActions([
-    actionTypes.GET_CURRENT_USER
-  ]),
   created () {
-    this.GET_CURRENT_USER();
+    data.methods.setCurrentUser();
   }
 }
 </script>

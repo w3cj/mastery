@@ -1,16 +1,10 @@
 <template>
     <div>
-      <div v-if="user.isInstructor">
-        <student-search
-          v-bind:cohort_id="cohort_id"
-          v-bind:onSelectStudent="selectStudent">
-        </student-search>
-      </div>
-      <h1 class="text-center" id="student-name">{{student.full_name}}</h1>
+      <h1 class="text-center" id="student-name">{{data.student.full_name}}</h1>
       <center>
-        <v-progress-circular v-if="loadingStandards" active red red-flash></v-progress-circular>
+        <v-progress-circular v-if="loadingAverage" active red red-flash></v-progress-circular>
       </center>
-      <div v-if="!loading && !loadingStandards">
+      <div v-if="!loading && !loadingAverage">
         <div class="row">
           <div class="text-center">
             <h4>
@@ -24,95 +18,79 @@
           </div>
           <br>
           <br>
-          <div class="col s12" v-if="tab == 'standards'">
-            <div>
-              <div class="input-field">
-                   <v-icon prefix>search</v-icon>
-                   <v-text-input v-model="search" name="search" id="search" placeholder="Filter standards"></v-text-input>
-               </div>
-            </div>
-            <div class="score-buttons">
-              <h4>Filter Score</h4>
-              <a v-on:click="filterScore()" class="waves-effect waves-light btn">All</a>
-              <a v-on:click="filterScore(0)" class="waves-effect waves-light btn grey" v-bind:class="{'lighten-5': !scoreFilter[0]}">0</a>
-              <a v-on:click="filterScore(1)" class="waves-effect waves-light btn red" v-bind:class="{'lighten-5': !scoreFilter[1]}">1</a>
-              <a v-on:click="filterScore(2)" class="waves-effect waves-light btn yellow" v-bind:class="{'lighten-5': !scoreFilter[2], 'accent-4': scoreFilter[2]}">2</a>
-              <a v-on:click="filterScore(3)" class="waves-effect waves-light btn green" v-bind:class="{'lighten-5': !scoreFilter[3]}">3</a>
-            </div>
-            <div class="clear">
+          <div class="input-field">
+            <v-icon prefix>search</v-icon>
+            <v-text-input v-model="search" name="search" id="search" placeholder="Filter standards"></v-text-input>
+          </div>
+          <div class="score-buttons">
+            <h4>Filter Score</h4>
+            <a v-on:click="filterScore()" class="waves-effect waves-light btn">All</a>
+            <a v-on:click="filterScore(0)" class="waves-effect waves-light btn grey" v-bind:class="{'lighten-5': !scoreFilter[0]}">0</a>
+            <a v-on:click="filterScore(1)" class="waves-effect waves-light btn red" v-bind:class="{'lighten-5': !scoreFilter[1]}">1</a>
+            <a v-on:click="filterScore(2)" class="waves-effect waves-light btn yellow" v-bind:class="{'lighten-5': !scoreFilter[2], 'accent-4': scoreFilter[2]}">2</a>
+            <a v-on:click="filterScore(3)" class="waves-effect waves-light btn green" v-bind:class="{'lighten-5': !scoreFilter[3]}">3</a>
+          </div>
+          <div class="clear">
 
-            </div>
-            <br />
-            <br />
-            <br />
-            <div class="left">
-              <v-switch
-                checked
-                on="Show Success Criteria"
-                off="Hide Success Criteria"
-                v-model="showSuccessCriteria"></v-switch>
-            </div>
-            <br />
-            <br />
-            <div v-for="subject in cohort.subjects" class="card" v-if="isSubjectVisible(subject.name)">
-              <v-collection>
-                  <v-collection-item v-for="standard in subject.standards" v-if="isStandardVisible(standard)"
-                    v-bind:class="{
-                      yellow: standard && standard.standard_type == 'elective',
-                      'lighten-4': standard && standard.standard_type == 'elective'
-                    }">
-                    <standard-checklist
-                      :user="user"
-                      :student="student"
-                      :standard="standard"
-                      :performance="performances[standard.id]"
-                      :showSuccessCriteria="showSuccessCriteria"
-                      :evidences="evidences"
-                      :student_id="student_id"
-                      :cohort="cohort"
-                      :resources="resources[standard.id] || []"
-                      :showScore="true">
-                    </standard-checklist>
-                  </v-collection-item>
-              </v-collection>
-            </div>
           </div>
-          <div v-if="tab == 'challenge-progress'" class="col s12">
-            <h2>Challenge progress...</h2>
+          <br />
+          <br />
+          <br />
+          <div class="left">
+            <v-switch
+              checked
+              on="Show Success Criteria"
+              off="Hide Success Criteria"
+              v-model="showSuccessCriteria"></v-switch>
           </div>
-        </div>
+          <br />
+          <br />
+          <div v-for="subject in cohort.subjects" class="card" v-if="isSubjectVisible(subject.name)">
+            <v-collection>
+                <v-collection-item v-for="standard in subject.standards" v-if="isStandardVisible(standard)"
+                  v-bind:class="{
+                    yellow: standard && standard.standard_type == 'elective',
+                    'lighten-4': standard && standard.standard_type == 'elective'
+                  }">
+                  <standard-checklist
+                    :user="user"
+                    :student="data.student"
+                    :standard="standard"
+                    :performance="data.performances[standard.id] || 0"
+                    :showSuccessCriteria="showSuccessCriteria"
+                    :evidences="data.evidences"
+                    :student_id="student_id"
+                    :cohort="cohort"
+                    :resources="data.resources[standard.id] || []"
+                    :showScore="true">
+                  </standard-checklist>
+                </v-collection-item>
+            </v-collection>
+          </div>
+      </div>
       </div>
     </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import Auth from '../../lib/Auth';
 import API from '../../lib/API';
+import data from '../../data';
 import {requireType, isSubjectVisible, isStandardVisible} from '../../lib/utils';
-import StudentSearch from '../StudentSearch';
 import StandardChecklist from '../StandardChecklist';
-import * as actionTypes from '../../store/action-types';
-import * as mutationTypes from '../../store/mutation-types';
 
 export default {
   name: 'student-dashboard',
   components: {
-    'standard-checklist': StandardChecklist,
-    'student-search': StudentSearch
+    'standard-checklist': StandardChecklist
   },
   data() {
     return {
       search: '',
       editMode: true,
-      loadingStandards: true,
-      performances: {},
-      evidences: {},
-      student: {},
-      resources: {},
+      loadingAverage: true,
+      data: data.data,
       student_id: this.$route.params.student_id,
       showSuccessCriteria: true,
-      tab: 'standards',
       scoreFilter: {
         0: false,
         1: true,
@@ -127,16 +105,13 @@ export default {
     user: requireType(Object),
     cohort_id: requireType([String, Number]),
     cohort: requireType(Object),
-    cohorts: requireType(Object),
     loading: requireType(Boolean)
   },
   watch: {
     '$route.params.cohort_id'(newId, oldId) {
-      this.cohort_id = newId;
       this.load();
     },
     '$route.params.student_id'(newId, oldId) {
-      const cohort_id = this.$route.params.cohort_id;
       this.load();
     }
   },
@@ -145,57 +120,19 @@ export default {
   },
   methods: {
     load() {
-      this.loadingStandards = true;
+      this.loadingAverage = true;
+      this.cohort_id = this.$route.params.cohort_id;
       this.student_id = this.$route.params.student_id ? this.$route.params.student_id : this.user.learn_id;
 
-      API.getEvidences(this.student_id)
-        .then(evidences => {
-          this.evidences = evidences;
-        }).catch(() => {
-          this.$router.replace('/');
-        });
-
-      if(this.cohort_id == 'default') {
-        API
-          .getDefaultCohort()
-          .then(cohort_id => {
-            this.cohort_id = cohort_id;
-            this.getStudentAndPerformances();
-          });
-      } else {
-        this.getStudentAndPerformances();
-      }
-
-      API
-        .getAllResources(this.cohort_id)
-        .then(resources => {
-          this.resources = resources;
-        });
-    },
-    getStudentAndPerformances() {
-      API.getStudent(this.cohort_id, this.student_id)
-        .then(student => {
-          student = student ? student : this.user;
-          this.student = student;
-          this.student_id = student.id ? student.id : student.learn_id;
-        });
-
-      API
-        .getStudentPerformances(this.cohort_id, this.student_id)
-        .then(data => {
-          this.performances = data;
-        }).catch(error => {
-          // this.$router.go('/');
-          console.log('error!');
-        }).then(() => {
-          this.loadingStandards = false;
-        });
-
-      API
-        .getAverageStudentPerformances(this.cohort_id, this.student_id)
-        .then(data => {
+      data
+        .methods
+        .setStudent(this.cohort_id, this.student_id)
+        .then(() => {
+          return API.getAverageStudentPerformances(this.cohort_id, this.student_id);
+        }).then(data => {
           this.average = data.average;
           this.mastery = data.mastery;
+          this.loadingAverage = false;
         });
     },
     filterScore(score) {
@@ -211,13 +148,10 @@ export default {
       }
     },
     isSubjectVisible(subject) {
-      return isSubjectVisible(this.search, subject, this.cohort, this.performances, this.scoreFilter);
+      return isSubjectVisible(this.search, subject, this.data.cohort, this.data.performances, this.scoreFilter);
     },
     isStandardVisible(standard) {
-      return isStandardVisible(this.search, standard, this.performances, this.scoreFilter)
-    },
-    selectStudent(student) {
-      this.$router.push({ name: 'student-dashboard', params: { cohort_id: this.cohort_id, student_id: student.id }})
+      return isStandardVisible(this.search, standard, this.data.performances, this.scoreFilter)
     }
   }
 }

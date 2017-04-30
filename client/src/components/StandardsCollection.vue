@@ -1,6 +1,6 @@
 <template>
   <div>
-    <cohort-badge :cohort="cohort"></cohort-badge>
+    <cohort-badge :cohort="data.cohort"></cohort-badge>
     <div v-if="user.isInstructor">
       <student-search
         v-bind:cohort_id="cohort_id"
@@ -8,13 +8,13 @@
       </student-search>
     </div>
     <center>
-      <h2 v-if="!loading && student" id="student-name">{{student.full_name}}</h2>
+      <h2 v-if="!loading && data.student" id="student-name">{{data.student.full_name}}</h2>
       <h3 v-if="!loading">{{$route.params.collection_name}} Standards</h3>
       <v-progress-circular v-if="loading" active green green-flash></v-progress-circular>
     </center>
     <div v-if="!loading">
       <div v-if="user.isInstructor && !$route.params.student_id">
-        <standard-search v-bind:cohort="cohort" v-bind:onAddStandard="addStandard"></standard-search>
+        <standard-search v-bind:cohort="data.cohort" v-bind:onAddStandard="addStandard"></standard-search>
       </div>
       <br>
       <br>
@@ -24,14 +24,14 @@
             <v-collection-item v-for="standard in standards">
               <standard-checklist
                 :user="user"
-                :student="student"
+                :student="data.student"
                 :standard="standard"
-                :performance="performances[standard.id]"
+                :performance="data.performances[standard.id] || 0"
                 :showSuccessCriteria="showSuccessCriteria"
-                :evidences="evidences"
+                :evidences="data.evidences"
                 :student_id="student_id"
-                :cohort="cohort"
-                :resources="resources[standard.id] || []"
+                :cohort="data.cohort"
+                :resources="data.resources[standard.id] || []"
                 :showScore="true">
               </standard-checklist>
               <div v-if="user.isInstructor && !$route.params.student_id">
@@ -50,6 +50,7 @@
 <script>
 import API from '../lib/API';
 import Auth from '../lib/Auth';
+import data from '../data';
 import StandardSearch from './StandardSearch';
 import StudentSearch from './StudentSearch';
 import StandardChecklist from './StandardChecklist';
@@ -66,15 +67,11 @@ export default {
   data() {
     return {
       user: Auth.getCurrentUser(),
-      student: {},
       cohort_id: this.$route.params.cohort_id,
       student_id: this.$route.params.student_id,
-      cohort: {},
+      data: data.data,
       loading: true,
       standards: [],
-      evidences: {},
-      resources: {},
-      performances: {},
       showSuccessCriteria: true,
       removing: false,
       adding: false
@@ -95,50 +92,20 @@ export default {
       this.cohort_id = this.$route.params.cohort_id;
       this.student_id = this.$route.params.student_id ? this.$route.params.student_id : this.user.learn_id;
 
-      Promise.all([
-        API.getEvidences(this.student_id)
-          .then(evidences => {
-            this.evidences = evidences;
-          }).catch(() => {
-            this.$router.replace('/');
-          }),
-        API
-          .getCohort(this.cohort_id)
-          .then(cohort => {
-            this.cohort = cohort;
-          }),
-        API.getStudent(this.cohort_id, this.student_id)
-          .then(student => {
-            student = student ? student : this.user;
-            this.student = student;
-            this.student_id = student.id ? student.id : student.learn_id;
-          }),
-        API
-          .getStudentPerformances(this.cohort_id, this.student_id)
-          .then(data => {
-            this.performances = data;
-          }).catch(error => {
-            this.$router.go('/');
-          }).then(() => {
-            this.loadingStandards = false;
-          }),
-        API
-          .getAllResources(this.cohort_id)
-          .then(resources => {
-            this.resources = resources;
-          })
-      ]).then(() => {
-        API
-          .getStandardCollection(this.cohort_id, this.$route.params.collection_name)
-          .then(collection => {
-            if(collection) {
-              this.standards = collection.standards.map(id => this.cohort.standards[id]);
-            }
-            this.loading = false;
-          });
-      }).catch(() => {
-        this.$router.go('/');
-      });
+      data
+        .methods
+        .setStudent(this.cohort_id, this.student_id)
+        .then(() => {
+          return API
+            .getStandardCollection(this.cohort_id, this.$route.params.collection_name);
+        }).then(collection => {
+          if(collection) {
+            this.standards = collection.standards.map(id => this.data.cohort.standards[id]);
+          }
+          this.loading = false;
+        }).catch(() => {
+          this.$router.go('/');
+        });
     },
     addStandard(standard) {
       if(this.standards.filter(s => s.id == standard.id).length > 0) return;

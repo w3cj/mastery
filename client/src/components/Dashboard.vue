@@ -1,44 +1,63 @@
 <template>
   <div>
     <br>
-    <div class="row">
+    <div class="row" v-if="!student_id">
       <div class="col s12 m6">
         <div class="left">
-          <div class="row" v-bind:class="{ show: (!loading && user.isInstructor && Object.keys(cohorts).length > 1), hide:  (loading || !(user.isInstructor && Object.keys(cohorts).length > 1)) }">
-            <cohort-search :cohorts="cohort_array" :onCohortChange="changeCohort"></cohort-search>
+          <div class="row"
+            v-bind:class="{
+                show: (!loading && user.isInstructor && hasCohorts),
+                hide: (loading || !(user.isInstructor && hasCohorts))
+              }">
+            <cohort-search :cohorts="data.cohort_array" :onCohortChange="changeCohort"></cohort-search>
           </div>
-          <div v-if="!loading && !user.isInstructor && student_id && Object.keys(cohorts).length > 1">
+          <div
+            v-if="!loading
+                  && !user.isInstructor
+                  && student_id
+                  && hasCohorts">
             <v-btn v-dropdown:dropdown>Change Cohort</v-btn>
             <v-dropdown id="dropdown">
-                <li v-for="cohort in cohorts">
-                    <router-link :to="{ name: 'student-dashboard', params: { cohort_id: cohort.cohort_id, student_id: student_id}}">{{cohort.badge}}</router-link>
+                <li v-for="cohort in data.cohorts">
+                    <router-link
+                      :to="{
+                        name: 'student-dashboard',
+                        params: {
+                          cohort_id: cohort.cohort_id,
+                          student_id: student_id
+                        }
+                      }">{{cohort.badge}}</router-link>
                 </li>
             </v-dropdown>
           </div>
         </div>
       </div>
     </div>
-    <cohort-badge :cohort="cohortInfo"></cohort-badge>
+    <cohort-badge :cohort="data.cohortInfo"></cohort-badge>
     <center>
       <v-progress-circular v-if="loading" active green green-flash></v-progress-circular>
     </center>
+    <div v-if="user.isInstructor && student_id">
+      <student-search
+        v-bind:cohort_id="cohort_id"
+        v-bind:onSelectStudent="selectStudent">
+      </student-search>
+    </div>
     <instructor-dashboard
       v-if="user.isInstructor && !$route.params.student_id"
       v-bind:user="user"
-      v-bind:cohort="cohort"
+      v-bind:cohort="data.cohort"
       v-bind:cohort_id="cohort_id"
-      v-bind:cohorts="cohorts"
+      v-bind:cohorts="data.cohorts"
       v-bind:loading="loading"
-      v-bind:students="students">
+      v-bind:students="data.students">
     </instructor-dashboard>
     <student-dashboard
       v-if="!user.isInstructor || $route.params.student_id"
       v-bind:user="user"
-      v-bind:cohort="cohort"
+      v-bind:cohort="data.cohort"
       v-bind:cohort_id="cohort_id"
-      v-bind:cohorts="cohorts"
-      v-bind:loading="loading"
-      v-bind:students="students">
+      v-bind:loading="loading">
     </student-dashboard>
   </div>
 </template>
@@ -46,10 +65,11 @@
 <script>
 import Auth from '../lib/Auth';
 import API from '../lib/API';
-import {setCohortBadge} from '../lib/utils';
+import data from '../data';
 import CohortSearch from './CohortSearch';
 import CohortBadge from './CohortBadge';
 import InstructorDashboard from './instructor/InstructorDashboard';
+import StudentSearch from './StudentSearch';
 import StudentDashboard from './student/StudentDashboard';
 
 export default {
@@ -58,23 +78,20 @@ export default {
     'cohort-search': CohortSearch,
     'instructor-dashboard': InstructorDashboard,
     'student-dashboard': StudentDashboard,
+    'student-search': StudentSearch,
     'cohort-badge': CohortBadge
   },
   data() {
-    const user = Auth.getCurrentUser();
+    const user = data.data.currentUser;
     const student_id = this.$route.params.student_id || user.learn_id;
 
     return {
       user,
       cohort_id: this.$route.params.cohort_id || localStorage.defaultCohort,
       student_id,
-      cohort: {},
-      cohortInfo: {},
-      cohorts: {},
-      cohort_array: [],
+      data: data.data,
       cohort_search: '',
-      loading: false,
-      students: []
+      loading: false
     };
   },
   beforeRouteEnter (to, from, next) {
@@ -94,26 +111,28 @@ export default {
   },
   watch: {
     '$route.params.cohort_id'(newId, oldId) {
-      this.cohort_id = newId;
-      this.student_id = this.$route.params.student_id || this.user.learn_id;
-      this.load(newId);
+      this.load();
     },
     '$route.params.student_id'(newId, oldId) {
-      const cohort_id = this.$route.params.cohort_id;
-      this.student_id = this.$route.params.student_id || this.user.learn_id;
-      this.load(cohort_id);
+      this.load();
+    }
+  },
+  computed: {
+    hasCohorts() {
+      return Object.keys(this.data.cohorts).length > 1;
     }
   },
   methods: {
-    load(cohort_id) {
+    load() {
       this.loading = true;
-      this.cohortInfo = {};
-      this.loadCohorts();
+      this.cohort_id = this.$route.params.cohort_id;
+      this.student_id = this.$route.params.student_id ? this.$route.params.student_id : null;
 
-      if(!isNaN(cohort_id)) {
-        this.loadCohort(cohort_id).then(() => {
-          this.loading = false;
-        });
+      if(!isNaN(this.cohort_id)) {
+        Promise.all([
+          data.methods.setCohorts(this.student_id),
+          data.methods.setCohort(this.cohort_id)
+        ]).then(() => this.loading = false);
       } else {
         API
           .getDefaultCohort()
@@ -125,52 +144,24 @@ export default {
           });
       }
     },
-    loadCohorts() {
-      let getCohorts = null;
-
-      if(this.user.isInstructor && !this.$route.params.student_id) {
-        getCohorts = API.getAllCohorts();
-      } else {
-        getCohorts = API.getCohorts(this.$route.params.student_id);
-      }
-
-      getCohorts
-        .then(cohorts => {
-          this.cohort_array = cohorts;
-          this.cohorts = cohorts.reduce((byId, cohort) => {
-            setCohortBadge(cohort);
-
-            byId[cohort.cohort_id] = cohort;
-            return byId;
-          }, {});
-        });
-    },
-    loadCohort(cohort_id) {
-      return Promise.all([
-        API.getCohort(cohort_id),
-        API.getStudentImages(cohort_id)
-      ]).then(results => {
-        const cohort = results[0];
-        const students = results[1];
-
-        this.cohort = cohort;
-        this.cohortInfo = cohort;
-        this.students = students;
-      });
-    },
-    loadStudents(cohort_id) {
-      return API.getStudentImages(cohort_id)
-        .then(students => {
-          this.students = students;
-        });
-    },
     changeCohort(cohortInfo) {
-      this.cohortInfo = cohortInfo;
+      this.data.cohortInfo = cohortInfo;
+      const student_id = this.$route.params.student_id;
+
       this.$router.push({
-        name: 'dashboard',
+        name: student_id ? 'student-dashboard' : 'dashboard',
         params: {
           cohort_id: cohortInfo.cohort_id,
-          student_id: this.$route.params.student_id
+          student_id
+        }
+      });
+    },
+    selectStudent(student) {
+      this.$router.push({
+        name: 'student-dashboard',
+        params: {
+          cohort_id: this.cohort_id,
+          student_id: student.id
         }
       });
     }
