@@ -250,7 +250,7 @@ export default {
       this.$set(standard, 'settingPerformance', true);
       API
         .setPerformance(this.cohort.cohort_id, this.student.id, standard.id, standard.setScore)
-        .then(result => {
+        .then(() => {
           standard.settingPerformance = false;
           if (this.onSetPerformance) this.onSetPerformance(standard.id, standard.setScore);
         });

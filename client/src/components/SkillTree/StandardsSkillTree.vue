@@ -92,9 +92,6 @@ export default {
           var width = element.clientWidth,
               height =  750;
 
-          var xLoc = width/2 - 25,
-              yLoc = 100;
-
           var nodes = [];
           var edges = [];
 

@@ -78,7 +78,7 @@ export default {
     };
   },
   watch: {
-    '$route.params.student_id'(newId, oldId) {
+    '$route.params.student_id'() {
       this.load();
     }
   },
@@ -113,7 +113,7 @@ export default {
 
       API
         .addStandardToCollection(this.cohort_id, this.$route.params.collection_name, standard.id)
-        .then(collection => {
+        .then(() => {
           this.adding = false;
           this.standards.push(standard);
         });
@@ -122,7 +122,7 @@ export default {
       this.removing = true;
       API
         .removeStandardFromCollection(this.cohort_id, this.$route.params.collection_name, standard.id)
-        .then(collection => {
+        .then(() => {
           const index = this.standards.indexOf(standard);
           this.standards.splice(index, 1);
           this.removing = false;

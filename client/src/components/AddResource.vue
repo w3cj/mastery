@@ -77,9 +77,8 @@ export default {
           this.resourceDescription = '',
           this.resourceURL = '';
           this.onAddResource(standard, result);
-        }).catch(error => {
+        }).catch(() => {
           this.adding = false;
-          console.log(error);
         });
     },
   }

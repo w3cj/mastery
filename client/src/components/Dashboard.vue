@@ -63,7 +63,6 @@
 </template>
 
 <script>
-import Auth from '../lib/Auth';
 import API from '../lib/API';
 import data from '../data';
 import CohortSearch from './CohortSearch';
@@ -110,10 +109,10 @@ export default {
     this.load(this.cohort_id);
   },
   watch: {
-    '$route.params.cohort_id'(newId, oldId) {
+    '$route.params.cohort_id'() {
       this.load();
     },
-    '$route.params.student_id'(newId, oldId) {
+    '$route.params.student_id'() {
       this.load();
     }
   },

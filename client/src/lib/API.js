@@ -1,10 +1,7 @@
-import fetch from 'isomorphic-fetch';
-
 import {
   fetchJSON,
   postJSON,
-  deleteJSON,
-  fetchWithBody
+  deleteJSON
 } from './fetch';
 import {setCohortBadge} from './utils';
 
@@ -29,7 +26,7 @@ class API {
       if(this.cache[cacheName]) {
         return Promise.resolve(this.cache[cacheName]);
       } else if (this.waitingCache[cacheName]) {
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
           this.waitingCache[cacheName].push({resolve});
         });
       } else {
@@ -173,7 +170,7 @@ class API {
   }
   getNotes(cohort_id, student_id, standard_id) {
     if(this.waitingNotes[cohort_id+student_id]) {
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         this.waitingNotes[cohort_id+student_id].push({resolve, standard_id});
       });
     } else {

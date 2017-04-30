@@ -58,17 +58,17 @@ export default {
             searchContainer.remove();
           }
 
-  				const input = $('#student_search');
-  				if(input.autocomplete) {
-  					const data = students.reduce((data, student) => {
-              data[student.full_name] = student.img.replace('http://', 'https://');
-              this.students[student.full_name] = student;
-  						return data;
-  					}, {});
-  					$('#student_search').autocomplete({
-  						data
-  					});
-  				}
+      const input = $('#student_search');
+      if(input.autocomplete) {
+        const data = students.reduce((data, student) => {
+          data[student.full_name] = student.img.replace('http://', 'https://');
+          this.students[student.full_name] = student;
+          return data;
+        }, {});
+        $('#student_search').autocomplete({
+          data
+        });
+      }
 
           const waitForTooltip = setInterval(function() {
             const tooltips = $('.tooltipped');

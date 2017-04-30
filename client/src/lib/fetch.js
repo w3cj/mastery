@@ -1,3 +1,4 @@
+import fetch from 'isomorphic-fetch';
 const API_URL = window.location.host.indexOf('localhost') > -1 ? 'http://localhost:3000/api/v1/' : 'https://mastery-api.galvanize.network/api/v1/';
 
 function fetchJSON(endpoint) {

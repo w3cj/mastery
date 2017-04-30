@@ -108,10 +108,10 @@ export default {
     loading: requireType(Boolean)
   },
   watch: {
-    '$route.params.cohort_id'(newId, oldId) {
+    '$route.params.cohort_id'() {
       this.load();
     },
-    '$route.params.student_id'(newId, oldId) {
+    '$route.params.student_id'() {
       this.load();
     }
   },

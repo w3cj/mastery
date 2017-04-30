@@ -50,7 +50,7 @@ export default {
 	computed: {
 		totalScores() {
 			if(this.performances.scoreTotals) {
-			  let total = 0;
+				let total = 0;
 				for (var i = 1; i < 5; i++) {
 					total += this.performances.scoreTotals[i];
 				}

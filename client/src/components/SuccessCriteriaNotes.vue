@@ -193,7 +193,7 @@ export default {
       this.$set(this.selectedNote, 'deleting', true);
       API
         .deleteNote(this.cohort_id, this.student_id, this.selectedNote._id)
-        .then((result) => {
+        .then(() => {
           this.$set(this.selectedNote, 'deleted', true);
         });
     }

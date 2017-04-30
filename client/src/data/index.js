@@ -82,7 +82,7 @@ const methods = {
         .then(performances => {
           data.performances = performances;
         })
-    ]).catch(error => {
+    ]).catch(() => {
       router.go('/');
     });
   }

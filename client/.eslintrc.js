@@ -4,7 +4,7 @@ module.exports = {
   parserOptions: {
     sourceType: 'module'
   },
-  // "extends": ["eslint:recommended"],
+  "extends": ["eslint:recommended"],
   "ecmaFeatures": {
     "modules": true
   },
@@ -13,7 +13,11 @@ module.exports = {
     "es6": true,
     "browser": true
   },
-  "globals": {},
+  "globals": {
+    d3: true,
+    $: true,
+    Materialize: true
+  },
   "rules": {
     "no-console": 0,
     "comma-dangle": 2,
