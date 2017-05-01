@@ -1,26 +1,22 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col s4">
-
-      </div>
-      <div class="col s8 row">
-        <div class="col s6">
-          <button
-            v-if="notes.filter(n => !n.deleted).length > 0"
-            v-on:click="showNotes = !showNotes"
-            class="waves-effect waves-light btn blue">
-              <v-icon prefix class="left">comment</v-icon>
-              {{showNotes ? 'Hide' : 'Show'}} Notes
-          </button>
+    <div class="row" v-if="canAdd || numVisibleNotes() > 0">
+      <div class="col s12">
+        <div
+          v-if="numVisibleNotes() > 0"
+          v-on:click="showNotes = !showNotes"
+          v-tooltip:bottom="'Toggle Comments'"
+          class="chip blue white-text waves-effect waves-light tiny-btn">
+          <v-icon>comment</v-icon>
+          {{numVisibleNotes()}}
         </div>
-        <div class="col s6">
-          <button
+        <div
+          v-if="canAdd"
           v-on:click="showForm = !showForm"
-          class="waves-effect waves-light btn">
-          <v-icon prefix class="left">note</v-icon>
-          {{showForm ? 'Done Adding' : 'Add a Note'}}
-        </button>
+          v-tooltip:bottom="'Add Note'"
+          class="chip pink white-text waves-effect waves-light tiny-btn">
+          <v-icon>note_add</v-icon>
+          Add Note
         </div>
       </div>
     </div>
@@ -96,7 +92,7 @@ import moment from 'moment';
 
 export default {
   name: 'success-criteria-notes',
-  props: ['student_id', 'notes', 'standard_id', 'success_criteria_id', 'cohort_id'],
+  props: ['student_id', 'notes', 'standard_id', 'success_criteria_id', 'cohort_id', 'canAdd'],
   data() {
     const noteTypes = [{
       id: 'comment',
@@ -168,6 +164,7 @@ export default {
           this.notes.push(result);
           this.adding = false;
           this.showForm = false;
+          this.showNotes = true;
 
           if(!this.users[result.creator_id]) {
             this.$set(this.users, result.creator_id, {
@@ -196,6 +193,9 @@ export default {
         .then(() => {
           this.$set(this.selectedNote, 'deleted', true);
         });
+    },
+    numVisibleNotes() {
+      return this.notes.filter(n => !n.deleted).length;
     }
   }
 }
@@ -207,5 +207,8 @@ export default {
     margin: 0.25em !important;
     padding: 0em !important;
     white-space: pre-wrap;
+  }
+  .tiny-btn {
+    padding-top: 0.2em !important;
   }
 </style>

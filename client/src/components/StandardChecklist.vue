@@ -1,9 +1,20 @@
 <template>
   <div>
     <h4>
-      <a v-on:click="toggleEditStandard($event)" class="btn-floating btn-large waves-effect waves-light" v-bind:class="performanceColors">
+      <a
+        v-on:click="toggleEditStandard($event)"
+        class="btn-floating btn-large waves-effect waves-light"
+        v-tooltip:bottom="'Edit Success Criteria'"
+        v-bind:class="performanceColors">
         <i v-if="!isEditing" class="material-icons">playlist_add_check</i>
         <i v-if="isEditing" class="material-icons">arrow_back</i>
+      </a>
+      <a
+        v-on:click="showResources = !showResources"
+        class="btn-floating btn-large waves-effect waves-light"
+        v-tooltip:bottom="'Toggle Resources'"
+        v-bind:class="{indigo: showResources, orange: !showResources}">
+        <i class="material-icons">library_books</i>
       </a> {{standard.description}}
       <span v-if="showScore && !user.isInstructor" style="float:right" v-bind:class="performanceTextColors">
         {{performance}}
@@ -21,6 +32,12 @@
         <v-progress-linear v-if="standard.settingPerformance" indeterminate class="performance-progress"></v-progress-linear>
       </span>
     </h4>
+    <div v-if="showResources">
+      <resource-list v-if="resources.length > 0" :resources="resources"></resource-list>
+      <blockquote v-if="!resources || resources.length == 0 ">
+        No resources found.
+      </blockquote>
+    </div>
     <ul v-if="showSuccessCriteria && !isEditing">
       <li v-for="success_criteria in standard.success_criteria">
         <p style="flex-direction: row;cursor: not-allowed;">
@@ -35,84 +52,74 @@
         </p>
       </li>
     </ul>
-    <v-collapsible collapse popout v-if="isEditing">
-      <li>
-          <v-collapsible-header class="active" style="padding:1em;">
-          </v-collapsible-header>
-          <v-collapsible-body>
-            <div class="buttons" v-if="user.isInstructor">
-              <a v-on:click="disableSuccessCriteria = !disableSuccessCriteria" class="waves-effect waves-light btn red lighten-3"><i class="material-icons left">remove_red_eye</i>Enable/Disable Success Criteria</a>
-            </div>
-            <div class="buttons">
-              <a v-on:click="tab = 'success_criteria'" class="waves-effect waves-light btn green"
+    <div v-if="isEditing">
+      <div class="buttons">
+        <a
+          v-if="user.isInstructor"
+          v-on:click="disableSuccessCriteria = !disableSuccessCriteria"
+          class="waves-effect waves-light btn red lighten-3">
+          <i class="material-icons left">remove_red_eye</i>Enable/Disable Success Criteria
+        </a>
+        <a
+          v-on:click="canAddNotes = !canAddNotes"
+          class="waves-effect waves-light btn">
+          <i class="material-icons left">note_add</i>{{canAddNotes ? 'Done Adding' : 'Add Notes'}}
+        </a>
+      </div>
+      <div>
+        <ul>
+          <li v-for="success_criteria in standard.success_criteria">
+            <div class="center success-criteria-check" style="cursor:pointer; flex-direction: row;">
+              <a
+                v-if="user.isInstructor && isChecked(success_criteria._id)"
+                v-tooltip:bottom="'Approve/Unapprove'"
+                v-on:click="approve(success_criteria._id, !evidences[success_criteria._id].approved)"
+                class="btn-floating waves-effect waves-light"
                 v-bind:class="{
-                  disabled: tab == 'success_criteria'
-                }"><i class="material-icons left">playlist_add_check</i>Success Criteria</a>
-              <a v-on:click="tab = 'resources'" class="waves-effect waves-light btn orange"
+                  'green': !evidences[success_criteria._id].approved,
+                  'yellow': evidences[success_criteria._id].approved
+                }">
+                <i class="material-icons">done</i>
+              </a>
+              <a
+                v-if="user.isInstructor && disableSuccessCriteria"
+                v-on:click="toggleSuccessCriteria(success_criteria._id)"
+                class="btn-floating waves-effect waves-light"
                 v-bind:class="{
-                  disabled: tab == 'resources'
-                }"><i class="material-icons left">library_books</i>Resources</a>
+                  'red': !disabledSuccessCriteria[success_criteria._id],
+                  'indigo': disabledSuccessCriteria[success_criteria._id]
+                }">
+                <i class="material-icons">remove_red_eye</i>
+              </a>
+              <span class="white-text">.</span>
+              <span class="center" v-on:mousedown="checkSuccessCriteria(success_criteria, $event)" style="flex-direction: row;">
+                <v-icon v-if="isChecked(success_criteria._id)"
+                  v-bind:class="{
+                    'green-text': isChecked(success_criteria._id) && evidences[success_criteria._id].approved,
+                    'yellow-text': isChecked(success_criteria._id) && !evidences[success_criteria._id].approved,
+                    'grey-text': !isChecked(success_criteria._id)
+                  }">check_box</v-icon>
+                <v-icon v-if="!isChecked(success_criteria._id)">check_box_outline_blank</v-icon>
+                <h5 style="text-align:left;margin-left:1em;" v-bind:class="{'grey-text': !isChecked(success_criteria._id), 'disabled-sc': disabledSuccessCriteria[success_criteria._id]}">{{decodeHtml(success_criteria.text)}}</h5>
+              </span>
             </div>
-            <div v-if="tab == 'success_criteria'">
-              <ul>
-                <li v-for="success_criteria in standard.success_criteria">
-                  <div class="center success-criteria-check" style="cursor:pointer; flex-direction: row;">
-                    <a
-                      v-if="user.isInstructor && isChecked(success_criteria._id)"
-                      v-on:click="approve(success_criteria._id, !evidences[success_criteria._id].approved)"
-                      class="btn-floating waves-effect waves-light"
-                      v-bind:class="{
-                        'green': !evidences[success_criteria._id].approved,
-                        'yellow': evidences[success_criteria._id].approved
-                      }">
-                      <i class="material-icons">done</i>
-                    </a>
-                    <a
-                      v-if="user.isInstructor && disableSuccessCriteria"
-                      v-on:click="toggleSuccessCriteria(success_criteria._id)"
-                      class="btn-floating waves-effect waves-light"
-                      v-bind:class="{
-                        'red': !disabledSuccessCriteria[success_criteria._id],
-                        'indigo': disabledSuccessCriteria[success_criteria._id]
-                      }">
-                      <i class="material-icons">remove_red_eye</i>
-                    </a>
-                    <span class="white-text">.</span>
-                    <span class="center" v-on:mousedown="checkSuccessCriteria(success_criteria, $event)" style="flex-direction: row;">
-                      <v-icon v-if="isChecked(success_criteria._id)"
-                        v-bind:class="{
-                          'green-text': isChecked(success_criteria._id) && evidences[success_criteria._id].approved,
-                          'yellow-text': isChecked(success_criteria._id) && !evidences[success_criteria._id].approved,
-                          'grey-text': !isChecked(success_criteria._id)
-                        }">check_box</v-icon>
-                      <v-icon v-if="!isChecked(success_criteria._id)">check_box_outline_blank</v-icon>
-                      <h5 style="text-align:left;margin-left:1em;" v-bind:class="{'grey-text': !isChecked(success_criteria._id), 'disabled-sc': disabledSuccessCriteria[success_criteria._id]}">{{decodeHtml(success_criteria.text)}}</h5>
-                    </span>
-                  </div>
-                  <div class="success-criteria-notes">
-                    <success-criteria-notes
-                      :cohort_id="cohort_id"
-                      :student_id="student_id"
-                      :notes="notes[success_criteria._id] || []"
-                      :standard_id="standard.id"
-                      :success_criteria_id="success_criteria._id">
-                    </success-criteria-notes>
-                  </div>
-                  <p v-if="evidences[success_criteria._id] && (evidences[success_criteria._id].checking || evidences[success_criteria._id].approving)">
-                    <v-progress-linear indeterminate></v-progress-linear>
-                  </p>
-                </li>
-              </ul>
+            <div class="success-criteria-notes">
+              <success-criteria-notes
+                :cohort_id="cohort_id"
+                :student_id="student_id"
+                :canAdd="canAddNotes"
+                :notes="notes[success_criteria._id] || []"
+                :standard_id="standard.id"
+                :success_criteria_id="success_criteria._id">
+              </success-criteria-notes>
             </div>
-            <div v-if="tab == 'resources'">
-              <resource-list v-if="resources.length > 0" :resources="resources"></resource-list>
-              <blockquote v-if="!resources || resources.length == 0 ">
-                No resources found.
-              </blockquote>
-            </div>
-          </v-collapsible-body>
-      </li>
-    </v-collapsible>
+            <p v-if="evidences[success_criteria._id] && (evidences[success_criteria._id].checking || evidences[success_criteria._id].approving)">
+              <v-progress-linear indeterminate></v-progress-linear>
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -133,7 +140,8 @@ export default {
 	data() {
 		return {
       isEditing: false,
-      tab: 'success_criteria',
+      showResources: false,
+      canAddNotes: false,
       performanceColors: {},
       performanceTextColors: {},
       loading: false,
