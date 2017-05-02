@@ -361,13 +361,13 @@ function cacheify(fn, ttl) {
   return cacheified;
 }
 
-/* es-lint-disable */
+/* eslint-disable */
 getLearnUser = cacheify(getLearnUser, 86400);
 getAllCohorts = cacheify(getAllCohorts, 86400);
 fetchCohortData = cacheify(fetchCohortData, 86400);
 fetchCohortInfo = cacheify(fetchCohortInfo, 86400);
 getStudentImages = cacheify(getStudentImages, 3600);
-/* es-lint-enable */
+/* eslint-enable */
 
 module.exports = {
   getAllCohorts,

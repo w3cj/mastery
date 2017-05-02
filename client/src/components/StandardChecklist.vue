@@ -108,7 +108,8 @@
                 :cohort_id="cohort_id"
                 :student_id="student_id"
                 :canAdd="canAddNotes"
-                :notes="notes[success_criteria._id] || []"
+                :notes="notes[success_criteria._id]"
+                :onNoteAdd="addNote"
                 :standard_id="standard.id"
                 :success_criteria_id="success_criteria._id">
               </success-criteria-notes>
@@ -188,6 +189,13 @@ export default {
             all[note.success_criteria_id].push(note);
             return all;
           }, {});
+
+          this.standard.success_criteria.forEach(({_id}) => {
+            if(!this.notes[_id]) {
+              this.$set(this.notes, _id, []);
+            }
+          });
+
           this.loading = false;
         });
 
@@ -297,6 +305,9 @@ export default {
             this.$set(this.disabledSuccessCriteria, success_criteria_id, false);
           });
       }
+    },
+    addNote(success_criteria_id, note) {
+      this.notes[success_criteria_id].push(note);
     },
     decodeHtml(html) {
       return decodeHtml(html);

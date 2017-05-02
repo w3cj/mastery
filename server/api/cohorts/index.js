@@ -1,8 +1,8 @@
 const ezc = require('express-zero-config');
 
-const {resJSON, nextError} = require('../lib/routeHelpers');
-const CohortManager = require('../lib/CohortManager');
-const {Student, StandardCollection, Resource, Note, SuccessCriteria} = require('../models');
+const {resJSON, nextError} = require('../../lib/routeHelpers');
+const CohortManager = require('../../lib/CohortManager');
+const {Student, StandardCollection, Resource, Note, SuccessCriteria} = require('../../models');
 
 function processRequest(promise, res, next) {
   promise
@@ -183,5 +183,7 @@ router.post('/:cohort_id/standards/:standard_id/resources', validCohortId, Cohor
     next(new Error('Missing required parameters.'));
   }
 });
+
+router.use('/:cohort_id/repos', validCohortId, require('./repos'));
 
 module.exports = router;

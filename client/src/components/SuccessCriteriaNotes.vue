@@ -92,7 +92,7 @@ import moment from 'moment';
 
 export default {
   name: 'success-criteria-notes',
-  props: ['student_id', 'notes', 'standard_id', 'success_criteria_id', 'cohort_id', 'canAdd'],
+  props: ['student_id', 'notes', 'standard_id', 'success_criteria_id', 'cohort_id', 'canAdd', 'onNoteAdd'],
   data() {
     const noteTypes = [{
       id: 'comment',
@@ -161,7 +161,7 @@ export default {
         .then(result => {
           this.note = '';
           this.title = '';
-          this.notes.push(result);
+          this.onNoteAdd(this.success_criteria_id, result);
           this.adding = false;
           this.showForm = false;
           this.showNotes = true;

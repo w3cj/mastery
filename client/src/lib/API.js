@@ -209,6 +209,15 @@ class API {
   enableSuccessCriteria(cohort_id, standard_id, success_criteria_id) {
     return postJSON(`cohorts/${cohort_id}/standards/${standard_id}/enable/${success_criteria_id}`);
   }
+  getRepos(cohort_id) {
+    return fetchJSON(`cohorts/${cohort_id}/repos`);
+  }
+  getRepo(cohort_id, name) {
+    return fetchJSON(`cohorts/${cohort_id}/repos/${name}`);
+  }
+  addRepo(cohort_id, name) {
+    return postJSON(`cohorts/${cohort_id}/repos/${name}`);
+  }
 }
 
 export default new API();

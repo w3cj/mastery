@@ -12,6 +12,7 @@ const Performance = require('./Performance');
 const Evidence = require('./Evidence');
 const Resource = require('./Resource');
 const Note = require('./Note');
+const Repo = require('./Repo');
 const StandardCollection = require('./StandardCollection');
 const SuccessCriteria = require('./SuccessCriteria');
 
@@ -23,6 +24,7 @@ module.exports = {
   Evidence: new Evidence(db),
   Resource: new Resource(db),
   Note: new Note(db),
+  Repo: new Repo(db),
   StandardCollection: new StandardCollection(db),
   SuccessCriteria: new SuccessCriteria(db)
 };

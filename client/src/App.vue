@@ -4,10 +4,10 @@
         <a href="#!" class="brand-logo margin-left logo-small" slot="logo">Galvanize Mastery</a>
         <ul class="right">
           <li>
-              <a href="#!" class="hide-on-large-only" v-side-nav:menu="nav"><v-icon>menu</v-icon></a>
+              <a href="#!" class="hide-menu-icon" v-side-nav:menu="nav"><v-icon>menu</v-icon></a>
           </li>
         </ul>
-        <ul class="right hide-on-med-and-down">
+        <ul class="right hide-nav">
           <nav-links v-bind:currentUser="data.currentUser"></nav-links>
         </ul>
         <v-side-nav id="menu">
@@ -86,15 +86,24 @@ main {
   flex-direction: column;
 }
 
-@media (min-width: 993px) {
-  .margin-left {
-    margin-left: 10%;
+@media (min-width: 1121px) {
+  .hide-menu-icon {
+    display: none;
   }
 }
 
 @media (min-width: 993px) {
   .logo-small {
     font-size: 1.4rem !important;
+  }
+  .margin-left {
+    margin-left: 10%;
+  }
+}
+
+@media (max-width: 1120px) {
+  .hide-nav {
+    display: none;
   }
 }
 
