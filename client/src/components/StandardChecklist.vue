@@ -34,6 +34,12 @@
     </h4>
     <div v-if="showResources">
       <resource-list v-if="resources.length > 0" :resources="resources"></resource-list>
+      <add-resource
+        v-if="user.isInstructor"
+        :cohort_id="cohort_id"
+        :standard="standard"
+        :onAddResource="onAddResource"
+        ></add-resource>
       <blockquote v-if="!resources || resources.length == 0 ">
         No resources found.
       </blockquote>
@@ -127,6 +133,7 @@
 <script>
 import API from '../lib/API';
 import ResourceList from './ResourceList';
+import AddResource from './AddResource';
 import SuccessCriteriaNotes from './SuccessCriteriaNotes';
 import getEncouragement from '../lib/encouragement';
 import {decodeHtml} from '../lib/utils';
@@ -136,6 +143,7 @@ export default {
   props: ['student', 'user', 'standard', 'performance', 'showSuccessCriteria', 'evidences', 'student_id', 'cohort', 'showScore', 'resources', 'onSetPerformance', 'singleView'],
   components: {
     'resource-list': ResourceList,
+    'add-resource': AddResource,
     'success-criteria-notes': SuccessCriteriaNotes
   },
 	data() {
@@ -318,6 +326,9 @@ export default {
     },
     addNote(success_criteria_id, note) {
       this.notes[success_criteria_id].push(note);
+    },
+    onAddResource(standard, resource) {
+      this.resources.push(resource);
     },
     decodeHtml(html) {
       return decodeHtml(html);

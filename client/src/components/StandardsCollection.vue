@@ -31,7 +31,7 @@
                 :evidences="data.evidences"
                 :student_id="student_id"
                 :cohort="data.cohort"
-                :resources="data.resources[standard.id] || []"
+                :resources="data.resources[standard.id]"
                 :showScore="true">
               </standard-checklist>
               <div v-if="user.isInstructor && !$route.params.student_id">

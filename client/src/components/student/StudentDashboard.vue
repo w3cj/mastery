@@ -59,7 +59,7 @@
                     :evidences="data.evidences"
                     :student_id="student_id"
                     :cohort="cohort"
-                    :resources="data.resources[standard.id] || []"
+                    :resources="data.resources[standard.id]"
                     :singleView="singleView"
                     :showScore="true">
                   </standard-checklist>

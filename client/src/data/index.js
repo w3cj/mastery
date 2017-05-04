@@ -38,6 +38,15 @@ const methods = {
       data.cohort = cohort;
       data.cohortInfo = cohort;
       data.students = students;
+
+      cohort.subjects.forEach(subject => {
+        subject.standards.forEach(standard => {
+          if(!resources[standard.id]) {
+            resources[standard.id] = [];
+          }
+        });
+      })
+
       data.resources = resources;
     });
   },

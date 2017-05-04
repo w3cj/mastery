@@ -24,7 +24,7 @@
               :evidences="data.evidences"
               :student_id="student_id"
               :cohort="data.cohort"
-              :resources="data.resources[standard.id] || []"
+              :resources="data.resources[standard.id]"
               :onSetPerformance="onSetPerformance"
               :showScore="true">
             </standard-checklist>
