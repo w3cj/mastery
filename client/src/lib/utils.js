@@ -18,10 +18,10 @@ export function setCohortBadge(cohort) {
   }
 }
 
-export function isSubjectVisible(search, subject, cohort, performances, scoreFilter) {
+export function isSubjectVisible(search, subject, cohort, performances, scoreFilter, standard_id) {
   subject = cohort.subjects.filter(s => s.name == subject)[0];
   const isVisible = subject.standards.reduce((isAssigned, standard) => {
-    return (isAssigned || isStandardVisible(search, standard, performances, scoreFilter));
+    return (isAssigned || isStandardVisible(search, standard, performances, scoreFilter, standard_id));
   }, false);
 
   if(isVisible && search.trim() != '') {
@@ -32,7 +32,9 @@ export function isSubjectVisible(search, subject, cohort, performances, scoreFil
   }
 }
 
-export function isStandardVisible(search, standard, performances, scoreFilter) {
+export function isStandardVisible(search, standard, performances, scoreFilter, standard_id) {
+  if(standard_id) return standard.id == standard_id;
+
   const performance = performances ? performances[standard.id] : null;
   const isVisible = performances ? scoreFilter[performance] : true;
 

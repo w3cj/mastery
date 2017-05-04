@@ -6,7 +6,7 @@
       </center>
       <div v-if="!loading && !loadingAverage">
         <div class="row">
-          <div class="text-center row">
+          <div class="text-center row" v-if="!singleView">
             <h5 class="col s12">
               <strong>Average: </strong>{{ average }}
             </h5>
@@ -21,12 +21,12 @@
               <pie-chart :chart-data="chartData"></pie-chart>
             </div>
           </div>
-          <div class="input-field">
+          <div class="input-field" v-if="!singleView">
             <v-icon prefix>search</v-icon>
             <v-text-input v-model="search" name="search" id="search" placeholder="Filter standards"></v-text-input>
           </div>
           <br>
-          <div class="row">
+          <div class="row" v-if="!singleView">
             <div class="col s12 m6">
               <v-switch
               checked
@@ -60,6 +60,7 @@
                     :student_id="student_id"
                     :cohort="cohort"
                     :resources="data.resources[standard.id] || []"
+                    :singleView="singleView"
                     :showScore="true">
                   </standard-checklist>
                 </v-collection-item>
@@ -73,7 +74,7 @@
 <script>
 import API from '../../lib/API';
 import data from '../../data';
-import {requireType, isSubjectVisible, isStandardVisible} from '../../lib/utils';
+import {isSubjectVisible, isStandardVisible} from '../../lib/utils';
 import StandardChecklist from '../StandardChecklist';
 import PieChart from '../charts/PieChart';
 
@@ -83,6 +84,7 @@ export default {
     'standard-checklist': StandardChecklist,
     PieChart
   },
+  props: ['user', 'cohort_id', 'cohort', 'loading', 'singleView'],
   data() {
     return {
       search: '',
@@ -101,12 +103,6 @@ export default {
       mastery: {},
       chartData: {}
     };
-  },
-  props: {
-    user: requireType(Object),
-    cohort_id: requireType([String, Number]),
-    cohort: requireType(Object),
-    loading: requireType(Boolean)
   },
   watch: {
     '$route.params.cohort_id'() {
@@ -159,10 +155,10 @@ export default {
       }
     },
     isSubjectVisible(subject) {
-      return isSubjectVisible(this.search, subject, this.data.cohort, this.data.performances, this.scoreFilter);
+      return isSubjectVisible(this.search, subject, this.data.cohort, this.data.performances, this.scoreFilter, this.$route.query.standard_id);
     },
     isStandardVisible(standard) {
-      return isStandardVisible(this.search, standard, this.data.performances, this.scoreFilter)
+      return isStandardVisible(this.search, standard, this.data.performances, this.scoreFilter, this.$route.query.standard_id)
     }
   }
 }

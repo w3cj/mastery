@@ -26,6 +26,25 @@
             <blockquote>
               Added by {{users[note.creator_id].full_name}} {{moment(note.created)}}
             </blockquote>
+            <div class="button-area">
+              <div class="chip" v-if="note.student_id != note.creator_id">
+                <router-link :to="{ name: 'student-dashboard', params: { 'cohort_id': cohort_id, 'student_id': note.student_id } }">
+                <img :src="users[note.student_id].image" :alt="users[note.student_id].full_name">
+                {{users[note.student_id].full_name}}
+                </router-link>
+              </div>
+              <router-link :to="{
+                name: 'student-dashboard',
+                params: {
+                  student_id: note.student_id
+                },
+                query: {
+                  standard_id: note.standard_id,
+                  success_criteria_id: note.success_criteria_id,
+                  singleView: true
+                }
+              }" class="waves btn indigo"><v-icon class="left">comment</v-icon>View Note</router-link>
+            </div>
             <a
               v-bind:href="note.type == 'link' ? note.content : '#' + $route.fullPath"
               v-bind:target="note.type == 'link' ? '_blank' : ''"
@@ -130,3 +149,10 @@ export default {
   }
 }
 </script>
+<style>
+  .button-area {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+</style>

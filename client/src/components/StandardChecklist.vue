@@ -68,7 +68,7 @@
       </div>
       <div>
         <ul>
-          <li v-for="success_criteria in standard.success_criteria">
+          <li v-for="success_criteria in standard.success_criteria" :id="success_criteria._id">
             <div class="center success-criteria-check" style="cursor:pointer; flex-direction: row;">
               <a
                 v-if="user.isInstructor && isChecked(success_criteria._id)"
@@ -133,7 +133,7 @@ import {decodeHtml} from '../lib/utils';
 
 export default {
   name: 'standard-checklist',
-  props: ['student', 'user', 'standard', 'performance', 'showSuccessCriteria', 'evidences', 'student_id', 'cohort', 'showScore', 'resources', 'onSetPerformance'],
+  props: ['student', 'user', 'standard', 'performance', 'showSuccessCriteria', 'evidences', 'student_id', 'cohort', 'showScore', 'resources', 'onSetPerformance', 'singleView'],
   components: {
     'resource-list': ResourceList,
     'success-criteria-notes': SuccessCriteriaNotes
@@ -197,6 +197,16 @@ export default {
           });
 
           this.loading = false;
+          this.isEditing = this.singleView || this.isEditing;
+
+          if(this.$route.query.success_criteria_id) {
+            const success_criteria_id = this.$route.query.success_criteria_id;
+            setTimeout(function() {
+              $(`#${success_criteria_id}`)[0].scrollIntoView({
+                behavior: "smooth"
+              });
+            }, 500);
+          }
         });
 
       API

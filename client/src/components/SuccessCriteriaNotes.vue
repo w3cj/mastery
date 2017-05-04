@@ -133,6 +133,7 @@ export default {
   },
   methods: {
     load() {
+      this.showNotes = this.$route.query.success_criteria_id == this.success_criteria_id;
       $('.modal').modal();
       const users = this.notes.reduce((users, note) => {
         users[note.creator_id] = users[note.creator_id] || {

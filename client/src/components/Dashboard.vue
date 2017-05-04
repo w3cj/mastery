@@ -33,11 +33,14 @@
         </div>
       </div>
     </div>
+    <div v-if="singleView">
+      <v-btn class="orange" @click.native="viewAll()">View All Standards</v-btn>
+    </div>
     <cohort-badge :cohort="data.cohortInfo"></cohort-badge>
     <center>
       <v-progress-circular v-if="loading" active green green-flash></v-progress-circular>
     </center>
-    <div v-if="user.isInstructor && student_id">
+    <div v-if="user.isInstructor && student_id && !singleView">
       <student-search
         v-bind:cohort_id="cohort_id"
         v-bind:onSelectStudent="selectStudent">
@@ -54,10 +57,11 @@
     </instructor-dashboard>
     <student-dashboard
       v-if="!user.isInstructor || $route.params.student_id"
-      v-bind:user="user"
-      v-bind:cohort="data.cohort"
-      v-bind:cohort_id="cohort_id"
-      v-bind:loading="loading">
+      :user="user"
+      :cohort="data.cohort"
+      :cohort_id="cohort_id"
+      :singleView="singleView"
+      :loading="loading">
     </student-dashboard>
   </div>
 </template>
@@ -90,6 +94,7 @@ export default {
       student_id,
       data: data.data,
       cohort_search: '',
+      singleView: false,
       loading: false
     };
   },
@@ -123,6 +128,7 @@ export default {
   },
   methods: {
     load() {
+      this.singleView = this.$route.query.singleView == true ? true : false;
       this.loading = true;
       this.cohort_id = this.$route.params.cohort_id;
       this.student_id = this.$route.params.student_id ? this.$route.params.student_id : null;
@@ -161,6 +167,16 @@ export default {
         params: {
           cohort_id: this.cohort_id,
           student_id: student.id
+        }
+      });
+    },
+    viewAll() {
+      this.singleView = false;
+      this.$router.push({
+        name: 'student-dashboard',
+        params: {
+          cohort_id: this.cohort_id,
+          student_id: this.$route.params.student_id
         }
       });
     }
