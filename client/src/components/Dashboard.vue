@@ -128,7 +128,8 @@ export default {
   },
   methods: {
     load() {
-      this.singleView = this.$route.query.singleView == true ? true : false;
+      const {singleView} = this.$route.query;
+      this.singleView = singleView == "true" || singleView == true  ? true : false;
       this.loading = true;
       this.cohort_id = this.$route.params.cohort_id;
       this.student_id = this.$route.params.student_id ? this.$route.params.student_id : null;

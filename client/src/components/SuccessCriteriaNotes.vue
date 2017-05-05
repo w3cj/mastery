@@ -43,7 +43,7 @@
             style="margin-left:2.5em;"
             class="waves-effect waves-light btn"
             v-bind:class="{
-              disabled: !note || !title
+              disabled: !note
             }"
             type="submit">Add</button>
         </div>

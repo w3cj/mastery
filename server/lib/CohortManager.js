@@ -1,6 +1,5 @@
 const {fetchCohortData, getUserPerformances, getAveragePerformances, getAverageStudentPerformances, setUserPerformance} = require('./learn/learnInterface');
 const {Student, Instructor, Performance} = require('../models');
-const {resUnAuthorized} = require('./routeHelpers');
 
 class CohortManager {
   constructor() {
@@ -75,14 +74,6 @@ class CohortManager {
 
   waitFindCohort(cohort_id) {
     return fetchCohortData(cohort_id);
-  }
-
-  isInstructor(req, res, next) {
-    if(req.user.isInstructor) {
-      next();
-    } else {
-      resUnAuthorized(res);
-    }
   }
 }
 

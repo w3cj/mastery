@@ -5,11 +5,11 @@
       <v-progress-circular v-if="loading" active green green-flash></v-progress-circular>
     </center>
     <div v-if="!loading">
-      <center v-if="Math.ceil(notes.length / count) > 1">
+      <center v-if="numPages > 1">
         <v-pagination
         color="blue"
         waves
-        :length="Math.ceil(notes.length / count)"
+        :length="numPages"
         v-model="page"
         ></v-pagination>
       </center>
@@ -27,23 +27,26 @@
               Added by {{users[note.creator_id].full_name}} {{moment(note.created)}}
             </blockquote>
             <div class="button-area">
-              <div class="chip" v-if="note.student_id != note.creator_id">
+              <div class="chip" v-if="user.isInstructor && note.student_id != note.creator_id">
                 <router-link :to="{ name: 'student-dashboard', params: { 'cohort_id': cohort_id, 'student_id': note.student_id } }">
                 <img :src="users[note.student_id].image" :alt="users[note.student_id].full_name">
                 {{users[note.student_id].full_name}}
                 </router-link>
               </div>
-              <router-link :to="{
-                name: 'student-dashboard',
-                params: {
-                  student_id: note.student_id
-                },
-                query: {
-                  standard_id: note.standard_id,
-                  success_criteria_id: note.success_criteria_id,
-                  singleView: true
-                }
-              }" class="waves btn indigo"><v-icon class="left">comment</v-icon>View Note</router-link>
+              <div class="buttons">
+                <v-btn @click.native="markAsRead(note)"><v-icon class="left">markunread</v-icon>Mark as Read</v-btn>
+                <router-link :to="{
+                  name: 'student-dashboard',
+                  params: {
+                    student_id: note.student_id
+                    },
+                    query: {
+                      standard_id: note.standard_id,
+                      success_criteria_id: note.success_criteria_id,
+                      singleView: true
+                    }
+                    }" class="waves btn indigo"><v-icon class="left">comment</v-icon>View Note</router-link>
+              </div>
             </div>
             <a
               v-bind:href="note.type == 'link' ? note.content : '#' + $route.fullPath"
@@ -83,13 +86,17 @@ export default {
     this.load();
   },
   computed: {
+    numPages() {
+      return Math.ceil(this.notes.filter(note => !note.read).length / this.count);
+    },
     visibleNotes() {
+      const notes = this.notes.filter(note => !note.read);
       const start = (this.page - 1) * this.count;
       let end = start + this.count;
-      if(end > this.notes.length) {
-        end = this.notes.length;
+      if(end > notes.length) {
+        end = notes.length;
       }
-      return this.notes.slice(start, end);
+      return notes.slice(start, end);
     }
   },
   methods: {
@@ -104,9 +111,9 @@ export default {
       let getNotes = null;
 
       if(this.user.isInstructor) {
-        getNotes = API.getCohortNotes(this.cohort_id);
+        getNotes = API.getUnreadCohortNotes(this.cohort_id);
       } else {
-        getNotes = API.getStudentNotes(this.cohort_id, this.user.learn_id);
+        getNotes = API.getUnreadStudentNotes(this.cohort_id, this.user.learn_id);
       }
 
       getNotes.then(notes => {
@@ -145,6 +152,13 @@ export default {
     },
     successCriteria(success_criteria, id) {
       return success_criteria.filter(s => s._id == id)[0].text;
+    },
+    markAsRead(note) {
+      API
+        .markNoteAsRead(note.cohort_id, note.student_id, note._id)
+        .then(result => {
+          this.$set(note, 'read', result.read);
+        });
     }
   }
 }

@@ -1,14 +1,8 @@
 const ezc = require('express-zero-config');
 
-const {resJSON, nextError} = require('../../lib/routeHelpers');
+const {processRequest, isInstructor, authorize} = require('../../lib/routeHelpers');
 const CohortManager = require('../../lib/CohortManager');
-const {Student, StandardCollection, Resource, Note, SuccessCriteria} = require('../../models');
-
-function processRequest(promise, res, next) {
-  promise
-    .then(resJSON(res))
-    .catch(nextError(next));
-}
+const {Student, StandardCollection, Resource, SuccessCriteria} = require('../../models');
 
 const routes = {
   '/:cohort_id': (req, res, next) => {
@@ -51,47 +45,13 @@ const routes = {
     const {cohort_id} = req.params;
     processRequest(CohortManager.getInstructors(cohort_id), res, next);
   },
-  '/:cohort_id/performances/average': (req, res, next) => {
-    const {cohort_id} = req.params;
-    if(req.user.isInstructor) {
-      processRequest(CohortManager.getAveragePerformances(cohort_id), res, next);
-    } else {
-      next(new Error('Un-Authorized'));
-    }
-  },
   '/:cohort_id/performances/:user_id': (req, res, next) => {
     const {cohort_id, user_id} = req.params;
-    if(req.user.isInstructor || req.user.learn_id == user_id) {
-      processRequest(CohortManager.getPerformances(cohort_id, user_id), res, next);
-    } else {
-      next(new Error('Un-Authorized'));
-    }
+    processRequest(CohortManager.getPerformances(cohort_id, user_id), res, next);
   },
   '/:cohort_id/performances/:user_id/average': (req, res, next) => {
     const {cohort_id, user_id} = req.params;
-    if(req.user.isInstructor || req.user.learn_id == user_id) {
-      processRequest(CohortManager.getAverageStudentPerformances(cohort_id, user_id), res, next);
-    } else {
-      next(new Error('Un-Authorized'));
-    }
-  },
-  '/:cohort_id/students/:student_id/notes': (req, res, next) => {
-    const {cohort_id, student_id} = req.params;
-
-    if(req.user.isInstructor || req.user.learn_id == student_id) {
-      processRequest(Note.getAll(cohort_id, student_id), res, next);
-    } else {
-      next(new Error('Un-Authorized'));
-    }
-  },
-  '/:cohort_id/notes': (req, res, next) => {
-    const {cohort_id} = req.params;
-
-    if(req.user.isInstructor) {
-      processRequest(Note.getAll(cohort_id), res, next);
-    } else {
-      next(new Error('Un-Authorized'));
-    }
+    processRequest(CohortManager.getAverageStudentPerformances(cohort_id, user_id), res, next);
   },
   '/:cohort_id/disabledSuccessCriteria': (req, res, next) => {
     const {cohort_id} = req.params;
@@ -109,7 +69,12 @@ function validCohortId(req, res, next) {
   }
 }
 
-Object.keys(routes).forEach(endpoint => router.get(endpoint, validCohortId, routes[endpoint]));
+router.get('/:cohort_id/performances/average', validCohortId, isInstructor, (req, res, next) => {
+  const {cohort_id} = req.params;
+  processRequest(CohortManager.getAveragePerformances(cohort_id), res, next);
+});
+
+Object.keys(routes).forEach(endpoint => router.get(endpoint, validCohortId, authorize, routes[endpoint]));
 
 router.post('/:cohort_id/evidences', validCohortId, (req, res, next) => {
   const {cohort_id} = req.params;
@@ -117,42 +82,17 @@ router.post('/:cohort_id/evidences', validCohortId, (req, res, next) => {
   processRequest(Student.checkSuccessCriteria(req.user.github_id, cohort_id, success_criteria_id, checked), res, next);
 });
 
-router.post('/:cohort_id/students/:student_id/performances/:standard_id', validCohortId, CohortManager.isInstructor, (req, res, next) => {
+router.post('/:cohort_id/students/:student_id/performances/:standard_id', validCohortId, isInstructor, (req, res, next) => {
   const {cohort_id, student_id, standard_id} = req.params;
   processRequest(CohortManager.setPerformance(cohort_id, student_id, standard_id, req.body.score), res, next);
 });
 
-router.post('/:cohort_id/students/:student_id/notes', validCohortId, (req, res, next) => {
-  const {cohort_id, student_id} = req.params;
-  const note = req.body;
-  note.cohort_id = cohort_id;
-  note.student_id = student_id;
-  note.creator_id = req.user.learn_id;
-  note.created = new Date();
-
-  if(req.user.isInstructor || req.user.learn_id == student_id) {
-    processRequest(Note.insert(note), res, next);
-  } else {
-    next(new Error('Un-Authorized'));
-  }
-});
-
-router.delete('/:cohort_id/students/:student_id/notes/:note_id', validCohortId, (req, res, next) => {
-  const {cohort_id, student_id, note_id} = req.params;
-
-  if(req.user.isInstructor || req.user.learn_id == student_id) {
-    processRequest(Note.delete(cohort_id, student_id, note_id), res, next);
-  } else {
-    next(new Error('Un-Authorized'));
-  }
-});
-
-router.post('/:cohort_id/standards/:standard_id/disable/:success_criteria_id', validCohortId, CohortManager.isInstructor, (req, res, next) => {
+router.post('/:cohort_id/standards/:standard_id/disable/:success_criteria_id', validCohortId, isInstructor, (req, res, next) => {
   const {cohort_id, standard_id, success_criteria_id} = req.params;
   processRequest(SuccessCriteria.disable(cohort_id, standard_id, success_criteria_id), res, next);
 });
 
-router.post('/:cohort_id/standards/:standard_id/enable/:success_criteria_id', validCohortId, CohortManager.isInstructor, (req, res, next) => {
+router.post('/:cohort_id/standards/:standard_id/enable/:success_criteria_id', validCohortId, isInstructor, (req, res, next) => {
   const {cohort_id, standard_id, success_criteria_id} = req.params;
   processRequest(SuccessCriteria.enable(cohort_id, standard_id, success_criteria_id), res, next);
 });
@@ -162,17 +102,17 @@ router.get('/:cohort_id/standards/collections/:collection_name', validCohortId, 
   processRequest(StandardCollection.find(cohort_id, collection_name), res, next);
 });
 
-router.post('/:cohort_id/standards/collections/:collection_name/:standard_id', validCohortId, CohortManager.isInstructor, (req, res, next) => {
+router.post('/:cohort_id/standards/collections/:collection_name/:standard_id', validCohortId, isInstructor, (req, res, next) => {
   const {cohort_id, collection_name, standard_id} = req.params;
   processRequest(StandardCollection.addStandard(cohort_id, collection_name, standard_id), res, next);
 });
 
-router.delete('/:cohort_id/standards/collections/:collection_name/:standard_id', validCohortId, CohortManager.isInstructor, (req, res, next) => {
+router.delete('/:cohort_id/standards/collections/:collection_name/:standard_id', validCohortId, isInstructor, (req, res, next) => {
   const {cohort_id, collection_name, standard_id} = req.params;
   processRequest(StandardCollection.removeStandard(cohort_id, collection_name, standard_id), res, next);
 });
 
-router.post('/:cohort_id/standards/:standard_id/resources', validCohortId, CohortManager.isInstructor, (req, res, next) => {
+router.post('/:cohort_id/standards/:standard_id/resources', validCohortId, isInstructor, (req, res, next) => {
   const resource = req.body;
   const {cohort_id, standard_id} = req.params;
   if(resource.title && resource.type && resource.url && resource.description) {
@@ -185,5 +125,6 @@ router.post('/:cohort_id/standards/:standard_id/resources', validCohortId, Cohor
 });
 
 router.use('/:cohort_id/repos', validCohortId, require('./repos'));
+router.use('/:cohort_id', validCohortId, require('./notes'));
 
 module.exports = router;

@@ -28,6 +28,13 @@
               class="validate performance-input"
               v-bind:class="performanceTextColors"
               v-on:keyup.enter="setPerformance(standard)">
+              <br>
+              <a
+                v-if="performance != standard.setScore"
+                v-on:click="setPerformance(standard)"
+                class="btn-floating btn waves-effect waves indigo">
+                <i class="material-icons">save</i>
+              </a>
         </div>
         <v-progress-linear v-if="standard.settingPerformance" indeterminate class="performance-progress"></v-progress-linear>
       </span>
@@ -131,6 +138,7 @@
 </template>
 
 <script>
+import data from '../data';
 import API from '../lib/API';
 import ResourceList from './ResourceList';
 import AddResource from './AddResource';
@@ -155,7 +163,8 @@ export default {
       performanceTextColors: {},
       loading: false,
       disabledSuccessCriteria: {},
-      disableSuccessCriteria: false
+      disableSuccessCriteria: false,
+      data: data.data
 		}
 	},
   watch: {
@@ -209,11 +218,14 @@ export default {
 
           if(this.$route.query.success_criteria_id) {
             const success_criteria_id = this.$route.query.success_criteria_id;
-            setTimeout(function() {
-              $(`#${success_criteria_id}`)[0].scrollIntoView({
+            const scrollToSuccessCriteria = () => {
+              const element = $(`#${success_criteria_id}`)[0];
+              if(!element) return setTimeout(scrollToSuccessCriteria, 200);
+              element.scrollIntoView({
                 behavior: "smooth"
               });
-            }, 500);
+            }
+            setTimeout(scrollToSuccessCriteria, 200);
           }
         });
 
@@ -285,6 +297,7 @@ export default {
       API
         .setPerformance(this.cohort.cohort_id, this.student.id, standard.id, standard.setScore)
         .then(() => {
+          this.data.performances[standard.id] = standard.setScore;
           standard.settingPerformance = false;
           if (this.onSetPerformance) this.onSetPerformance(standard.id, standard.setScore);
         });

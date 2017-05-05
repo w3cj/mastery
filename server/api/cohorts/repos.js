@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { resJSON, nextError } = require('../../lib/routeHelpers');
+const { resJSON, nextError, isInstructor } = require('../../lib/routeHelpers');
 const CohortManager = require('../../lib/CohortManager');
 const { Repo } = require('../../models');
 
@@ -35,7 +35,7 @@ const router = express.Router({mergeParams: true});
 
 Object.keys(routes).forEach(endpoint => router.get(endpoint, routes[endpoint]));
 
-router.post('/:name', CohortManager.isInstructor, (req, res, next) => {
+router.post('/:name', isInstructor, (req, res, next) => {
   const { cohort_id, name } = req.params;
   processRequest(Repo.insert(cohort_id, name), res, next);
 });

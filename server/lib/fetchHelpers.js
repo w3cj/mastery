@@ -24,6 +24,10 @@ function postJSON(url, options, body) {
 function fetchJSON(url, options) {
   return fetch(url, options)
     .then(response => {
+      if(response.status != 200) {
+        throw new Error(response.statusText);
+      }
+
       return response.json();
     });
 }

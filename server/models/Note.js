@@ -17,8 +17,31 @@ class Note {
     if(student_id) {
       query.student_id = student_id;
     }
-    
+
     return this.notes.find(query);
+  }
+  getAllUnread(cohort_id, student_id) {
+    const query = {
+      cohort_id,
+      read_date: undefined
+    };
+
+    if(student_id) {
+      query.student_id = student_id;
+    }
+
+    return this.notes.find(query);
+  }
+  read(cohort_id, student_id, note_id) {
+    return this.notes.findOneAndUpdate({
+      cohort_id,
+      student_id,
+      _id: monk.id(note_id)
+    }, {
+      $set: {
+        read: new Date()
+      }
+    })
   }
   delete(cohort_id, student_id, note_id) {
     return this.notes.remove({

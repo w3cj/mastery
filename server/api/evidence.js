@@ -1,23 +1,8 @@
 const ezc = require('express-zero-config');
 
-const {resJSON, nextError} = require('../lib/routeHelpers');
+const {processRequest, isInstructor, authorize} = require('../lib/routeHelpers');
 const {Evidence, Student, Instructor} = require('../models');
 const CohortManager = require('../lib/CohortManager');
-
-function processRequest(promise, res, next) {
-  promise
-    .then(resJSON(res))
-    .catch(nextError(next));
-}
-
-function authorize(req, res, next) {
-  const {user_id} = req.params;
-  if(req.user.isInstructor || req.user.learn_id == user_id) {
-    next();
-  } else {
-    next(new Error('Un-Authorized'));
-  }
-}
 
 const router = ezc.createRouter();
 
@@ -45,7 +30,7 @@ router.get('/:user_id', authorize, (req, res, next) => {
     }), res, next);
 });
 
-router.get('/cohort/:cohort_id', authorize, CohortManager.isInstructor, (req, res, next) => {
+router.get('/cohort/:cohort_id', authorize, isInstructor, (req, res, next) => {
   const {cohort_id} = req.params;
   processRequest(Evidence.getAll(cohort_id), res, next);
 });
@@ -69,7 +54,7 @@ router.post('/:user_id', authorize, (req, res, next) => {
       }), res, next);
 });
 
-router.post('/:user_id/success_criteria/:success_criteria_id/approve', authorize, CohortManager.isInstructor, (req, res, next) => {
+router.post('/:user_id/success_criteria/:success_criteria_id/approve', authorize, isInstructor, (req, res, next) => {
   const {cohort_id, approved} = req.body;
   const {user_id, success_criteria_id} = req.params;
   processRequest(

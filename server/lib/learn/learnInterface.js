@@ -174,6 +174,7 @@ function getPerformances(cohort_id) {
 }
 
 function getAveragePerformances(cohort_id) {
+  console.log('fuck your mother');
   return fetchJSON(`${learnURL}api/v1/cohorts/${cohort_id}/performances`, getAuthHeader())
     .then(performances => {
       return averagePerformances(performances);

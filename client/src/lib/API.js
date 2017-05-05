@@ -168,6 +168,12 @@ class API {
   getStudentNotes(cohort_id, student_id) {
     return fetchJSON(`cohorts/${cohort_id}/students/${student_id}/notes`);
   }
+  getUnreadCohortNotes(cohort_id) {
+    return fetchJSON(`cohorts/${cohort_id}/notes/unread`);
+  }
+  getUnreadStudentNotes(cohort_id, student_id) {
+    return fetchJSON(`cohorts/${cohort_id}/students/${student_id}/notes/unread`);
+  }
   getNotes(cohort_id, student_id, standard_id) {
     if(this.waitingNotes[cohort_id+student_id]) {
       return new Promise(resolve => {
@@ -196,6 +202,9 @@ class API {
   }
   addNote(cohort_id, student_id, newNote) {
     return postJSON(`cohorts/${cohort_id}/students/${student_id}/notes`, newNote);
+  }
+  markNoteAsRead(cohort_id, student_id, note_id) {
+    return postJSON(`cohorts/${cohort_id}/students/${student_id}/notes/${note_id}/read`);
   }
   deleteNote(cohort_id, student_id, note_id) {
     return deleteJSON(`cohorts/${cohort_id}/students/${student_id}/notes/${note_id}`);
