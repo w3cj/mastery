@@ -21,10 +21,12 @@ const routes = {
     const {cohort_id, name} = req.params;
     processRequest(Promise.all([
       CohortManager.getStudents(cohort_id),
-      github.getAllPullRequests(name)
-    ]).then(({0: students, 1: pulls}) => {
+      github.getAllPullRequests(name),
+      github.getAllForks(name)
+    ]).then(({0: students, 1: pulls, 2: forks}) => {
       return students.reduce((all, student) => {
-        all[student.id] = pulls[student.github_id] || null;
+        all[student.id] = pulls[student.github_id] || {};
+        all[student.id].forked = forks[student.github_id] ? true : false;
         return all;
       }, {});
     }), res, next);

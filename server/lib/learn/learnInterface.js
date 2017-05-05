@@ -31,6 +31,10 @@ function getStudentInfo(cohort_id) {
         .reduce((promise, full_name) => {
           const student = students[full_name];
           return promise.then(() => {
+            if(!student.github_username.trim()) {
+              student.github_id = undefined;
+              return;
+            }
             return getGithubUser(student.github_username)
               .then(user => {
                 student.github_id = user.id;
@@ -158,7 +162,7 @@ function getUserFromBody(body) {
     admin
   };
 
-  if(github_username) {
+  if(github_username.trim()) {
     return getGithubUser(github_username)
       .then(githubUser => {
         user.github_id = githubUser.id;
@@ -174,7 +178,6 @@ function getPerformances(cohort_id) {
 }
 
 function getAveragePerformances(cohort_id) {
-  console.log('fuck your mother');
   return fetchJSON(`${learnURL}api/v1/cohorts/${cohort_id}/performances`, getAuthHeader())
     .then(performances => {
       return averagePerformances(performances);

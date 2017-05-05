@@ -1,5 +1,5 @@
 const test = require('tape');
-const {hasProperty} = require('../test/helpers');
+const {hasProperty} = require('../../test/helpers');
 
 const {getLearnUser, getStudentInfo, getInstructorInfo} = require('./learnInterface');
 

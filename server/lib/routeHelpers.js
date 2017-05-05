@@ -32,7 +32,7 @@ function isInstructor(req, res, next) {
 function authorize(req, res, next) {
   const {user_id, student_id} = req.params;
   if(!user_id && !student_id) return next();
-  if(req.user.isInstructor || req.user.learn_id == user_id) {
+  if(req.user.isInstructor || req.user.learn_id == user_id || req.user.learn_id == student_id) {
     next();
   } else {
     next(new Error('Un-Authorized'));

@@ -207,11 +207,14 @@ export default {
             return all;
           }, {});
 
-          this.standard.success_criteria.forEach(({_id}) => {
-            if(!this.notes[_id]) {
-              this.$set(this.notes, _id, []);
-            }
-          });
+          if(this.standard.success_criteria) {            
+            this.standard.success_criteria.forEach(({_id}) => {
+              if(!this.notes[_id]) {
+                this.$set(this.notes, _id, []);
+              }
+            });
+          }
+
 
           this.loading = false;
           this.isEditing = this.singleView || this.isEditing;

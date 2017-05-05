@@ -25,6 +25,7 @@ function fetchJSON(url, options) {
   return fetch(url, options)
     .then(response => {
       if(response.status != 200) {
+        console.log('error', response.status, url);
         throw new Error(response.statusText);
       }
 
@@ -35,6 +36,11 @@ function fetchJSON(url, options) {
 function fetchText(url, options) {
   return fetch(url, options)
     .then(response => {
+      if(response.status != 200) {
+        console.log('error', response.status, url);
+        throw new Error(response.statusText);
+      }
+
       return response.text();
     });
 }

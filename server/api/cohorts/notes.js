@@ -26,6 +26,11 @@ router.get('/notes/unread', isInstructor, (req, res, next) => {
   processRequest(Note.getAllUnread(cohort_id), res, next);
 });
 
+router.get('/students/:student_id/notes/unread', authorize, (req, res, next) => {
+  const {cohort_id, student_id} = req.params;
+  processRequest(Note.getAllUnread(cohort_id, student_id), res, next);
+});
+
 router.post('/students/:student_id/notes', authorize, (req, res, next) => {
   const {cohort_id, student_id} = req.params;
   const note = req.body;

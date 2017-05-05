@@ -58,6 +58,34 @@ async function getAllPullRequests(repo) {
   }, {});
 }
 
+async function getAllForks(repo) {
+  let allForks = [];
+  let page = 1;
+  let morePagesAvailable = true;
+  while (morePagesAvailable) {
+    const forks = await github.repos.getForks({
+      owner: 'gSchool',
+      repo,
+      per_page: 100,
+      page,
+      state: 'all'
+    });
+    allForks = allForks.concat(forks);
+    if (forks[0] && forks[0].number >= 100) {
+      morePagesAvailable = true;
+      page++;
+    } else {
+      morePagesAvailable = false;
+    }
+  }
+  return allForks.reduce((all, fork) => {
+    all[fork.owner.id] = true;
+
+    return all;
+  }, {});
+}
+
 module.exports = {
-  getAllPullRequests
+  getAllPullRequests,
+  getAllForks
 }

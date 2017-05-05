@@ -22,6 +22,8 @@
       <div class="col s12">
         <v-icon>error</v-icon> No Pull
         <br>
+        <v-icon>timeline</v-icon> Forked
+        <br>
         <v-icon>drafts</v-icon> Open
         <br>
         <v-icon>done</v-icon> Closed
@@ -39,6 +41,7 @@
                       <div class="chip" v-for="pull in repo.pulls" v-on:click="openPull(pull)" v-bind:class="{ 'student-pull': pull.state, 'no-pull': !pull.state }">
                         <img :src="users[pull.user_id].image" :alt="users[pull.user_id].full_name">
                         {{users[pull.user_id].full_name}}
+                        <v-icon v-if="pull.forked" class="right">timeline</v-icon>
                         <v-icon v-if="pull.state == 'closed'" class="right">done</v-icon>
                         <v-icon v-if="pull.state == 'open'" class="right">drafts</v-icon>
                         <v-icon v-if="!pull.state" class="right">error</v-icon>
