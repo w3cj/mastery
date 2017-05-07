@@ -233,7 +233,8 @@ function fetchCohortInfo(cohort_id) {
             const cohort_info = {
               cohort_id,
               name: json.data.attributes.name,
-              label: json.data.attributes.label
+              label: json.data.attributes.label,
+              curriculum_id: json.data.relationships.curriculum.data.id
             };
 
             return cohort_info;
@@ -242,15 +243,14 @@ function fetchCohortInfo(cohort_id) {
 
 function fetchCohortData(cohort_id) {
   return Promise.all([
-    fetchJSON(`${learnURL}api/v1/cohorts/${cohort_id}/performances`, getAuthHeader()),
     fetchCohortInfo(cohort_id),
+    fetchJSON(`${learnURL}api/v1/cohorts/${cohort_id}/performances`, getAuthHeader()),
   ]).then(results => {
       const data = results[0];
-      const cohort_info = results[1];
+      const performanceData = results[1];
       if(data.error) throw data.error;
-      data.cohort_id = cohort_id;
-      data.name = cohort_info.name;
-      data.label = cohort_info.label;
+      data.subjects = performanceData.subjects;
+      data.students = performanceData.students;
       return formatCohortData(data)
         .then(() => Promise.all([
           Student.upsert(data.students),
@@ -267,8 +267,6 @@ function formatCohortData(data) {
   if(data.subjects) {
     formatSubjects(data);
   }
-
-  delete data.performances;
 
   return Promise.all([
     getStudentInfo(data.cohort_id)

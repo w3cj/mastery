@@ -43,9 +43,12 @@
               <a v-on:click="filterScore(3)" class="waves-effect waves-light btn green" v-bind:class="{'lighten-5': !scoreFilter[3]}">3</a>
             </div>
           </div>
-          <div v-for="subject in cohort.subjects" class="card" v-if="isSubjectVisible(subject.name)">
-            <v-collection>
-                <v-collection-item v-for="standard in subject.standards" v-if="isStandardVisible(standard)"
+          <div v-for="subject in visibleSubjects" class="card">
+            <v-collection with-header>
+              <v-collection-item header>
+                  <h3>{{subject.name}}</h3>
+              </v-collection-item>
+                <v-collection-item v-for="standard in subject.standards" v-if="standard.visible"
                   v-bind:class="{
                     yellow: standard && standard.standard_type == 'elective',
                     'lighten-4': standard && standard.standard_type == 'elective'
@@ -66,6 +69,9 @@
                 </v-collection-item>
             </v-collection>
           </div>
+          <div v-if="visibleSubjects.length == 0">
+            <blockquote>No standards to show. Try <a @click="search = ''" :href="'#' + $route.path">removing the filter</a> or <a @click="filterScore" :href="'#' + $route.path">show all scores.</a></blockquote>
+          </div>
       </div>
       </div>
     </div>
@@ -74,7 +80,7 @@
 <script>
 import API from '../../lib/API';
 import data from '../../data';
-import {isSubjectVisible, isStandardVisible} from '../../lib/utils';
+import {isSubjectVisible} from '../../lib/utils';
 import StandardChecklist from '../StandardChecklist';
 import PieChart from '../charts/PieChart';
 
@@ -97,7 +103,7 @@ export default {
         0: false,
         1: true,
         2: true,
-        3: true
+        3: false
       },
       average: 0,
       mastery: {},
@@ -110,6 +116,11 @@ export default {
     },
     '$route.params.student_id'() {
       this.load();
+    }
+  },
+  computed: {
+    visibleSubjects() {
+      return this.data.cohort.subjects.filter(subject => isSubjectVisible(this.search, subject.name, this.data.cohort, this.data.performances, this.scoreFilter, this.$route.query.standard_id));
     }
   },
   mounted() {
@@ -153,12 +164,6 @@ export default {
           3: true
         };
       }
-    },
-    isSubjectVisible(subject) {
-      return isSubjectVisible(this.search, subject, this.data.cohort, this.data.performances, this.scoreFilter, this.$route.query.standard_id);
-    },
-    isStandardVisible(standard) {
-      return isStandardVisible(this.search, standard, this.data.performances, this.scoreFilter, this.$route.query.standard_id)
     }
   }
 }

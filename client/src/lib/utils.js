@@ -21,7 +21,9 @@ export function setCohortBadge(cohort) {
 export function isSubjectVisible(search, subject, cohort, performances, scoreFilter, standard_id) {
   subject = cohort.subjects.filter(s => s.name == subject)[0];
   const isVisible = subject.standards.reduce((isAssigned, standard) => {
-    return (isAssigned || isStandardVisible(search, standard, performances, scoreFilter, standard_id));
+    const visible = isStandardVisible(search, standard, performances, scoreFilter, standard_id);
+    standard.visible = visible;
+    return (isAssigned || visible);
   }, false);
 
   if(isVisible && search.trim() != '') {
