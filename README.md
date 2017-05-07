@@ -24,6 +24,8 @@ A tool for self assessed mastery tracking of a standards based curriculum.
 * Node.js/Express
 * Mongo
 
+All routes are listed here: https://mastery-api.galvanize.network/docs
+
 ```sh
 cd server && yarn # Install dependencies with yarn
 cp .env.sample .env # Update with learn auth token and github client id/secret

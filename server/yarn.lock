@@ -451,6 +451,10 @@ expand-tilde@^1.2.2:
   dependencies:
     os-homedir "^1.0.1"
 
+express-list-endpoints@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/express-list-endpoints/-/express-list-endpoints-3.0.0.tgz#59144e76b19957f9b117b6350239288f16ee28b7"
+
 express-zero-config@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/express-zero-config/-/express-zero-config-1.1.1.tgz#2c98e6c28b8a80b07797e96291786a85154cf11b"

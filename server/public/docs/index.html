@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Galvanize Mastery API</title>
+    <link rel="stylesheet" href="//bootswatch.com/slate/bootstrap.min.css">
+  </head>
+  <body class="container">
+    <header>
+      <h1 class="text-center">Galvanize Mastery API</h1>
+    </header>
+    <main>
+      <form class="form">
+        <div class="form-group">
+          <label for="search">Search</label>
+          <input type="text" class="form-control" id="search">
+        </div>
+      </form>
+      <table class="table table-striped table-hover">
+        <thead>
+          <th>
+            Methods
+          </th>
+          <th>
+            Path
+          </th>
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+    </main>
+    <script type="text/javascript">
+      fetch('./endpoints.json')
+        .then(response => response.json())
+        .then(addEndpoints);
+
+      function addEndpoints(endpoints) {
+        renderEndpoints(endpoints);
+
+        const searchElement = document.querySelector('#search');
+
+        searchElement.addEventListener('keyup', () => {
+          const searchValue = searchElement.value;
+          if(!searchValue.trim()) renderEndpoints(endpoints);
+          const regexp = new RegExp(searchValue, 'gi');
+          renderEndpoints(endpoints.filter(e => `${e.path}${e.methods}`.match(regexp)));
+        });
+      }
+
+      function renderEndpoints(endpoints) {
+        document.querySelector('tbody').innerHTML = endpoints.map(endpoint => {
+          return `<tr><td>${endpoint.methods.join(' ')}</td><td>${endpoint.path}</td></tr>`
+        }).join('');
+      }
+    </script>
+  </body>
+</html>
