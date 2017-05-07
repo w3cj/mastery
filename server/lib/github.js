@@ -13,24 +13,29 @@ github.authenticate({
 
 async function getAllPullRequests(repo) {
   let allPulls = [];
-  let page = 1;
-  let morePagesAvailable = true;
-  while (morePagesAvailable) {
-    const pulls = await github.pullRequests.getAll({
-      owner: 'gSchool',
-      repo,
-      per_page: 100,
-      page,
-      state: 'all'
-    });
-    allPulls = allPulls.concat(pulls);
-    if (pulls[0] && pulls[0].number >= 100) {
-      morePagesAvailable = true;
-      page++;
-    } else {
-      morePagesAvailable = false;
+  try {
+    let page = 1;
+    let morePagesAvailable = true;
+    while (morePagesAvailable) {
+      const pulls = await github.pullRequests.getAll({
+        owner: 'gSchool',
+        repo,
+        per_page: 100,
+        page,
+        state: 'all'
+      });
+      allPulls = allPulls.concat(pulls);
+      if (pulls[0] && pulls[0].number >= 100) {
+        morePagesAvailable = true;
+        page++;
+      } else {
+        morePagesAvailable = false;
+      }
     }
+  } catch (e) {
+    console.log('error getting pull requests', repo, e);
   }
+
   return allPulls.reduce((all, pull) => {
     const newPull = {
       id: pull.id,
@@ -60,24 +65,29 @@ async function getAllPullRequests(repo) {
 
 async function getAllForks(repo) {
   let allForks = [];
-  let page = 1;
-  let morePagesAvailable = true;
-  while (morePagesAvailable) {
-    const forks = await github.repos.getForks({
-      owner: 'gSchool',
-      repo,
-      per_page: 100,
-      page,
-      state: 'all'
-    });
-    allForks = allForks.concat(forks);
-    if (forks[0] && forks[0].number >= 100) {
-      morePagesAvailable = true;
-      page++;
-    } else {
-      morePagesAvailable = false;
+  try {
+    let page = 1;
+    let morePagesAvailable = true;
+    while (morePagesAvailable) {
+      const forks = await github.repos.getForks({
+        owner: 'gSchool',
+        repo,
+        per_page: 100,
+        page,
+        state: 'all'
+      });
+      allForks = allForks.concat(forks);
+      if (forks[0] && forks[0].number >= 100) {
+        morePagesAvailable = true;
+        page++;
+      } else {
+        morePagesAvailable = false;
+      }
     }
+  } catch (e) {
+     console.log('error getting forks', repo, e);
   }
+
   return allForks.reduce((all, fork) => {
     all[fork.owner.id] = true;
 

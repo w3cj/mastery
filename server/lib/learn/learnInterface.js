@@ -118,6 +118,9 @@ function getGithubUser(github_username) {
         user.id = user.id.toString();
       }
       return user;
+    }).catch(() => {
+      console.log('github user', github_username, 'not found');
+      return {};
     });
 }
 
