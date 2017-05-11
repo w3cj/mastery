@@ -103,7 +103,8 @@ export default {
         0: false,
         1: true,
         2: true,
-        3: false
+        3: false,
+        4: false
       },
       average: 0,
       mastery: {},
@@ -156,12 +157,16 @@ export default {
     filterScore(score) {
       if (typeof score == 'number') {
         this.scoreFilter[score] = !this.scoreFilter[score];
+        if(score == 3) {
+          this.scoreFilter[4] = this.scoreFilter[3];
+        }
       } else {
         this.scoreFilter = {
           0: true,
           1: true,
           2: true,
-          3: true
+          3: true,
+          4: true
         };
       }
     }
