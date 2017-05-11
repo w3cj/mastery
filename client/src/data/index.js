@@ -91,7 +91,8 @@ const methods = {
         .then(performances => {
           data.performances = performances;
         })
-    ]).catch(() => {
+    ]).catch((error) => {
+      console.log(error);
       router.go('/');
     });
   }
