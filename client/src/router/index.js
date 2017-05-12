@@ -14,6 +14,7 @@ import StandardsSkillTree from '../components/SkillTree/StandardsSkillTree';
 import StandardCollections from '../components/StandardCollections';
 import StandardsCollection from '../components/StandardsCollection';
 import Dashboard from '../components/Dashboard';
+import ResourceTracker from '../components/ResourceTracker';
 
 import Auth from '../lib/Auth';
 
@@ -37,6 +38,8 @@ const router = new VueRouter({
     { path: '/cohort/:cohort_id/repos', name: 'repos', component: Repos, beforeEnter: requireAuth },
     { path: '/cohort/:cohort_id/standards', name: 'standards', component: Standards, beforeEnter: requireAuth },
     { path: '/cohort/:cohort_id/activity-feed', name: 'activity-feed', component: ActivityFeed, beforeEnter: requireAuth },
+    { path: '/cohort/:cohort_id/resource-tracker', name: 'resource-tracker', component: ResourceTracker, beforeEnter: requireAuth },
+    { path: '/cohort/:cohort_id/resource-tracker/student/:student_id', name: 'resource-tracker-student', component: ResourceTracker, beforeEnter: requireAuth },
     { path: '/cohort/:cohort_id/standards/skill-tree', name: 'standards-skill-tree', component: StandardsSkillTree, beforeEnter: requireAuth },
     { path: '/cohort/:cohort_id/standards/skill-tree/student/:student_id', name: 'standards-skill-tree-student', component: StandardsSkillTree, beforeEnter: requireAuth },
     { path: '/cohort/:cohort_id/standards/collections', name: 'standard-collections', component: StandardCollections, beforeEnter: requireAuth },
