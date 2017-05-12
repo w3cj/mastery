@@ -22,6 +22,12 @@ class ResourceTracker {
       done_date: checked ? new Date() : null
     };
 
+    $set.checkedout = false;
+    
+    if(!checked) {
+      $set.checkout_date = null;
+    }
+
     return this.trackers
       .findOneAndUpdate({
         cohort_id,
@@ -33,19 +39,11 @@ class ResourceTracker {
         upsert: true
       });
   }
-  checkout(cohort_id, student_id, resource_id, checkedout) {
+  checkout(cohort_id, student_id, resource_id) {
     const $set = {
-      checkedout
+      checkedout: true,
+      checkout_date: new Date()
     };
-
-    const now = new Date();
-    if(checkedout) {
-      $set.checkout_date = now;
-      $set.checkin_date = null;
-    } else {
-      $set.checkin_date = now;
-    }
-    checkedout ? $set.checkout_date = now : $set.checkin_date = now;
 
     return this.trackers
       .findOneAndUpdate({

@@ -33,9 +33,4 @@ router.post('/student/:student_id/resource/:resource_id/checkout', authorize, (r
   processRequest(ResourceTracker.checkout(cohort_id, student_id, resource_id, true), res, next);
 });
 
-router.post('/student/:student_id/resource/:resource_id/checkin', authorize, (req, res, next) => {
-  const { cohort_id, student_id, resource_id } = req.params;
-  processRequest(ResourceTracker.checkout(cohort_id, student_id, resource_id, false), res, next);
-});
-
 module.exports = router;

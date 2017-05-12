@@ -236,9 +236,6 @@ class API {
   checkoutResource(cohort_id, student_id, resource_id) {
     return postJSON(`cohorts/${cohort_id}/resource-tracker/student/${student_id}/resource/${resource_id}/checkout`);
   }
-  checkinResource(cohort_id, student_id, resource_id) {
-    return postJSON(`cohorts/${cohort_id}/resource-tracker/student/${student_id}/resource/${resource_id}/checkin`);
-  }
   getRepos(cohort_id) {
     return fetchJSON(`cohorts/${cohort_id}/repos`);
   }

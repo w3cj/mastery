@@ -26,16 +26,13 @@
           <li class="collection-item" v-for="tracker in checkedOutTrackers" v-show="tracker.checkedout">
             <span class="emoji">{{typeEmojis[resources[tracker.resource_id].type]}}</span>
             <a
-              v-on:mousedown="checkinResource(tracker)"
-              class="btn-floating waves-effect waves-light red"
-              v-tooltip:bottom="'Check In'">
-              <i class="material-icons">turned_in_not</i></a>
-            <a
-              v-show="!tracker.checked"
-              v-on:mousedown="checkResource(tracker)"
-              class="btn-floating waves-effect waves-light green"
-              v-tooltip:bottom="'Mark Done'">
+              v-on:mousedown="checkResource(tracker, true)"
+              class="btn-floating waves-effect waves-light green">
               <i class="material-icons">done</i></a>
+            <a
+              v-on:mousedown="checkResource(tracker, false)"
+              class="btn-floating waves-effect waves-light red">
+              <i class="material-icons">close</i></a>
             <a v-bind:href="resources[tracker.resource_id].url" target="_blank">{{resources[tracker.resource_id].title}}</a>
             <br>
             <small>Checked Out: {{tracker.checkout_date | moment}}</small>
@@ -140,20 +137,24 @@ export default {
           this.loading = false;
         });
     },
-    checkResource(tracker) {
-      API
-        .checkResource(this.data.cohort_id, this.data.student_id, tracker.resource_id)
-        .then(() => {
-          this.$set(tracker, 'checked', true);
-          this.$set(tracker, 'done_date', new Date());
-        });
-    },
-    checkinResource(tracker) {
-      API
-        .checkinResource(this.data.cohort_id, this.data.student_id, tracker.resource_id)
-        .then(() => {
-          this.$set(tracker, 'checkedout', false);
-        });
+    checkResource(tracker, checked) {
+      if(checked) {
+        API
+          .checkResource(this.data.cohort_id, this.data.student_id, tracker.resource_id)
+          .then(() => {
+            this.$set(tracker, 'checked', true);
+            this.$set(tracker, 'checkedout', false);
+            this.$set(tracker, 'done_date', new Date());
+          });
+      } else {
+        API
+          .uncheckResource(this.data.cohort_id, this.data.student_id, tracker.resource_id)
+          .then(() => {
+            this.$set(tracker, 'checked', false);
+            this.$set(tracker, 'checkedout', false);
+            this.$set(tracker, 'done_date', null);
+          });
+      }
     },
     selectStudent(student) {
       this.$router.push({
