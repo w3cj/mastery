@@ -20,42 +20,42 @@
       </div>
     </div>
     <div class="row" v-if="checkedOutTrackers.length > 0 || doneTrackers.length > 0">
-      <div class="col s6" v-if="checkedOutTrackers.length == 0">
-        <blockquote>No checked out resources.</blockquote>
+      <div class="col s6">
+        <blockquote v-if="checkedOutTrackers.length == 0">No checked out resources.</blockquote>
+        <ul class="collection">
+          <li class="collection-item" v-for="tracker in checkedOutTrackers" v-show="tracker.checkedout">
+            <span class="emoji">{{typeEmojis[resources[tracker.resource_id].type]}}</span>
+            <a
+              v-on:mousedown="checkinResource(tracker)"
+              class="btn-floating waves-effect waves-light red"
+              v-tooltip:bottom="'Check In'">
+              <i class="material-icons">turned_in_not</i></a>
+            <a
+              v-show="!tracker.checked"
+              v-on:mousedown="checkResource(tracker)"
+              class="btn-floating waves-effect waves-light green"
+              v-tooltip:bottom="'Mark Done'">
+              <i class="material-icons">done</i></a>
+            <a v-bind:href="resources[tracker.resource_id].url" target="_blank">{{resources[tracker.resource_id].title}}</a>
+            <br>
+            <small>Checked Out: {{tracker.checkout_date | moment}}</small>
+          </li>
+        </ul>
       </div>
-      <ul class="col s6 collection">
-        <li class="collection-item" v-for="tracker in checkedOutTrackers" v-show="tracker.checkedout">
-          <span class="emoji">{{typeEmojis[resources[tracker.resource_id].type]}}</span>
-          <a
-            v-on:mousedown="checkinResource(tracker)"
-            class="btn-floating waves-effect waves-light red"
-            v-tooltip:bottom="'Check In'">
-            <i class="material-icons">turned_in_not</i></a>
-          <a
-            v-show="!tracker.checked"
-            v-on:mousedown="checkResource(tracker)"
-            class="btn-floating waves-effect waves-light green"
-            v-tooltip:bottom="'Mark Done'">
-            <i class="material-icons">done</i></a>
-          <a v-bind:href="resources[tracker.resource_id].url" target="_blank">{{resources[tracker.resource_id].title}}</a>
-          <br>
-          <small>Checked Out: {{tracker.checkout_date | moment}}</small>
-        </li>
-      </ul>
-      <div class="col s6" v-if="doneTrackers.length == 0">
-        <blockquote>No resources marked done.</blockquote>
-      </div>
-      <ul class="col s6 collection">
-        <li class="collection-item" v-for="tracker in doneTrackers" v-show="tracker.checked">
-          <span style="display: flex; flex-direction: column;">
-            <span>
-              <span class="emoji">{{typeEmojis[resources[tracker.resource_id].type]}}</span>
-              <a v-bind:href="resources[tracker.resource_id].url" target="_blank">{{resources[tracker.resource_id].title}}</a>
+      <div class="col s6">
+        <blockquote v-if="doneTrackers.length == 0">No resources marked done.</blockquote>
+        <ul class="collection">
+          <li class="collection-item" v-for="tracker in doneTrackers" v-show="tracker.checked">
+            <span style="display: flex; flex-direction: column;">
+              <span>
+                <span class="emoji">{{typeEmojis[resources[tracker.resource_id].type]}}</span>
+                <a v-bind:href="resources[tracker.resource_id].url" target="_blank">{{resources[tracker.resource_id].title}}</a>
+              </span>
+              <small>Marked Done: {{tracker.done_date | moment}}</small>
             </span>
-            <small>Marked Done: {{tracker.done_date | moment}}</small>
-          </span>
-        </li>
-      </ul>
+          </li>
+        </ul>
+      </div>
     </div>
     <div v-if="!loading && checkedOutTrackers.length == 0 && doneTrackers.length == 0">
       <blockquote>No tracked resources to show.</blockquote>
