@@ -73,11 +73,6 @@
           class="waves-effect waves-light btn red lighten-3">
           <i class="material-icons left">remove_red_eye</i>Enable/Disable Success Criteria
         </a>
-        <a
-          v-on:click="canAddNotes = !canAddNotes"
-          class="waves-effect waves-light btn">
-          <i class="material-icons left">note_add</i>{{canAddNotes ? 'Done Adding' : 'Add Notes'}}
-        </a>
       </div>
       <div>
         <ul>
@@ -120,7 +115,7 @@
               <success-criteria-notes
                 :cohort_id="cohort_id"
                 :student_id="student_id"
-                :canAdd="canAddNotes"
+                :canAdd="true"
                 :notes="notes[success_criteria._id]"
                 :onNoteAdd="addNote"
                 :standard_id="standard.id"
@@ -158,7 +153,6 @@ export default {
 		return {
       isEditing: false,
       showResources: false,
-      canAddNotes: false,
       performanceColors: {},
       performanceTextColors: {},
       loading: false,
@@ -207,7 +201,7 @@ export default {
             return all;
           }, {});
 
-          if(this.standard.success_criteria) {            
+          if(this.standard.success_criteria) {
             this.standard.success_criteria.forEach(({_id}) => {
               if(!this.notes[_id]) {
                 this.$set(this.notes, _id, []);

@@ -218,6 +218,27 @@ class API {
   enableSuccessCriteria(cohort_id, standard_id, success_criteria_id) {
     return postJSON(`cohorts/${cohort_id}/standards/${standard_id}/enable/${success_criteria_id}`);
   }
+  getStudentResourceTrackers(cohort_id, student_id) {
+    return fetchJSON(`cohorts/${cohort_id}/resource-tracker/student/${student_id}`)
+      .then(resourceTrackers => {
+        return resourceTrackers.reduce((all, one) => {
+          all[one.resource_id] = one;
+          return all;
+        }, {});
+      });
+  }
+  checkResource(cohort_id, student_id, resource_id) {
+    return postJSON(`cohorts/${cohort_id}/resource-tracker/student/${student_id}/resource/${resource_id}/check`);
+  }
+  uncheckResource(cohort_id, student_id, resource_id) {
+    return postJSON(`cohorts/${cohort_id}/resource-tracker/student/${student_id}/resource/${resource_id}/uncheck`);
+  }
+  checkoutResource(cohort_id, student_id, resource_id) {
+    return postJSON(`cohorts/${cohort_id}/resource-tracker/student/${student_id}/resource/${resource_id}/checkout`);
+  }
+  checkinResource(cohort_id, student_id, resource_id) {
+    return postJSON(`cohorts/${cohort_id}/resource-tracker/student/${student_id}/resource/${resource_id}/checkin`);
+  }
   getRepos(cohort_id) {
     return fetchJSON(`cohorts/${cohort_id}/repos`);
   }

@@ -12,7 +12,9 @@ const data = {
   cohortInfo: {},
   cohort_array: [],
   students: [],
-  student: {},
+  student: {
+    resourceTrackers: {}
+  },
   evidences: {},
   performances: {},
   resources: {}
@@ -80,19 +82,23 @@ const methods = {
         .then(evidences => {
           data.evidences = evidences;
         }),
-      API.getStudent(cohort_id, data.student_id)
-        .then(student => {
-          student = student ? student : data.currentUser;
-          data.student = student;
-          data.student_id = student.id ? student.id : student.learn_id;
-        }),
+      Promise.all([
+      API.getStudent(cohort_id, data.student_id),
+      API.getStudentResourceTrackers(cohort_id, data.student_id)
+      ]).then(({0: student, 1: resourceTrackers }) => {
+        student = student ? student : data.currentUser;
+        student.resourceTrackers = {};
+        data.student = student;
+        data.student_id = student.id ? student.id : student.learn_id;
+        data.student.resourceTrackers = resourceTrackers;
+      }),
       API
         .getStudentPerformances(cohort_id, data.student_id)
         .then(performances => {
           data.performances = performances;
-        })
+        }),
     ]).catch((error) => {
-      console.log(error);
+      alert(error.message);
       router.go('/');
     });
   }

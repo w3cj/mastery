@@ -103,8 +103,6 @@ export default {
             this.standards = collection.standards.map(id => this.data.cohort.standards[id]);
           }
           this.loading = false;
-        }).catch(() => {
-          this.$router.go('/');
         });
     },
     addStandard(standard) {

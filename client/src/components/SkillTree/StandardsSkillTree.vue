@@ -130,8 +130,6 @@ export default {
               }
               this.loading = false;
             });
-        }).catch(() => {
-          this.$router.go('/');
         });
     },
     selectStudent(student) {

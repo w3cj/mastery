@@ -126,5 +126,6 @@ router.post('/:cohort_id/standards/:standard_id/resources', validCohortId, isIns
 
 router.use('/:cohort_id/repos', validCohortId, require('./repos'));
 router.use('/:cohort_id', validCohortId, require('./notes'));
+router.use('/:cohort_id/resource-tracker', validCohortId, require('./resource-tracker'));
 
 module.exports = router;

@@ -11,6 +11,7 @@ const Instructor = require('./Instructor');
 const Performance = require('./Performance');
 const Evidence = require('./Evidence');
 const Resource = require('./Resource');
+const ResourceTracker = require('./ResourceTracker');
 const Note = require('./Note');
 const Repo = require('./Repo');
 const StandardCollection = require('./StandardCollection');
@@ -26,5 +27,6 @@ module.exports = {
   Note: new Note(db),
   Repo: new Repo(db),
   StandardCollection: new StandardCollection(db),
-  SuccessCriteria: new SuccessCriteria(db)
+  SuccessCriteria: new SuccessCriteria(db),
+  ResourceTracker: new ResourceTracker(db)
 };
