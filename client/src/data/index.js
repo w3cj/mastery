@@ -17,7 +17,9 @@ const data = {
   },
   evidences: {},
   performances: {},
-  resources: {}
+  resources: {},
+  collections: [],
+  collectionsByStandard: {}
 };
 
 const methods = {
@@ -25,21 +27,33 @@ const methods = {
     data.currentUser = Auth.getCurrentUser();
   },
   setCohort(cohort_id) {
-    if(data.cohort_id == cohort_id) return Promise.resolve();
+    // if(data.cohort_id == cohort_id) return Promise.resolve();
 
     data.cohort_id = cohort_id;
     return Promise.all([
       API.getCohort(cohort_id),
       API.getStudentImages(cohort_id),
-      API.getAllResources(cohort_id)
+      API.getAllResources(cohort_id),
+      API.getStandardCollections(cohort_id)
     ]).then(results => {
       const cohort = results[0];
       const students = results[1];
       const resources = results[2];
+      const collections = results[3];
 
       data.cohort = cohort;
       data.cohortInfo = cohort;
       data.students = students;
+      data.collections = collections;
+
+      data.collectionsByStandard = collections.reduce((byStandard, collection) => {
+        collection.standards.forEach(standard_id => {
+          byStandard[standard_id] = byStandard[standard_id] || [];
+          byStandard[standard_id].push(collection.collection_name);
+        });
+
+        return byStandard;
+      }, {});
 
       cohort.subjects.forEach(subject => {
         subject.standards.forEach(standard => {

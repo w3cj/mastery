@@ -1,14 +1,8 @@
 const express = require('express');
 
-const { resJSON, nextError, isInstructor } = require('../../lib/routeHelpers');
+const { processRequest, isInstructor } = require('../../lib/routeHelpers');
 const CohortManager = require('../../lib/CohortManager');
 const { Repo } = require('../../models');
-
-function processRequest(promise, res, next) {
-  promise
-    .then(resJSON(res))
-    .catch(nextError(next));
-}
 
 const github = require('../../lib/github');
 

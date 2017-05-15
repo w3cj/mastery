@@ -80,6 +80,9 @@ export default {
   watch: {
     '$route.params.student_id'() {
       this.load();
+    },
+    '$route.params.collection_name'() {
+      this.load();
     }
   },
   mounted() {
@@ -103,6 +106,17 @@ export default {
             this.standards = collection.standards.map(id => this.data.cohort.standards[id]);
           }
           this.loading = false;
+        }).then(() => {
+          if(this.$route.query.standard) {
+            const scrollToStandard = () => {
+              const element = $('#standard-' + this.$route.query.standard)[0];
+              if(!element) return setTimeout(scrollToStandard, 200);
+              element.scrollIntoView({
+                behavior: "smooth"
+              });
+            }
+            setTimeout(scrollToStandard, 200);
+          }
         });
     },
     addStandard(standard) {

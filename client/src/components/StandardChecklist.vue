@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :id="'standard-' + standard.id">
     <h4>
       <a
         v-on:click="toggleEditStandard($event)"
@@ -39,6 +39,16 @@
         <v-progress-linear v-if="standard.settingPerformance" indeterminate class="performance-progress"></v-progress-linear>
       </span>
     </h4>
+    <div class="standard-collections" v-if="data.collectionsByStandard[standard.id]">
+      <div class="chip" v-for="collection in data.collectionsByStandard[standard.id]">
+        <router-link
+          :to="{
+            name: 'standards-collection',
+            params: { collection_name: collection },
+            query: { standard: standard.id }
+          }">{{collection}}</router-link>
+      </div>
+    </div>
     <div v-if="showResources">
       <resource-list v-if="resources.length > 0" :resources="resources"></resource-list>
       <add-resource

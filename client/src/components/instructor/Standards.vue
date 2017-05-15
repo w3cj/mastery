@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <cohort-badge :cohort="cohort"></cohort-badge>
+    <cohort-badge :cohort="data.cohort"></cohort-badge>
     <center>
       <v-progress-circular v-if="loading" active green green-flash></v-progress-circular>
     </center>
@@ -9,55 +9,41 @@
            <v-icon prefix>search</v-icon>
            <v-text-input v-model="search" name="search" id="search" placeholder="Filter standards"></v-text-input>
        </div>
-      <div v-for="subject in cohort.subjects" class="card" v-if="isSubjectVisible(subject.name)">
-        <v-collection with-header>
-            <v-collection-item header>
-                <h3>{{subject.name}}</h3>
-            </v-collection-item>
-            <v-collection-item>
-              <v-collapsible v-bind:expand="true">
-                  <li v-for="standard in subject.standards" v-if="isStandardVisible(standard)" class="standard">
-                      <v-collapsible-header
-                        v-bind:class="{
-                          yellow: standard && standard.standard_type == 'elective',
-                          'lighten-4': standard && standard.standard_type == 'elective'
-                        }">
-                        <h4>{{standard.description}}</h4>
-                      </v-collapsible-header>
-                      <v-collapsible-body>
-                        <h5>Success Criteria</h5>
-                        <p class="circle-list">
-                          <ul>
-                            <li v-for="success_criteria in standard.success_criteria">
-                              {{decodeHtml(success_criteria.text)}}
-                            </li>
-                          </ul>
-                        </p>
-                        <div v-if="resources[standard.id]">
-                          <resource-list
-                            :resources="resources[standard.id]">
-                          </resource-list>
-                        </div>
-                        <add-resource
-                          v-if="user.isInstructor"
-                          :cohort_id="cohort_id"
-                          :standard="standard"
-                          :onAddResource="onAddResource"
-                          ></add-resource>
-                      </v-collapsible-body>
-                  </li>
-              </v-collapsible>
-            </v-collection-item>
-        </v-collection>
-      </div>
+       <div v-for="subject in visibleSubjects" class="card">
+         <v-collection with-header>
+           <v-collection-item header>
+               <h3>{{subject.name}}</h3>
+           </v-collection-item>
+             <v-collection-item v-for="standard in subject.standards" v-if="standard.visible"
+               v-bind:class="{
+                 yellow: standard && standard.standard_type == 'elective',
+                 'lighten-4': standard && standard.standard_type == 'elective'
+               }">
+               <standard-checklist
+                 :user="user"
+                 :student="data.student"
+                 :standard="standard"
+                 :performance="0"
+                 :showSuccessCriteria="true"
+                 :evidences="data.evidences"
+                 :student_id="student_id"
+                 :cohort="data.cohort"
+                 :resources="data.resources[standard.id]"
+                 :singleView="false"
+                 :showScore="false">
+               </standard-checklist>
+             </v-collection-item>
+         </v-collection>
+       </div>
     </div>
   </div>
 </template>
 
 <script>
+import data from '../../data';
 import Auth from '../../lib/Auth';
-import API from '../../lib/API';
-import {decodeHtml, isSubjectVisible, isStandardVisible} from '../../lib/utils';
+import {decodeHtml, isSubjectVisible} from '../../lib/utils';
+import StandardChecklist from '../StandardChecklist';
 import AddResource from '../AddResource';
 import ResourceList from '../ResourceList';
 import CohortBadge from '../CohortBadge';
@@ -67,33 +53,37 @@ export default {
   components: {
     'add-resource': AddResource,
     'resource-list': ResourceList,
-    'cohort-badge': CohortBadge
+    'cohort-badge': CohortBadge,
+    'standard-checklist': StandardChecklist
   },
   data() {
     return {
       user: Auth.getCurrentUser(),
       search: '',
-      cohort: {},
       loading: true,
       cohort_id: this.$route.cohort_id,
-      resources: {}
+      data: data.data,
+      scoreFilter: {
+        undefined: true,
+        0: true
+      }
     };
+  },
+  computed: {
+    visibleSubjects() {
+      return this.data.cohort.subjects.filter(subject => isSubjectVisible(this.search, subject.name, this.data.cohort, this.data.performances, this.scoreFilter, this.$route.query.standard_id));
+    }
   },
   created() {
     this.cohort_id = this.$route.params.cohort_id;
+    this.student_id = this.$route.params.student_id ? this.$route.params.student_id : this.user.learn_id;
 
-    API
-      .getCohort(this.cohort_id)
-      .then(cohort => {
-        this.cohort = cohort;
+    data
+      .methods
+      .setCohort(this.cohort_id)
+      .then(() => {
         this.loading = false;
-      });
-
-    API
-      .getAllResources(this.cohort_id)
-      .then(resources => {
-        this.resources = resources;
-      });
+      })
   },
   methods: {
     onAddResource(standard, resource) {
@@ -101,12 +91,6 @@ export default {
         this.$set(this.resources, standard.id, []);
       }
       this.resources[standard.id].push(resource);
-    },
-    isSubjectVisible(subject) {
-      return isSubjectVisible(this.search, subject, this.cohort, this.performances, this.scoreFilter);
-    },
-    isStandardVisible(standard) {
-      return isStandardVisible(this.search, standard, this.performances, this.scoreFilter)
     },
     decodeHtml(html) {
       return decodeHtml(html);

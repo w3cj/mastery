@@ -43,7 +43,6 @@
 </template>
 
 <script>
-import API from '../lib/API';
 import Auth from '../lib/Auth';
 import data from '../data';
 import CohortBadge from './CohortBadge';
@@ -71,9 +70,7 @@ export default {
       .methods
       .setCohort(this.cohort_id)
       .then(() => {
-        return API.getStandardCollections(this.cohort_id);
-      }).then(collections => {
-        this.collections = collections;
+        this.collections = data.data.collections;
         this.loading = false;
       });
   },
