@@ -143,6 +143,8 @@ export default {
   },
   methods: {
     load() {
+      if(this.cohort_id == 'default') return;
+      
       this.loadingPerformances = true;
       Promise.all([
         API

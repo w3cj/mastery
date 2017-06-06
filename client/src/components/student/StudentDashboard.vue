@@ -129,6 +129,8 @@ export default {
   },
   methods: {
     load() {
+      if(this.cohort_id == 'default') return;
+
       this.loadingAverage = true;
       this.cohort_id = this.$route.params.cohort_id;
       this.student_id = this.$route.params.student_id ? this.$route.params.student_id : this.user.learn_id;
