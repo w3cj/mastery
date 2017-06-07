@@ -38,7 +38,6 @@
 </template>
 
 <script>
-import API from '../../lib/API';
 import Auth from '../../lib/Auth';
 import data from '../../data';
 import SkillTree from './SkillTree';
@@ -122,14 +121,8 @@ export default {
         .setStudent(this.cohort_id, this.student_id)
         .then(() => {
           graph.setColors(this.data.performances);
-          API
-            .getStandardCollection(this.cohort_id, 'Quarter 1')
-            .then(collection => {
-              if(collection) {
-                this.standards = collection.standards.map(id => this.data.cohort.standards[id]);
-              }
-              this.loading = false;
-            });
+          this.standards = Object.keys(this.data.cohort.standards).map(id => this.data.cohort.standards[id]);
+          this.loading = false;
         });
     },
     selectStudent(student) {
