@@ -1,0 +1,331 @@
+{
+  "nodes": [{
+    "id": 2,
+    "title": "Resume",
+    "x": 563.0227944854687,
+    "y": 8.554830551425766,
+    "standards": [13952]
+  }, {
+    "id": 3,
+    "title": "Describe Galvanize",
+    "x": 782.3604257110546,
+    "y": 154.72306299237425,
+    "standards": [13951]
+  }, {
+    "id": 4,
+    "title": "Describe a current project",
+    "x": 661.7311379913281,
+    "y": 158.52864980725462,
+    "standards": [13953]
+  }, {
+    "id": 5,
+    "title": "Verbal Introduction",
+    "x": 708.3026597503613,
+    "y": 1.6644124987524265,
+    "standards": [13952]
+  }, {
+    "id": 6,
+    "title": "Deploy to Heroku",
+    "x": 1456.3530557159374,
+    "y": 449.401176452915,
+    "standards": [13962]
+  }, {
+    "id": 7,
+    "title": "Deploy Separate Client-Server",
+    "x": 1465.878978491206,
+    "y": 756.7468113902014,
+    "standards": [13966]
+  }, {
+    "id": 8,
+    "title": "Automated DOM tests",
+    "x": 206.89049744643677,
+    "y": 669.7244155968529,
+    "standards": [13978]
+  }, {
+    "id": 9,
+    "title": "Objects: State and Behavior",
+    "x": 496.14695525207026,
+    "y": 386.0928821566504,
+    "standards": [13981]
+  }, {
+    "id": 10,
+    "title": "Evaluate: State and Behavior",
+    "x": 635.6454675201367,
+    "y": 379.18107414273436,
+    "standards": [13984]
+  }, {
+    "id": 11,
+    "title": "Objects: Constructor Functions",
+    "x": 16.955877066035157,
+    "y": 386.929170854668,
+    "standards": [13985]
+  }, {
+    "id": 12,
+    "title": "Objects: Factory Functions",
+    "x": 13.909307241816407,
+    "y": 268.13724327115233,
+    "standards": [13988]
+  }, {
+    "id": 13,
+    "title": "Polya Whiteboard",
+    "x": 41.51249480285156,
+    "y": 660.5207889082831,
+    "standards": [13989]
+  }, {
+    "id": 14,
+    "title": "Polya Algorithm Problems",
+    "x": 32.858304739375,
+    "y": 515.583474159519,
+    "standards": [13990]
+  }, {
+    "id": 15,
+    "title": "Git: Collaborate",
+    "x": 1679.957540274043,
+    "y": 284.39321327237303,
+    "standards": [13995]
+  }, {
+    "id": 16,
+    "title": "Git: Remotes",
+    "x": 1455.6070306304882,
+    "y": 287.3305530550879,
+    "standards": [13994]
+  }, {
+    "id": 17,
+    "title": "Git: Stash",
+    "x": 1568.84257316627,
+    "y": 285.40018272427733,
+    "standards": [13999]
+  }, {
+    "id": 18,
+    "title": "Accumulator Patterns",
+    "x": 444.48397612609375,
+    "y": 263.9092228415411,
+    "standards": [14004]
+  }, {
+    "id": 19,
+    "title": "Organize code with functions",
+    "x": 270.05182337798584,
+    "y": 261.1021080019873,
+    "standards": [14003]
+  }, {
+    "id": 20,
+    "title": "Big O: 1,n,n^2",
+    "x": 148.77211153544891,
+    "y": 528.8355302813452,
+    "standards": [14007]
+  }, {
+    "id": 21,
+    "title": "Promises",
+    "x": 921.47964263,
+    "y": 467.05207634,
+    "standards": [14010]
+  }, {
+    "id": 22,
+    "title": "Refactor Loops functional",
+    "x": 387.3801553253125,
+    "y": 527.096265793125,
+    "standards": [14013]
+  }, {
+    "id": 23,
+    "title": "Memory References",
+    "x": -165.56615233383667,
+    "y": 321.7911434176367,
+    "standards": [14016]
+  }, {
+    "id": 24,
+    "title": "Refactor: Dry",
+    "x": 539.0857827667187,
+    "y": 621.9427061083716,
+    "standards": [14018]
+  }, {
+    "id": 25,
+    "title": "Refactor: SRP",
+    "x": 533.3904702667187,
+    "y": 506.7145450117987,
+    "standards": [14019]
+  }, {
+    "id": 26,
+    "title": "Test-drive a function",
+    "x": 333.80831694640625,
+    "y": 665.8221325877112,
+    "standards": [14020]
+  }, {
+    "id": 27,
+    "title": "SQL",
+    "x": 953.7068765167187,
+    "y": 281.4011211398047,
+    "standards": [14022]
+  }, {
+    "id": 28,
+    "title": "Entity Relationship Diagrams",
+    "x": 779.7559487823437,
+    "y": 281.9443187716406,
+    "standards": [14023]
+  }, {
+    "id": 29,
+    "title": "Server Side Application",
+    "x": 1236.82192778625,
+    "y": 257.9894542696875,
+    "standards": [14024]
+  }, {
+    "id": 30,
+    "title": "CRUD App",
+    "x": 1215.6943643096874,
+    "y": 648.970142066757,
+    "standards": [14025]
+  }, {
+    "id": 31,
+    "title": "Validate User Input",
+    "x": 1231.3574502471874,
+    "y": 454.82655143765624,
+    "standards": [14027]
+  }, {
+    "id": 32,
+    "title": "Server-Side Auth",
+    "x": 1093.771878958125,
+    "y": 653.353658974449,
+    "standards": [14028]
+  }, {
+    "id": 33,
+    "title": "Security Vulnerabilities",
+    "x": 1095.3506753448437,
+    "y": 814.4882535937231,
+    "standards": [14029]
+  }, {
+    "id": 34,
+    "title": "Describe Auth",
+    "x": 943.7176187042187,
+    "y": 652.688204288761,
+    "standards": [14030]
+  }, {
+    "id": 35,
+    "title": "RESTful API",
+    "x": 1334.2034585479687,
+    "y": 633.4546577933233,
+    "standards": [14031]
+  }, {
+    "id": 36,
+    "title": "Server-Side Separate Concerns",
+    "x": 1080.0744302276562,
+    "y": 461.0913066866797,
+    "standards": [14033]
+  }, {
+    "id": 37,
+    "title": "Server-Side Test Suite",
+    "x": 268.4364526275586,
+    "y": 530.7069429161947,
+    "standards": [14032]
+  }, {
+    "id": 37,
+    "title": "Write Automated Tests",
+    "x": 1578.673002005,
+    "y": 1256.1950206759375,
+    "standards": [14008]
+  }],
+  "edges": [{
+    "source": 29,
+    "target": 36
+  }, {
+    "source": 27,
+    "target": 36
+  }, {
+    "source": 36,
+    "target": 30
+  }, {
+    "source": 36,
+    "target": 35
+  }, {
+    "source": 28,
+    "target": 27
+  }, {
+    "source": 29,
+    "target": 31
+  }, {
+    "source": 31,
+    "target": 35
+  }, {
+    "source": 31,
+    "target": 30
+  }, {
+    "source": 32,
+    "target": 33
+  }, {
+    "source": 34,
+    "target": 32
+  }, {
+    "source": 36,
+    "target": 32
+  }, {
+    "source": 31,
+    "target": 32
+  }, {
+    "source": 21,
+    "target": 36
+  }, {
+    "source": 29,
+    "target": 6
+  }, {
+    "source": 16,
+    "target": 6
+  }, {
+    "source": 5,
+    "target": 4
+  }, {
+    "source": 19,
+    "target": 22
+  }, {
+    "source": 19,
+    "target": 24
+  }, {
+    "source": 19,
+    "target": 25
+  }, {
+    "source": 19,
+    "target": 12
+  }, {
+    "source": 19,
+    "target": 11
+  }, {
+    "source": 6,
+    "target": 7
+  }, {
+    "source": 35,
+    "target": 7
+  }, {
+    "source": 19,
+    "target": 18
+  }, {
+    "source": 19,
+    "target": 37
+  }, {
+    "source": 37,
+    "target": 8
+  }, {
+    "source": 37,
+    "target": 26
+  }, {
+    "source": 19,
+    "target": 9
+  }, {
+    "source": 9,
+    "target": 10
+  }, {
+    "source": 19,
+    "target": 20
+  }, {
+    "source": 14,
+    "target": 13
+  }, {
+    "source": 19,
+    "target": 14
+  }, {
+    "source": 23,
+    "target": 12
+  }, {
+    "source": 23,
+    "target": 11
+  }, {
+    "source": 5,
+    "target": 3
+  }]
+}

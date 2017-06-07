@@ -9,9 +9,14 @@
     </div>
     <center>
       <h1 v-if="data.student" id="student-name">{{data.student.full_name}}</h1>
+      <h3>Quarter {{ quarter == 'q1' ? '1' : '2'}} Skill Tree</h3>
       <v-progress-circular v-if="loading" active green green-flash></v-progress-circular>
     </center>
-    <blockquote>Click a node to see the associated standards.</blockquote>
+    <div v-if="!loading">
+      <v-btn @click.native="load('q1')" class="indigo">Quarter 1</v-btn>
+      <v-btn @click.native="load('q2')" class="indigo">Quarter 2</v-btn>
+      <blockquote>Click a node to see the associated standards.</blockquote>
+    </div>
     <div>
       <v-collection v-if="!loading">
           <v-collection-item v-for="standard in selectedStandards">
@@ -31,7 +36,7 @@
           </v-collection-item>
         </v-collection>
     </div>
-    <div id="graph">
+    <div id="graph" v-show="!loading">
 
     </div>
   </div>
@@ -61,7 +66,8 @@ export default {
       loading: true,
       standards: [],
       showSuccessCriteria: true,
-      selectedStandardIds: []
+      selectedStandardIds: [],
+      quarter: 'q1'
     };
   },
   watch: {
@@ -75,15 +81,24 @@ export default {
     }
   },
   mounted() {
-    this.load();
+    this.load(localStorage.skillTree || 'q1');
   },
   methods: {
     showStandards(standards) {
       this.selectedStandardIds = standards;
     },
-    load() {
+    load(quarter) {
+      if(!quarter) {
+        quarter = localStorage.skillTree || 'q1';
+      }
+
+      this.quarter = quarter;
+
+      document.querySelector('#graph').innerHTML = '';
+      localStorage.skillTree = quarter;
+
       this.loading = true;
-      fetch('./static/quarter1.json')
+      fetch(`./static/${quarter}.json`)
         .then(res => res.json())
         .then(quarter1 => {
           var element = document.querySelector('#skill-tree');
@@ -98,7 +113,7 @@ export default {
                 .attr("width", width)
                 .attr("height", height);
 
-          var graph = new SkillTree(svg, nodes, edges);
+          var graph = new SkillTree(svg, nodes, edges, quarter == 'q1');
               graph.setIdCt(2);
 
           graph.updateGraph();
