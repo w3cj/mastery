@@ -20,7 +20,7 @@ export default {
   props: ['currentUser'],
   data() {
     return {
-      skillTreeCohorts: [149, 184]
+      skillTreeCohorts: [149, 184, 246]
     };
   },
   methods: {
