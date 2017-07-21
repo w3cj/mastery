@@ -16,13 +16,19 @@ function getAllCohorts() {
 }
 
 function getStudentImages(cohort_id) {
-  const studentURL = `${learnURL}cohorts/${cohort_id}/students?layout=grid`;
-  return fetchText(studentURL, getAuthHeader())
-    .then(getStudentImagesFromBody);
+  const studentURL = `${learnURL}api/v1/cohorts/${cohort_id}/students`;
+  return fetchJSON(studentURL, getAuthHeader())
+    .then(students => {
+      return students.data.map(s => ({
+        id: s.id,
+        img: s.avatar,
+        full_name: `${s.first_name} ${s.last_name}`
+      }));
+    });
 }
 
 function getStudentInfo(cohort_id) {
-  const studentURL = `${learnURL}cohorts/${cohort_id}/students`;
+  const studentURL = `${learnURL}cohorts/${cohort_id}`;
 
   return fetchText(studentURL, getAuthHeader())
     .then(getStudentsFromBody)
@@ -52,28 +58,6 @@ function getInstructorInfo(cohort_id) {
 
   return fetchText(staffingURL, getAuthHeader())
     .then(getInstructorsFromBody);
-}
-
-function getStudentImagesFromBody(body) {
-  const $ = cheerio.load(body);
-  const thumbnails = $('a.thumbnail');
-
-  const images = [];
-
-  thumbnails.each(function() {
-    const thumbnail = $(this);
-    const id = thumbnail.attr('href').split('/students/')[1];
-    const img = thumbnail.find('img').attr('src');
-    const full_name = thumbnail.find('.caption').text().trim();
-
-    images.push({
-      id,
-      img,
-      full_name
-    });
-  });
-
-  return images;
 }
 
 function getStudentsFromBody(body) {
@@ -112,6 +96,7 @@ function getInstructorsFromBody(body) {
 }
 
 function getGithubUser(github_username) {
+  if(!github_username) return {};
   return fetchJSON(`https://api.github.com/users/${github_username}?access_token=${process.env.GITHUB_TOKEN}`)
     .then(user => {
       if(user.id) {

@@ -23,7 +23,7 @@ class ResourceTracker {
     };
 
     $set.checkedout = false;
-    
+
     if(!checked) {
       $set.checkout_date = null;
     }
