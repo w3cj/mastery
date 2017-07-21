@@ -28,11 +28,19 @@ function getStudentImages(cohort_id) {
 }
 
 function getStudentInfo(cohort_id) {
-  const studentURL = `${learnURL}cohorts/${cohort_id}`;
+  const studentURL = `${learnURL}api/v1/cohorts/${cohort_id}/students`;
 
-  return fetchText(studentURL, getAuthHeader())
-    .then(getStudentsFromBody)
+  return fetchJSON(studentURL, getAuthHeader())
     .then(students => {
+      return students.data.reduce((all, s) => {
+        const student = {
+          github_username: s.github_username,
+          full_name: `${s.first_name} ${s.last_name}`
+        };
+        all[student.full_name] = student;
+        return all;
+      }, {});
+    }).then(students => {
       return Object.keys(students)
         .reduce((promise, full_name) => {
           const student = students[full_name];
@@ -370,7 +378,6 @@ module.exports = {
   fetchCohortInfo,
   getLearnUser,
   getLearnUserByEmail,
-  getStudentsFromBody,
   getStudentImages,
   getStudentInfo,
   getInstructorsFromBody,
