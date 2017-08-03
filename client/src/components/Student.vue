@@ -1,7 +1,7 @@
 <template>
 	<div class="card col s6 m4 l3" v-if="studentVisible(student)">
 	 <div class="card-image waves-effect waves-block waves-light">
-		 <img v-if="showImage"  class="activator" v-bind:src="student.img.replace('http://', 'https://')">
+		 <img v-if="showImage"  class="activator" v-bind:src="student.img ? student.img.replace('http://', 'https://') : 'https://api.adorable.io/avatars/285/' + student.id + '.png'">
 	 </div>
 	 <div class="card-content">
 		 <span v-if="showName" class="card-title activator grey-text text-darken-4">{{formatName(student.full_name)}}<i class="material-icons right">more_vert</i></span>

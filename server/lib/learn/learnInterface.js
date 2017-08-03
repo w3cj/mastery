@@ -45,7 +45,7 @@ function getStudentInfo(cohort_id) {
         .reduce((promise, full_name) => {
           const student = students[full_name];
           return promise.then(() => {
-            if(!student.github_username.trim()) {
+            if(!student.github_username || !student.github_username.trim()) {
               student.github_id = undefined;
               return;
             }
@@ -158,7 +158,7 @@ function getUserFromBody(body) {
     admin
   };
 
-  if(github_username.trim()) {
+  if(github_username && github_username.trim()) {
     return getGithubUser(github_username)
       .then(githubUser => {
         user.github_id = githubUser.id;

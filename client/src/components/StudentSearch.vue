@@ -61,7 +61,7 @@ export default {
       const input = $('#student_search');
       if(input.autocomplete) {
         const data = students.reduce((data, student) => {
-          data[student.full_name] = student.img.replace('http://', 'https://');
+          data[student.full_name] = student.img ? student.img.replace('http://', 'https://') : 'https://api.adorable.io/avatars/285/' + student.id + '.png';
           this.students[student.full_name] = student;
           return data;
         }, {});
