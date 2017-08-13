@@ -76,7 +76,7 @@ export default {
   },
   watch: {
     '$route.params.student_id'() {
-      this.load();
+      this.load(this.quarter);
     }
   },
   computed: {
@@ -164,7 +164,7 @@ export default {
     },
     onSetPerformance() {
       document.querySelector('#graph').innerHTML = '';
-      this.load();
+      this.load(this.quarter);
     }
   }
 }
