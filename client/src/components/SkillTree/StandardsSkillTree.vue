@@ -9,12 +9,13 @@
     </div>
     <center>
       <h1 v-if="data.student" id="student-name">{{data.student.full_name}}</h1>
-      <h3>Quarter {{ quarter == 'q1' ? '1' : '2'}} Skill Tree</h3>
+      <h3>{{ currentQuarter().name }} Skill Tree</h3>
       <v-progress-circular v-if="loading" active green green-flash></v-progress-circular>
     </center>
     <div v-if="!loading">
-      <v-btn @click.native="load('q1')" class="indigo">Quarter 1</v-btn>
-      <v-btn @click.native="load('q2')" class="indigo">Quarter 2</v-btn>
+      <v-btn v-for="section in skillOpts.sections" @click.native="load(section.file)" class="skillButton indigo">
+        {{ section.name }}
+      </v-btn>
       <blockquote>Click a node to see the associated standards.</blockquote>
     </div>
     <div>
@@ -58,6 +59,8 @@ export default {
     'cohort-badge': CohortBadge
   },
   data() {
+    var cohortId = this.$route.params.cohort_id
+    var skillOpts = data.methods.getSkillTreeOpts(cohortId);
     return {
       user: Auth.getCurrentUser(),
       data: data.data,
@@ -67,7 +70,8 @@ export default {
       standards: [],
       showSuccessCriteria: true,
       selectedStandardIds: [],
-      quarter: 'q1'
+      skillOpts: skillOpts,
+      quarter: skillOpts.sections[0].file
     };
   },
   watch: {
@@ -81,24 +85,29 @@ export default {
     }
   },
   mounted() {
-    this.load(localStorage.skillTree || 'q1');
+    var savedSection = localStorage.skillTree
+    if (savedSection && this.skillOpts.sections.find(section => section.file === savedSection)) {
+      this.load(savedSection);
+    } else {
+      this.load(this.quarter);
+    }
   },
   methods: {
+    currentQuarter() {
+      return this.skillOpts.sections.find(section => section.file === this.quarter)
+    },
     showStandards(standards) {
       this.selectedStandardIds = standards;
     },
     load(quarter) {
-      if(!quarter) {
-        quarter = localStorage.skillTree || 'q1';
-      }
-
       this.quarter = quarter;
 
       document.querySelector('#graph').innerHTML = '';
       localStorage.skillTree = quarter;
 
       this.loading = true;
-      fetch(`./static/${quarter}.json`)
+      var skillsTreeBranch = this.skillOpts.skillsTreeBranch
+      fetch(`./static/${skillsTreeBranch}/${quarter}.json`)
         .then(res => res.json())
         .then(quarter1 => {
           var element = document.querySelector('#skill-tree');
@@ -113,7 +122,7 @@ export default {
                 .attr("width", width)
                 .attr("height", height);
 
-          var graph = new SkillTree(svg, nodes, edges, quarter == 'q1');
+          var graph = new SkillTree(svg, nodes, edges);
               graph.setIdCt(2);
 
           graph.updateGraph();
@@ -251,5 +260,9 @@ path.link.selected {
 
 .week-title {
 font-family: sans-serif;
+}
+
+.skillButton {
+  margin-right: 10px;
 }
 </style>
