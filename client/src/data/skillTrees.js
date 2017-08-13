@@ -5,7 +5,6 @@ export default [
   {
     id: 296,
     skillsTreeBranch: '17-03-WD-SEA',
-    showWeeks: false,
     sections: [
       { name: 'Fundamentals', file: 'fundamentals' }
     ]
@@ -19,7 +18,6 @@ export default [
   return {
     id: cohort.id,
     sections: cohort.sections || defaultSections,
-    showWeeks: cohort.showWeeks === undefined,
     skillsTreeBranch: cohort.skillsTreeBranch || 'default'
   }
 })

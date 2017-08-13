@@ -1,4 +1,4 @@
-var SkillTree = function(svg, nodes, edges, showWeeks){
+var SkillTree = function(svg, nodes, edges){
     var thisGraph = this;
         thisGraph.idct = 0;
 
@@ -55,60 +55,6 @@ var SkillTree = function(svg, nodes, edges, showWeeks){
     // svg nodes and edges
     thisGraph.paths = svgG.append("g").selectAll("g");
     thisGraph.circles = svgG.append("g").selectAll("g");
-
-    if(showWeeks) {
-      svgG.append("text")
-      .attr("y", 225)//magic number here
-      .attr("x", -170)
-      .attr('text-anchor', 'middle')
-      .attr("class", "week-title")//easy to style with CSS
-      .text("Week 1");
-
-      svgG.append("line")//making a line for legend
-      .attr("x1", -200)
-      .attr("x2", 1000)
-      .attr("y1", 235)
-      .attr("y2", 235)
-      .style("stroke-dasharray","5,5")//dashed array for line
-      .style("stroke", "black");
-
-      svgG.append("text")
-      .attr("y", 520)//magic number here
-      .attr("x", -170)
-      .attr('text-anchor', 'middle')
-      .attr("class", "week-title")//easy to style with CSS
-      .text("Week 2");
-
-      svgG.append("line")//making a line for legend
-      .attr("x1", -200)
-      .attr("x2", 1000)
-      .attr("y1", 530)
-      .attr("y2", 530)
-      .style("stroke-dasharray","5,5")//dashed array for line
-      .style("stroke", "black");
-
-      svgG.append("text")
-      .attr("y", 780)//magic number here
-      .attr("x", -170)
-      .attr('text-anchor', 'middle')
-      .attr("class", "week-title")//easy to style with CSS
-      .text("Week 3");
-
-      svgG.append("line")//making a line for legend
-      .attr("x1", -200)
-      .attr("x2", 1000)
-      .attr("y1", 790)
-      .attr("y2", 790)
-      .style("stroke-dasharray","5,5")//dashed array for line
-      .style("stroke", "black");
-
-      svgG.append("text")
-      .attr("y", 1040)//magic number here
-      .attr("x", -170)
-      .attr('text-anchor', 'middle')
-      .attr("class", "week-title")//easy to style with CSS
-      .text("Week 4");
-    }
 
     thisGraph.drag = d3.behavior.drag()
           .origin(function(d){

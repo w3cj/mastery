@@ -122,7 +122,7 @@ export default {
                 .attr("width", width)
                 .attr("height", height);
 
-          var graph = new SkillTree(svg, nodes, edges, this.skillOpts.showWeeks);
+          var graph = new SkillTree(svg, nodes, edges);
               graph.setIdCt(2);
 
           graph.updateGraph();
