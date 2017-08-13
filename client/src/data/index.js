@@ -2,6 +2,7 @@ import Auth from '../lib/Auth';
 import API from '../lib/API';
 import {setCohortBadge} from '../lib/utils';
 import router from '../router';
+import skillTrees from './skillTrees'
 
 const data = {
   cohort_id: -1,
@@ -115,6 +116,10 @@ const methods = {
       alert(error.message);
       router.go('/');
     });
+  },
+  getSkillTreeOpts(cohort_id) {
+    var cohortId = cohort_id || data.cohort_id
+    return skillTrees.find(({ id }) => id == cohortId);
   }
 }
 

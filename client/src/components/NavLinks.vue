@@ -8,25 +8,22 @@
     </span>
     <li v-if="currentUser && $route.params.cohort_id"><router-link :to="{ name: 'resource-tracker', params: { cohort_id: $route.params.cohort_id} }"><i class="material-icons left">done</i>Resource Tracker</router-link></li>
     <li v-if="currentUser && $route.params.cohort_id"><router-link :to="{ name: 'standard-collections', params: { cohort_id: $route.params.cohort_id} }"><i class="material-icons left">group_work</i>Collections</router-link></li>
-    <li v-if="currentUser && enableSkillTree($route.params.cohort_id)"><router-link :to="{ name: 'standards-skill-tree', params: { cohort_id: $route.params.cohort_id} }"><i class="material-icons left">nature</i>Skill Tree</router-link></li>
+    <li v-if="currentUser && cohortSkillTree($route.params.cohort_id)"><router-link :to="{ name: 'standards-skill-tree', params: { cohort_id: $route.params.cohort_id } }"><i class="material-icons left">nature</i>Skill Tree</router-link></li>
     <li v-if="currentUser && $route.params.cohort_id"><router-link :to="{ name: 'activity-feed', params: { cohort_id: $route.params.cohort_id} }"><i class="material-icons left">feedback</i>Activity</router-link></li>
     <li v-if="currentUser"><router-link :to="{ name: 'logout' }">Logout</router-link></li>
   </div>
 </template>
 
 <script>
+import data from '../data';
+
 export default {
   name: 'nav-links',
   props: ['currentUser'],
-  data() {
-    return {
-      skillTreeCohorts: [149, 184, 246]
-    };
-  },
   methods: {
-    enableSkillTree(cohort_id) {
-      return this.skillTreeCohorts.find(id => id == cohort_id);
-    },
+    cohortSkillTree(cohort_id) {
+      return data.methods.getSkillTreeOpts(cohort_id)
+    }
   }
 }
 </script>

@@ -1,10 +1,9 @@
-var SkillTree = function(svg, nodes, edges, q1){
+var SkillTree = function(svg, nodes, edges, showWeeks){
     var thisGraph = this;
         thisGraph.idct = 0;
 
     thisGraph.nodes = nodes || [];
     thisGraph.edges = edges || [];
-    thisGraph.q1 = q1;
 
     thisGraph.state = {
       selectedNode: null,
@@ -57,7 +56,7 @@ var SkillTree = function(svg, nodes, edges, q1){
     thisGraph.paths = svgG.append("g").selectAll("g");
     thisGraph.circles = svgG.append("g").selectAll("g");
 
-    if(thisGraph.q1) {
+    if(showWeeks) {
       svgG.append("text")
       .attr("y", 225)//magic number here
       .attr("x", -170)
