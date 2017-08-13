@@ -1,0 +1,165 @@
+{
+  "edges": [
+    {
+      "source": 1,
+      "target": 0
+    },
+    {
+      "source": 1,
+      "target": 2
+    },
+    {
+      "source": 2,
+      "target": 4
+    },
+    {
+      "source": 0,
+      "target": 5
+    },
+    {
+      "source": 4,
+      "target": 5
+    },
+    {
+      "source": 5,
+      "target": 6
+    },
+    {
+      "source": 6,
+      "target": 7
+    },
+    {
+      "source": 6,
+      "target": 9
+    },
+    {
+      "source": 6,
+      "target": 8
+    },
+    {
+      "source": 8,
+      "target": 10
+    },
+    {
+      "source": 10,
+      "target": 11
+    },
+    {
+      "source": 9,
+      "target": 11
+    },
+    {
+      "source": 11,
+      "target": 12
+    }
+  ],
+  "nodes": [
+    {
+      "id": 0,
+      "standards": [
+        14211
+      ],
+      "title": "Learning to Learn",
+      "x": "9.06402587890625",
+      "y": "180.59320068359375"
+    },
+    {
+      "id": 1,
+      "standards": [
+        14214
+      ],
+      "title": "Immersive Environments",
+      "x": "212.6661224365234",
+      "y": "70.2082748413086"
+    },
+    {
+      "id": 2,
+      "standards": [
+        14213
+      ],
+      "title": "Problem Solving",
+      "x": "405.8553466796875",
+      "y": "197.96855640411377"
+    },
+    {
+      "id": 4,
+      "standards": [
+        14328
+      ],
+      "title": "Logic",
+      "x": "195.270263671875",
+      "y": "202.65245056152344"
+    },
+    {
+      "id": 5,
+      "standards": [
+        14208
+      ],
+      "title": "Workflow & Tools",
+      "x": "201.5619201660156",
+      "y": "358.2182312011719"
+    },
+    {
+      "id": 6,
+      "standards": [
+        14205
+      ],
+      "title": "Development Environment",
+      "x": "399.4594116210938",
+      "y": "511.0460662841797"
+    },
+    {
+      "id": 7,
+      "standards": [
+        14209
+      ],
+      "title": "Environment Variables",
+      "x": "397.6357116699219",
+      "y": "352.2070155143738"
+    },
+    {
+      "id": 8,
+      "standards": [
+        14207
+      ],
+      "title": "File Nav",
+      "x": 398.14306640625,
+      "y": 675.42280626297
+    },
+    {
+      "id": 9,
+      "standards": [
+        14204
+      ],
+      "title": "JavaScript Workflow",
+      "x": 186.5791015625,
+      "y": "509.4432678222656"
+    },
+    {
+      "id": 10,
+      "standards": [
+        14206
+      ],
+      "title": "CLI Interaction",
+      "x": "184.7828979492188",
+      "y": "837.7047157287598"
+    },
+    {
+      "id": 11,
+      "standards": [
+      ],
+      "title": "Complex Problem Solving",
+      "x": "186.1375122070312",
+      "y": "660.9775695800781"
+    },
+    {
+      "id": 12,
+      "standards": [
+        14203
+      ],
+      "title": "Checkpoint",
+      "x": 16.07958984375,
+      "y": "658.0003967285156"
+    }
+  ]
+}
