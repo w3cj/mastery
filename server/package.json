@@ -28,6 +28,7 @@
     "tape": "^4.6.3"
   },
   "devDependencies": {
-    "express-list-endpoints": "^3.0.0"
+    "express-list-endpoints": "^3.0.0",
+    "nodemon": "^1.11.0"
   }
 }
