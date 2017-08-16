@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import Auth from '../lib/Auth';
 import API from '../lib/API';
 import {setCohortBadge} from '../lib/utils';
@@ -29,6 +30,9 @@ const methods = {
   },
   setCohort(cohort_id) {
     // if(data.cohort_id == cohort_id) return Promise.resolve();
+    localStorage.defaultCohort = cohort_id;
+
+    Vue.set(data.cohort, 'loading', true);
 
     data.cohort_id = cohort_id;
     return Promise.all([
@@ -44,6 +48,7 @@ const methods = {
 
       data.cohort = cohort;
       data.cohortInfo = cohort;
+      Vue.set(data.cohort, 'loading', false);
       data.students = students;
       data.collections = collections;
 

@@ -1,5 +1,18 @@
 <template>
     <div>
+      <div class="row"
+        v-if="!loading"
+        v-bind:class="{
+            show: (!loading && data.cohort_array.length > 1),
+            hide: (loading || data.cohort_array.length <= 1)
+          }">
+          <v-btn class="indigo" v-dropdown:dropdown>Change Cohort</v-btn>
+          <v-dropdown id="dropdown">
+            <li v-for="cohort in data.cohort_array">
+              <span @click="changeCohort(cohort)">{{cohort.name}}</span>
+            </li>
+          </v-dropdown>
+      </div>
       <h1 class="text-center" id="student-name">{{data.student.full_name}}</h1>
       <center>
         <v-progress-circular v-if="loadingAverage" active red red-flash></v-progress-circular>
@@ -83,12 +96,14 @@ import data from '../../data';
 import {isSubjectVisible} from '../../lib/utils';
 import StandardChecklist from '../StandardChecklist';
 import PieChart from '../charts/PieChart';
+import CohortSearch from '../CohortSearch';
 
 export default {
   name: 'student-dashboard',
   components: {
     'standard-checklist': StandardChecklist,
-    PieChart
+    PieChart,
+    'cohort-search': CohortSearch
   },
   props: ['user', 'cohort_id', 'cohort', 'loading', 'singleView'],
   data() {
@@ -171,6 +186,21 @@ export default {
           4: true
         };
       }
+    },
+    changeCohort({cohort_id}) {
+      const student_id = this.$route.params.student_id;
+      const params = {
+        cohort_id
+      }
+
+      if(student_id) {
+        params.student_id = student_id;
+      }
+
+      this.$router.push({
+        name: 'student-dashboard',
+        params
+      });
     }
   }
 }
