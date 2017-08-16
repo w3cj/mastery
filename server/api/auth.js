@@ -20,12 +20,14 @@ const routes = {
   '/exchange': (req, res, next) => {
     const user = req.user;
 
+    console.log('exchanging user:', user);
     Promise.all([
       Instructor
         .find(req.user.github_id, 'id'),
       Student
         .find(req.user.github_id, 'id')
     ]).then(users => {
+      console.log('found users', users);
       const instructor = users[0];
       const student = users[1];
       const learn_id = instructor ? instructor.id : student ? student.id : null;
@@ -36,6 +38,7 @@ const routes = {
 
         resUserToken(res, user);
       } else {
+        console.log('learn user not found, finding by email:', user.email);
         getLearnUserByEmail(user.email)
           .then(learnUser => {
             user.learn_id = learnUser.id;
