@@ -6,7 +6,8 @@ export default [
     id: 296,
     skillsTreeBranch: '17-03-WD-SEA',
     sections: [
-      { name: 'Fundamentals', file: 'fundamentals' }
+      { name: 'Fundamentals', file: 'fundamentals' },
+      { name: 'Module A', file: 'a' }
     ]
   }
 ].map(cohort => {
