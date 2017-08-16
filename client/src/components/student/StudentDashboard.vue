@@ -198,7 +198,7 @@ export default {
       }
 
       this.$router.push({
-        name: 'student-dashboard',
+        name: student_id ? 'student-dashboard' : 'dashboard',
         params
       });
     }
