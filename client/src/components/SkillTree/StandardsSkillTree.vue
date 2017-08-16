@@ -19,6 +19,7 @@
       <blockquote>Click a node to see the associated standards.</blockquote>
     </div>
     <div>
+      <div id="graph" v-show="!loading"></div>
       <v-collection v-if="!loading">
           <v-collection-item v-for="standard in selectedStandards">
             <standard-checklist
@@ -36,9 +37,6 @@
             </standard-checklist>
           </v-collection-item>
         </v-collection>
-    </div>
-    <div id="graph" v-show="!loading">
-
     </div>
   </div>
 </template>
@@ -113,7 +111,7 @@ export default {
           var element = document.querySelector('#skill-tree');
 
           var width = element.clientWidth,
-              height =  750;
+              height =  400;
 
           var nodes = [];
           var edges = [];
@@ -181,7 +179,7 @@ export default {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  background-color: rgb(248, 248, 248)
+  background-color: rgb(52, 54, 51)
 }
 
 #graph p{
@@ -191,41 +189,73 @@ export default {
 }
 
 .conceptG text{
+  font-size: 1.2rem;
   pointer-events: none;
   fill: white;
 }
 
 marker{
-  fill: #333;
+  fill: rgb(219, 219, 219);
 }
 
 circle {
-  fill: rgb(158, 158, 158);
+  fill: rgb(219, 219, 219);
 }
 
 g.conceptG circle{
-  stroke: #333;
-  stroke-width: 2px;
+  stroke: rgb(70, 70, 70);
+  stroke-width: 5px;
 }
 
 .conceptG-0 {
-  fill: rgb(158, 158, 158);
+  fill: rgb(107, 107, 107);
 }
 
-.conceptG-1 {
-  fill: rgb(244, 67, 54);
+g.conceptG circle.conceptG-1 {
+  fill: rgb(202, 60, 37);
+  stroke: rgb(166, 50, 31);
+  stroke-width: 5px;
 }
 
-.conceptG-2 {
-  fill: rgb(255, 214, 0);
+g.conceptG circle.conceptG-2 {
+  fill: rgb(240, 207, 101);
+  stroke: rgb(197, 170, 83);
 }
 
-.conceptG-3 {
-  fill: rgb(76, 175, 80);
+g.conceptG circle.conceptG-3 {
+  fill: rgb(63, 163, 77);
+  stroke: rgb(52, 134, 64);
+  stroke-width: 5px;
 }
 
-g.conceptG:hover circle{
-  fill: rgb(200, 238, 241);
+g.conceptG:hover circle.conceptG-0{
+  fill: rgb(70, 70, 70);
+  stroke: rgb(107, 107, 107);
+}
+
+g.conceptG:hover circle.conceptG-1{
+  fill: rgb(166, 50, 31);
+  stroke: rgb(202, 60, 37);
+}
+
+g.conceptG:hover circle.conceptG-2{
+  fill: rgb(197, 170, 83);
+  stroke: rgb(240, 207, 101);
+}
+
+g.conceptG:hover circle.conceptG-3{
+  fill: rgb(52, 134, 64);
+  stroke: rgb(63, 163, 77);
+}
+
+g.conceptG circle.conceptEntry {
+  stroke: rgb(219, 219, 219);
+  transform: translateY(15px) scale(1.3);
+}
+
+g.conceptG circle.conceptExit {
+  fill: rgb(219, 219, 219);
+  transform: translateY(15px) scale(1.3);
 }
 
 g.selected circle{
@@ -237,9 +267,24 @@ g.selected:hover circle{
 
 path.link {
   fill: none;
-  stroke: #333;
-  stroke-width: 6px;
+  stroke: rgba(219, 219, 219, 0.2);
+  stroke-width: 3px;
   cursor: default;
+  animation: radiate 4s infinite;
+}
+
+@keyframes radiate {
+  0% {
+    opacity: 0.2;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 0.2;
+  }
 }
 
 path.link:hover{
