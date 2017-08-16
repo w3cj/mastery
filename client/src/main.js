@@ -5,8 +5,13 @@ import VueCookie from 'vue-cookie';
 window.d3 = require('d3/d3.js');
 /* eslint-enable */
 
-if(localStorage.version != '2.9.0') {
-  localStorage.version = '2.9.0';
+if(!localStorage.reset && localStorage.defaultCohort == '162') {
+  localStorage.clear();
+  localStorage.reset = true;
+}
+
+if(localStorage.version != '2.10.0') {
+  localStorage.version = '2.10.0';
   window.location.reload(true);
 }
 
