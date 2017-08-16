@@ -22,9 +22,9 @@ var SkillTree = function(svg, nodes, edges){
     defs.append('svg:marker')
       .attr('id', 'end-arrow')
       .attr('viewBox', '0 -5 10 10')
-      .attr('refX', "32")
-      .attr('markerWidth', 3.5)
-      .attr('markerHeight', 3.5)
+      .attr('refX', "150")
+      .attr('markerWidth', 5)
+      .attr('markerHeight', 5)
       .attr('orient', 'auto')
       .append('svg:path')
       .attr('d', 'M0,-5L10,0L0,5');
@@ -96,6 +96,16 @@ var SkillTree = function(svg, nodes, edges){
   };
 
   SkillTree.prototype.loadGraph = function(jsonObj) {
+    jsonObj.nodes = jsonObj.nodes.map(function (node) {
+      var x = node.x * 2
+      var y = node.y * 2
+      x = x - (x % 50)
+      y = y - (y % 50)
+      var newNode = Object.assign(node, { x: x, y: y })
+
+      return newNode
+    })
+
     var thisGraph = this;
     thisGraph.deleteGraph(true);
     thisGraph.nodes = jsonObj.nodes;
@@ -149,17 +159,9 @@ var SkillTree = function(svg, nodes, edges){
 
   /* insert svg line breaks: taken from http://stackoverflow.com/questions/13241475/how-do-i-include-newlines-in-labels-in-d3-charts */
   SkillTree.prototype.insertTitleLinebreaks = function (gEl, title) {
-    var words = title.split(/\s+/g),
-        nwords = words.length;
-    var el = gEl.append("text")
-          .attr("text-anchor","middle")
-          .attr("dy", "-" + (nwords-1)*7.5);
-
-    for (var i = 0; i < words.length; i++) {
-      var tspan = el.append('tspan').text(words[i]);
-      if (i > 0)
-        tspan.attr('x', 0).attr('dy', '15');
-    }
+    var el = gEl.append("text").attr("text-anchor","middle")
+    var tspan = el.append('tspan').text(title);
+    tspan.attr('y', -65);
   };
 
   // mousedown on main svg
@@ -251,11 +253,17 @@ var SkillTree = function(svg, nodes, edges){
 
   SkillTree.prototype.setColors = function(performances) {
     d3.selectAll('g.conceptG circle').attr('class', function(d) {
+      var styles = ''
       if(performances[d.standards[0]] != undefined) {
-        return 'conceptG-' + performances[d.standards[0]];
+        styles += 'conceptG-' + performances[d.standards[0]];
       } else {
-        return 'conceptG-0';
+        styles += 'conceptG-0';
       }
+
+      if (d.entry) styles += ' conceptEntry'
+      if (d.exit) styles += ' conceptExit'
+
+      return styles
     });
   }
 
