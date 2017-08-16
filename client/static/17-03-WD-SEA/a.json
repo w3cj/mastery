@@ -1,0 +1,374 @@
+{
+  "edges": [
+    {
+      "source": 1,
+      "target": 0
+    },
+    {
+      "source": 1,
+      "target": 2
+    },
+    {
+      "source": 2,
+      "target": 4
+    },
+    {
+      "source": 2,
+      "target": 5
+    },
+    {
+      "source": 5,
+      "target": 6
+    },
+    {
+      "source": 6,
+      "target": 7
+    },
+    {
+      "source": 7,
+      "target": 8
+    },
+    {
+      "source": 1,
+      "target": 9
+    },
+    {
+      "source": 9,
+      "target": 10
+    },
+    {
+      "source": 12,
+      "target": 13
+    },
+    {
+      "source": 13,
+      "target": 14
+    },
+    {
+      "source": 12,
+      "target": 15
+    },
+    {
+      "source": 10,
+      "target": 16
+    },
+    {
+      "source": 16,
+      "target": 12
+    },
+    {
+      "source": 15,
+      "target": 14
+    },
+    {
+      "source": 14,
+      "target": 17
+    },
+    {
+      "source": 17,
+      "target": 18
+    },
+    {
+      "source": 18,
+      "target": 19
+    },
+    {
+      "source": 8,
+      "target": 19
+    },
+    {
+      "source": 20,
+      "target": 22
+    },
+    {
+      "source": 20,
+      "target": 21
+    },
+    {
+      "source": 19,
+      "target": 20
+    },
+    {
+      "source": 21,
+      "target": 23
+    },
+    {
+      "source": 22,
+      "target": 23
+    },
+    {
+      "source": 23,
+      "target": 24
+    },
+    {
+      "source": 24,
+      "target": 25
+    },
+    {
+      "source": 25,
+      "target": 26
+    },
+    {
+      "source": 26,
+      "target": 27
+    },
+    {
+      "source": 23,
+      "target": 28
+    },
+    {
+      "source": 28,
+      "target": 29
+    },
+    {
+      "source": 23,
+      "target": 30
+    },
+    {
+      "source": 30,
+      "target": 31
+    },
+    {
+      "source": 31,
+      "target": 32
+    },
+    {
+      "source": 27,
+      "target": 33
+    },
+    {
+      "source": 29,
+      "target": 33
+    },
+    {
+      "source": 32,
+      "target": 33
+    }
+  ],
+  "nodes": [
+    {
+      "standards": [14220],
+      "id": 0,
+      "title": "Git",
+      "x": "171.1704711914062",
+      "y": "101.64120483398438"
+    },
+    {
+      "standards": [14219],
+      "id": 1,
+      "title": "Github",
+      "x": 413,
+      "y": 96
+    },
+    {
+      "standards": [14227],
+      "id": 2,
+      "title": "HTML Basics",
+      "x": "330.0322875976562",
+      "y": "264.594482421875"
+    },
+    {
+      "standards": [14228],
+      "id": 4,
+      "title": "HTML Forms",
+      "x": "387.9342041015625",
+      "y": "441.5523376464844"
+    },
+    {
+      "standards": [14229],
+      "id": 5,
+      "title": "CSS Basics",
+      "x": "593.650146484375",
+      "y": "419.78460693359375"
+    },
+    {
+      "standards": [14226],
+      "id": 6,
+      "title": "CSS Layout",
+      "x": "599.1552124023438",
+      "y": "652.5354309082031"
+    },
+    {
+      "standards": [14225],
+      "id": 7,
+      "title": "Responsive Design",
+      "x": "432.691162109375",
+      "y": "657.6375427246094"
+    },
+    {
+      "standards": [14217],
+      "id": 8,
+      "title": "Checkpoint",
+      "x": "435.4518432617188",
+      "y": "889.4498291015625"
+    },
+    {
+      "standards": [14232],
+      "id": 9,
+      "title": "Primitives",
+      "x": "180.1981201171875",
+      "y": "236.40553283691406"
+    },
+    {
+      "standards": [14236],
+      "id": 10,
+      "title": "Data Structures",
+      "x": "184.1649780273438",
+      "y": "419.662841796875"
+    },
+    {
+      "standards": [14237],
+      "id": 12,
+      "title": "Functions",
+      "x": "21.9928131103516",
+      "y": "581.8364868164062"
+    },
+    {
+      "standards": [14231],
+      "id": 13,
+      "title": "Debugging",
+      "x": "25.2851333618164",
+      "y": "759.2851257324219"
+    },
+    {
+      "standards": [14234],
+      "id": 14,
+      "title": "Basic Accumulator Pattern",
+      "x": "198.7091674804688",
+      "y": "754.222900390625"
+    },
+    {
+      "standards": [14230],
+      "id": 15,
+      "title": "Scope",
+      "x": "192.5441589355469",
+      "y": "580.3299560546875"
+    },
+    {
+      "standards": [14233],
+      "id": 16,
+      "title": "Loops & Conditionals",
+      "x": "22.2966918945312",
+      "y": "419.8567657470703"
+    },
+    {
+      "standards": [14235],
+      "id": 17,
+      "title": "Higher Order Functions",
+      "x": "81.4327392578125",
+      "y": "897.7828979492188"
+    },
+    {
+      "standards": [14215],
+      "id": 18,
+      "title": "Checkpoint",
+      "x": "254.0990600585938",
+      "y": "898.6000061035156"
+    },
+    {
+      "standards": [14245],
+      "id": 19,
+      "title": "Manipulate the DOM",
+      "x": "352.2561645507812",
+      "y": "1075.182373046875"
+    },
+    {
+      "standards": [14244],
+      "id": 20,
+      "title": "Event Handlers",
+      "x": "354.9340209960938",
+      "y": "1227.1239013671875"
+    },
+    {
+      "standards": [14243],
+      "id": 21,
+      "title": "Client-Side Validation",
+      "x": "167.3231201171875",
+      "y": "1226.852294921875"
+    },
+    {
+      "standards": [14246],
+      "id": 22,
+      "title": "Intervals & Timeouts",
+      "x": "538.168701171875",
+      "y": "1227.04150390625"
+    },
+    {
+      "standards": [14218],
+      "id": 23,
+      "title": "Checkpoint",
+      "x": "354.0873413085938",
+      "y": "1373.112548828125"
+    },
+    {
+      "standards": [14221],
+      "id": 24,
+      "title": "Memory",
+      "x": "147.9609985351562",
+      "y": "1491.2806396484375"
+    },
+    {
+      "standards": [14224],
+      "id": 25,
+      "title": "Binary",
+      "x": 50.10888671875,
+      "y": "1636.88134765625"
+    },
+    {
+      "standards": [14222],
+      "id": 26,
+      "title": "Asymptotic Notation",
+      "x": "232.9876708984375",
+      "y": "1677.893798828125"
+    },
+    {
+      "standards": [14223],
+      "id": 27,
+      "title": "Searching & Sorting Basics",
+      "x": "145.0649719238281",
+      "y": "1866.511962890625"
+    },
+    {
+      "standards": [14239],
+      "id": 28,
+      "title": "Testing Methodology",
+      "x": "350.1151123046875",
+      "y": "1547.929443359375"
+    },
+    {
+      "standards": [14241],
+      "id": 29,
+      "title": "Testing Code",
+      "x": "440.1174926757812",
+      "y": "1715.1927490234375"
+    },
+    {
+      "standards": [14238],
+      "id": 30,
+      "title": "Agile Methodology",
+      "x": "531.4451904296875",
+      "y": "1489.25439453125"
+    },
+    {
+      "standards": [14242],
+      "id": 31,
+      "title": "Agile Process",
+      "x": "585.59033203125",
+      "y": 1673.353515625
+    },
+    {
+      "standards": [14240],
+      "id": 32,
+      "title": "Collaboration",
+      "x": "525.5784912109375",
+      "y": "1874.3092041015625"
+    },
+    {
+      "standards": [14216],
+      "id": 33,
+      "title": "Checkpoint",
+      "x": 324.42236328125,
+      "y": "2083.567138671875"
+    }
+  ]
+}
