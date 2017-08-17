@@ -113,7 +113,7 @@ export default {
         byType[resource.type].push(resource);
         return byType;
       }, {});
-      this.types = Object.keys(this.byType);
+      this.types = Object.keys(this.byType).sort();
       this.selectedType = this.types[0];
     },
     checkResource(id) {
