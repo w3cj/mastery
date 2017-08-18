@@ -9,7 +9,15 @@ export default [
       { name: 'Fundamentals', file: 'fundamentals' },
       { name: 'Module A', file: 'a' }
     ]
-  }
+  },
+  {
+    id: 234,
+    skillsTreeBranch: '17-03-WD-SEA',
+    sections: [
+      { name: 'Fundamentals', file: 'fundamentals' },
+      { name: 'Module A', file: 'a' }
+    ]
+  },
 ].map(cohort => {
   const defaultSections = [
     { name: 'Quarter 1', file: 'q1' },
