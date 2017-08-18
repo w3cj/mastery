@@ -4,7 +4,9 @@
       <button class="waves btn resource-btn" v-bind:class="colors[type]" v-for="type in types" v-on:click="selectedType = type" v-bind:disabled="selectedType == type">
         <span class="emoji">{{typeEmojis[type]}}</span>
         <span>{{type}}</span>
-        <span class="resource-count">{{byType[type].length}}</span>
+        <div class="count-container">
+          <span class="resource-count">{{byType[type].length}}</span>
+        </div>
       </button>
     </div>
 
@@ -187,9 +189,16 @@ export default {
   .resource-btn {
     margin: 0.25em;
   }
+  .count-container {
+    flex: 1;
+  }
   .resource-count {
     color: black;
     font-weight: bold;
+    background: white;
+    border-radius: 30px;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
   }
   .circle-list ul {
     justify-content: center;
@@ -211,5 +220,17 @@ export default {
   .circle-list .checkout-button {
     cursor: pointer;
     font-size: 1.2rem;
+  }
+
+  @media (max-width: 692px) {
+    .resource-types button {
+      min-width: 100%;
+      max-width: 100%;
+    }
+
+    .circle-list li {
+      min-width: 100%;
+      max-width: 100%;
+    }
   }
 </style>
