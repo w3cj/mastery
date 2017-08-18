@@ -1,29 +1,29 @@
 <template>
-  <div class="resource-add">
+  <div class="resource-add grey lighten-5">
     <h5>Add A Resource</h5>
     <v-progress-linear indeterminate v-if="adding"></v-progress-linear>
     <form v-if="!adding" class="form" v-on:submit.prevent="addResource(resourceTitle, resourceURL, selectedResourceType, resourceDescription, standard)">
       <div class="row">
-        <div class="input-field col s12">
-             <v-icon prefix>title</v-icon>
-             <v-text-input v-model="resourceTitle" name="resourceTitle" id="resourceTitle" placeholder="Enter a Title"></v-text-input>
-         </div>
+        <div class="input-field col s4">
+          <v-icon prefix>title</v-icon>
+          <v-text-input v-model="resourceTitle" name="resourceTitle" id="resourceTitle" placeholder="Enter a Title"></v-text-input>
+        </div>
+        <div class="input-field col s8">
+          <v-icon prefix>description</v-icon>
+          <v-text-input name="resourceDescription" id="resourceDescription" v-model="resourceDescription" placeholder="Enter a description"></v-text-input>
+        </div>
         <div class="input-field col s12 m8">
-             <v-icon prefix>library_add</v-icon>
-             <v-text-input v-model="resourceURL" name="resourceURL" id="resourceURL" placeholder="http://awesome.resource/cool" type="url"></v-text-input>
+          <v-icon prefix>library_add</v-icon>
+          <v-text-input v-model="resourceURL" name="resourceURL" id="resourceURL" placeholder="http://awesome.resource/cool" type="url"></v-text-input>
          </div>
          <div class="input-field col s12 m4">
-           <select class="browser-default" v-model="selectedResourceType">
-             <option v-for="resource in resourceTypes" v-bind:value="resource.id">{{resource.text}}</option>
-            </select>
+          <select class="browser-default" v-model="selectedResourceType">
+            <option :value="null">-- Select a Resource Type --</option>
+            <option v-for="resource in resourceTypes" v-bind:value="resource.id">{{resource.text}}</option>
+          </select>
         </div>
-        <div class="input-field col s12 m8">
-          <v-icon prefix>description</v-icon>
-          <v-text-area name="resourceDescription" id="resourceDescription" v-model="resourceDescription" placeholder="Enter a description"></v-text-area>
-        </div>
-        <div class="col s7 m8">
-
-        </div>
+      </div>
+      <div class="row">
         <div class="col s5 m4">
           <button
             class="waves-effect waves-light btn"
@@ -86,6 +86,8 @@ export default {
 </script>
 <style>
   .resource-add {
-    margin: 1em;
+    border-radius: 1rem;
+    margin: 2rem;
+    padding: 2rem;
   }
 </style>
