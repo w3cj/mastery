@@ -182,6 +182,7 @@ export default {
     padding: 0em !important;
     font-family: sans-serif !important;
     white-space: pre-wrap;
+    text-align: left;
   }
   .resource-btn {
     margin: 0.25em;
