@@ -130,6 +130,13 @@ export default {
           };
           this.loadUser(note.creator_id);
 
+          if(note.student_id !== note.creator_id) {
+            users[note.student_id] = users[note.student_id] || {
+              image: `https://api.adorable.io/avatars/100/${note.student_id}.png`,
+              full_name: 'Loading...'
+            };
+          }
+
           return users;
         }, {});
 
