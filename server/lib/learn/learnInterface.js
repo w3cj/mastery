@@ -7,7 +7,7 @@ const learnCache = new NodeCache();
 require('dotenv').config();
 
 const {postJSON, fetchJSON, fetchText, getAuthHeader} = require('../fetchHelpers');
-const {Student, Instructor} = require('../../models');
+const {Student, Instructor, Github} = require('../../models');
 const {learnURL} = require('../constants');
 const {averagePerformances, averageStudentPerformances} = require('./analytics');
 
@@ -104,16 +104,25 @@ function getInstructorsFromBody(body) {
 }
 
 function getGithubUser(github_username) {
-  if(!github_username) return {};
-  return fetchJSON(`https://api.github.com/users/${github_username}?access_token=${process.env.GITHUB_TOKEN}`)
+  if(!github_username || github_username == 'Unknown') return Promise.resolve({});
+  return Github
+    .find(github_username)
     .then(user => {
-      if(user.id) {
-        user.id = user.id.toString();
+      if(user) {
+        console.log('exists', github_username);
+        return user;
+      } else {
+        return fetchJSON(`https://api.github.com/users/${github_username}?access_token=${process.env.GITHUB_TOKEN}`)
+          .then(user => {
+            if(user.id) {
+              user.id = user.id.toString();
+            }
+            return Github.insert(user);
+          }).catch(() => {
+            console.log('github user', github_username, 'not found');
+            return {};
+          });
       }
-      return user;
-    }).catch(() => {
-      console.log('github user', github_username, 'not found');
-      return {};
     });
 }
 
@@ -158,7 +167,7 @@ function getUserFromBody(body) {
     admin
   };
 
-  if(github_username && github_username.trim()) {
+  if(github_username && github_username.trim() && github_username != 'Unknown') {
     return getGithubUser(github_username)
       .then(githubUser => {
         user.github_id = githubUser.id;

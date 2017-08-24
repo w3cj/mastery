@@ -16,6 +16,7 @@ const Note = require('./Note');
 const Repo = require('./Repo');
 const StandardCollection = require('./StandardCollection');
 const SuccessCriteria = require('./SuccessCriteria');
+const Github = require('./Github');
 
 module.exports = {
   User: new User(db),
@@ -28,5 +29,6 @@ module.exports = {
   Repo: new Repo(db),
   StandardCollection: new StandardCollection(db),
   SuccessCriteria: new SuccessCriteria(db),
-  ResourceTracker: new ResourceTracker(db)
+  ResourceTracker: new ResourceTracker(db),
+  Github: new Github(db)
 };
