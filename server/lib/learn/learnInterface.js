@@ -158,7 +158,7 @@ function getUserFromBody(body) {
     cohorts.push(cohort_id);
   });
 
-  const admin = $($('dd')[2]).text() == 'admin';
+  const admin = $($('dd')[3]).text() == 'admin';
 
   const user = {
     full_name,
