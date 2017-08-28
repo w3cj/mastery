@@ -221,6 +221,7 @@ class API {
   getStudentResourceTrackers(cohort_id, student_id) {
     return fetchJSON(`cohorts/${cohort_id}/resource-tracker/student/${student_id}`)
       .then(resourceTrackers => {
+        if (!resourceTrackers) return {};
         return resourceTrackers.reduce((all, one) => {
           all[one.resource_id] = one;
           return all;

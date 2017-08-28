@@ -118,7 +118,7 @@ const methods = {
           data.performances = performances;
         }),
     ]).catch((error) => {
-      alert(error.message);
+      console.error(error);
       router.go('/');
     });
   },
