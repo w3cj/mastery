@@ -30,7 +30,7 @@ const routes = {
       console.log('found users', users);
       const instructor = users[0];
       const student = users[1];
-      const learn_id = instructor ? instructor.id : student ? student.id : null;
+      const learn_id = instructor && instructor.admin ? instructor.id : student ? student.id : null;
 
       if(learn_id) {
         user.learn_id = learn_id;
