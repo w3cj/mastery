@@ -5,6 +5,12 @@
       <v-progress-circular v-if="loading" active green green-flash></v-progress-circular>
     </center>
     <div v-if="!loading">
+      <div v-if="user.isInstructor">
+        <student-search
+          v-bind:cohort_id="cohort_id"
+          v-bind:onSelectStudent="selectStudent">
+        </student-search>
+      </div>
       <center v-if="numPages > 1">
         <v-pagination
         color="blue"
@@ -67,15 +73,20 @@
 import moment from 'moment';
 import Auth from '../lib/Auth';
 import API from '../lib/API';
+import StudentSearch from './StudentSearch';
 
 export default {
   name: 'activity-feed',
+  components: {
+    'student-search': StudentSearch,
+  },
   data() {
     return {
       users: {},
       notes: [],
       user: Auth.getCurrentUser(),
       cohort_id: this.$route.params.cohort_id,
+      student_id: this.$route.query.student_id,
       cohort: null,
       loading: false,
       count: 10,
@@ -99,9 +110,19 @@ export default {
       return notes.slice(start, end);
     }
   },
+  watch: {
+    '$route.params.cohort_id'() {
+      this.load();
+    },
+    '$route.query.student_id'() {
+      this.load();
+    }
+  },
   methods: {
     load() {
       this.loading = true;
+      this.cohort_id = this.$route.params.cohort_id;
+      this.student_id = this.$route.query.student_id;
 
       const loadCohort = API.getCohort(this.cohort_id)
         .then(cohort => {
@@ -110,10 +131,10 @@ export default {
 
       let getNotes = null;
 
-      if(this.user.isInstructor) {
+      if(this.user.isInstructor && !this.student_id) {
         getNotes = API.getUnreadCohortNotes(this.cohort_id);
       } else {
-        getNotes = API.getUnreadStudentNotes(this.cohort_id, this.user.learn_id);
+        getNotes = API.getUnreadStudentNotes(this.cohort_id, this.student_id || this.user.learn_id);
       }
 
       getNotes.then(notes => {
@@ -166,7 +187,19 @@ export default {
         .then(result => {
           this.$set(note, 'read', result.read);
         });
-    }
+    },
+    selectStudent(student) {
+      console.log(student);
+      this.$router.push({
+        name: 'activity-feed',
+        params: {
+          cohort_id: this.cohort_id,
+        },
+        query: {
+          student_id: student.id,
+        }
+      });
+    },
   }
 }
 </script>
