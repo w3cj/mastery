@@ -10,8 +10,8 @@ if(!localStorage.reset && localStorage.defaultCohort == '162') {
   localStorage.reset = true;
 }
 
-if(localStorage.version != '2.11.2') {
-  localStorage.version = '2.11.2';
+if(localStorage.version != '2.11.3') {
+  localStorage.version = '2.11.3';
   window.location.reload(true);
 }
 

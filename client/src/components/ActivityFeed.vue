@@ -189,7 +189,6 @@ export default {
         });
     },
     selectStudent(student) {
-      console.log(student);
       this.$router.push({
         name: 'activity-feed',
         params: {
