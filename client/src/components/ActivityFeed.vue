@@ -20,9 +20,15 @@
         ></v-pagination>
       </center>
       <v-collection v-if="visibleNotes.length > 0">
-        <v-collection-avatar v-for="note in visibleNotes" v-bind:src="users[note.creator_id].image">
+        <v-collection-avatar class="student-note" v-for="note in visibleNotes" v-bind:src="users[note.creator_id].image">
             <span class="title">
-              <strong>{{cohort.standards[note.standard_id].description}}</strong>
+              <v-icon v-if="data.evidences[note.success_criteria_id] && isChecked(note.success_criteria_id)"
+                v-bind:class="{
+                  'green-text': data.evidences[note.success_criteria_id].approved,
+                  'yellow-text': !data.evidences[note.success_criteria_id].approved
+                }">check_box</v-icon>
+              <v-icon v-if="data.evidences[note.success_criteria_id] && !isChecked(note.success_criteria_id)" class="grey-text">check_box_outline_blank</v-icon>
+              <strong :class="getPerformanceTextColors(data.performances[note.standard_id] || 0)">{{cohort.standards[note.standard_id].description}}</strong>
               <br>
               <i>{{successCriteria(cohort.standards[note.standard_id].success_criteria, note.success_criteria_id)}}</i>
             </span>
@@ -71,6 +77,7 @@
 
 <script>
 import moment from 'moment';
+import data from '../data';
 import Auth from '../lib/Auth';
 import API from '../lib/API';
 import StudentSearch from './StudentSearch';
@@ -90,7 +97,8 @@ export default {
       cohort: null,
       loading: false,
       count: 10,
-      page: 1
+      page: 1,
+      data: data.data,
     }
   },
   mounted() {
@@ -164,8 +172,15 @@ export default {
         this.users = users;
       });
 
-      Promise.all([loadCohort, getNotes]).then(() => {
+      const promises = [loadCohort, getNotes];
+
+      if(this.student_id) {
+        promises.push(data.methods.setStudent(this.cohort_id, this.student_id));
+      }
+
+      Promise.all(promises).then(() => {
         this.loading = false;
+        console.log(this.data.performances);
       })
     },
     loadUser(user_id) {
@@ -188,6 +203,28 @@ export default {
           this.$set(note, 'read', result.read);
         });
     },
+    getPerformanceColors(score) {
+      return {
+        'grey': score == 0 || score > 4,
+        'red': score == 1,
+        'yellow': score == 2,
+        'green': score == 3 || score == 4,
+        'accent-4': score == 2
+      }
+    },
+    getPerformanceTextColors(score) {
+      const performanceColors = this.getPerformanceColors(score);
+      return {
+        'grey-text': performanceColors.grey,
+        'red-text': performanceColors.red,
+        'yellow-text': performanceColors.yellow,
+        'green-text': performanceColors.green,
+        'accent-4': performanceColors.yellow
+      }
+    },
+    isChecked(id) {
+      return this.data.evidences[id] && this.data.evidences[id].checked;
+    },
     selectStudent(student) {
       this.$router.push({
         name: 'activity-feed',
@@ -207,5 +244,8 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+  }
+  .student-note {
+    background-color: #50AD55;
   }
 </style>
