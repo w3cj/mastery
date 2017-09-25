@@ -176,6 +176,8 @@ export default {
 
       if(this.student_id) {
         promises.push(data.methods.setStudent(this.cohort_id, this.student_id));
+      } else {
+        promises.push(data.methods.setStudent(null, null));
       }
 
       Promise.all(promises).then(() => {

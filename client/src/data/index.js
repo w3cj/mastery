@@ -93,6 +93,14 @@ const methods = {
       });
   },
   setStudent(cohort_id, student_id) {
+    if(!cohort_id || !student_id) {
+      data.student_id = -1;
+      data.student = {};
+      data.performances = {};
+      data.cohorts = {};
+      data.evidences = {};
+      return Promise.resolve();
+    }
     data.student_id = student_id;
 
     return Promise.all([
