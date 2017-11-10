@@ -49,11 +49,6 @@ function validCohortId(req, res, next) {
   }
 }
 
-router.get('/:cohort_id/performances/average', validCohortId, isInstructor, (req, res, next) => {
-  const {cohort_id} = req.params;
-  processRequest(CohortManager.getAveragePerformances(cohort_id), res, next);
-});
-
 Object.keys(routes).forEach(endpoint => router.get(endpoint, validCohortId, authorize, routes[endpoint]));
 
 router.post('/:cohort_id/evidences', validCohortId, (req, res, next) => {

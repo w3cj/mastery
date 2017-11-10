@@ -1,4 +1,4 @@
-const {fetchCohortData, getUserPerformances, getAveragePerformances, getAverageStudentPerformances, setUserPerformance} = require('./learn/learnInterface');
+const {fetchCohortData, getUserPerformances, getAverageStudentPerformances, setUserPerformance} = require('./learn/learnInterface');
 const {Student, Instructor, Performance} = require('../models');
 
 class CohortManager {
@@ -47,10 +47,6 @@ class CohortManager {
 
   getPerformances(cohort_id, user_id) {
     return getUserPerformances(cohort_id, user_id);
-  }
-
-  getAveragePerformances(cohort_id) {
-    return getAveragePerformances(cohort_id);
   }
 
   getAverageStudentPerformances(cohort_id, user_id) {

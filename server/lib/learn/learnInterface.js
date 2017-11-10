@@ -58,28 +58,24 @@ function getLearnUserByEmail(email) {
 }
 
 function getPerformances(cohort_id) {
-  return fetchJSON(`${learnURL}api/v1/cohorts/${cohort_id}/performances`, getAuthHeader());
-}
-
-function getAveragePerformances(cohort_id) {
   return fetchJSON(`${learnURL}api/v1/cohorts/${cohort_id}/performances`, getAuthHeader())
     .then(performances => {
-      return averagePerformances(performances);
+      performances.average = averagePerformances(performances);
+      return performances;
     });
 }
 
 function getAverageStudentPerformances(cohort_id, user_id) {
-  return fetchJSON(`${learnURL}cohorts/${cohort_id}/users/${user_id}/performances.json`, getAuthHeader())
-    .then(data => {
-      const scores = data.standards.reduce((performances, standard) => {
-        standard.performances.forEach(s => {
-          if(s.standard_type == 'core') {
-            performances['core'][s.id] = s.score
-          } else {
-            performances['elective'][s.id] = s.score
-          }
-        });
-        return performances;
+  return queries.getUserPerformances(cohort_id, user_id)
+    .then(performances => {
+      const scores = Object.keys(performances).reduce((all, performance_id) => {
+        const performance = performances[performance_id];
+        if(performance.standard_type == 'core') {
+          all.core[performance.standard_id] = performance.score;
+        } else {
+          all.elective[performance.standard_id] = performance.score;
+        }
+        return all;
       }, {
         core: {},
         elective: {}
@@ -90,12 +86,15 @@ function getAverageStudentPerformances(cohort_id, user_id) {
 }
 
 function getUserPerformances(cohort_id, user_id) {
-  return fetchJSON(`${learnURL}cohorts/${cohort_id}/users/${user_id}/performances.json`, getAuthHeader())
-    .then(data => {
-      return data.standards.reduce((performances, standard) => {
-        standard.performances.forEach(s => performances[s.standard_id] = s.score);
-        return performances;
-      }, {});
+  return queries
+    .getUserPerformances(cohort_id, user_id)
+    .then(performances => {
+      return Object
+        .keys(performances)
+        .reduce((all, performance_id) => {
+          all[performance_id] = performances[performance_id].score;
+          return all;
+        }, {});
     });
 }
 
@@ -127,7 +126,7 @@ function fetchCohortInfo(cohort_id) {
 function fetchCohortData(cohort_id) {
   return Promise.all([
     fetchCohortInfo(cohort_id),
-    fetchJSON(`${learnURL}api/v1/cohorts/${cohort_id}/performances`, getAuthHeader()),
+    getPerformances(cohort_id)
   ]).then(results => {
       const data = results[0];
       const performanceData = results[1];
@@ -255,7 +254,6 @@ getStudentImages = cacheify(getStudentImages, 3600);
 module.exports = {
   getAllCohorts,
   getPerformances,
-  getAveragePerformances,
   getAverageStudentPerformances,
   getUserPerformances,
   setUserPerformance,

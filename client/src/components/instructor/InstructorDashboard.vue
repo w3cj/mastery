@@ -144,22 +144,19 @@ export default {
   methods: {
     load() {
       if(this.cohort_id == 'default') return;
-      
+
       this.loadingPerformances = true;
-      Promise.all([
-        API
-          .getPerformances(this.cohort_id),
-        API
-          .getAveragePerformances(this.cohort_id)
-      ]).then(results => {
-        this.performances = results[0];
-        this.averagePerformances = results[1];
-        this.calculateMetrics();
-        this.loadingPerformances = false;
-        if(this.cohort.subjectsById && !this.cohort.subjectsById[this.scoreSubject_id]) {
-          this.scoreSubject_id = -1;
-        }
-      });
+      API
+        .getPerformances(this.cohort_id)
+        .then(performances => {
+          this.performances = performances;
+          this.averagePerformances = performances.average;
+          this.calculateMetrics();
+          this.loadingPerformances = false;
+          if(this.cohort.subjectsById && !this.cohort.subjectsById[this.scoreSubject_id]) {
+            this.scoreSubject_id = -1;
+          }
+        });
     },
     setFilteredSubject(id) {
       this.scoreSubject_id = id;

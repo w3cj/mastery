@@ -1,7 +1,7 @@
 const queries = require('../db/queries');
 
 queries
-  .getCohort(149)
+  .getUserPerformances(149, 2353)
   .then(result => {
     console.log(result);
   });

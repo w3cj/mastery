@@ -1,4 +1,5 @@
 const db = require('./connection');
+const moment = require('moment');
 
 module.exports = {
   getUserByEmail(email) {
@@ -91,6 +92,36 @@ module.exports = {
             updated_at
           }
         });
+      });
+  },
+  getUserPerformances(cohort_id, user_id) {
+    return db('cohorts')
+      .where('id', cohort_id)
+      .first()
+      .then(cohort => {
+        return db('performances')
+          .select('curriculum_standards.standard_type', 'performances.standard_id', 'performances.score', 'performances.updated_at')
+          .where('performances.user_id', user_id)
+          .andWhere('performances.cohort_id', cohort_id)
+          .andWhere('curriculum_standards.curriculum_id', cohort.curriculum_id)
+          .join('curriculum_standards', 'curriculum_standards.standard_id', 'performances.standard_id')
+          .then(performances => {
+            return performances.reduce((all, performance) => {
+              if(all[performance.standard_id] && +moment(all[performance.standard_id].updated_at) < +moment(performance.updated_at)) {
+                all[performance.standard_id] = performance;
+              } else if (!all[performance.standard_id]) {
+                all[performance.standard_id] = performance;
+              }
+
+              if(performance.standard_type === 0) {
+                performance.standard_type = 'core';
+              } else {
+                performance.standard_type = 'elective';
+              }
+
+              return all;
+            }, {});
+          });
       });
   }
 }
