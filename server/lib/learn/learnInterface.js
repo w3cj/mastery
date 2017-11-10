@@ -1,4 +1,3 @@
-const cheerio = require('cheerio');
 const crypto = require('crypto');
 const monk = require('monk');
 const NodeCache = require( "node-cache" );
@@ -6,176 +5,56 @@ const learnCache = new NodeCache();
 
 require('dotenv').config();
 
-const {postJSON, fetchJSON, fetchText, getAuthHeader} = require('../fetchHelpers');
-const {Student, Instructor, Github} = require('../../models');
+const {postJSON, fetchJSON, getAuthHeader} = require('../fetchHelpers');
+const {Student, Instructor} = require('../../models');
 const {learnURL} = require('../constants');
 const {averagePerformances, averageStudentPerformances} = require('./analytics');
+const queries = require('../../db/queries');
 
 function getAllCohorts() {
-  return fetchJSON(`${learnURL}api/v1/cohorts`, getAuthHeader());
+  return queries.getAllCohorts();
 }
 
 function getStudentImages(cohort_id) {
-  const studentURL = `${learnURL}api/v1/cohorts/${cohort_id}/students`;
-  return fetchJSON(studentURL, getAuthHeader())
+  return queries
+    .getStudents(cohort_id)
     .then(students => {
-      return students.data.map(s => ({
-        id: s.id,
-        img: s.avatar,
-        full_name: `${s.first_name} ${s.last_name}`
-      }));
+      return students.map(({id, image, full_name}) => {
+        return {
+          id,
+          full_name,
+          img: image
+        }
+      });
     });
 }
 
 function getStudentInfo(cohort_id) {
-  const studentURL = `${learnURL}api/v1/cohorts/${cohort_id}/students`;
-
-  return fetchJSON(studentURL, getAuthHeader())
+  return queries
+    .getStudents(cohort_id)
     .then(students => {
-      return students.data.reduce((all, s) => {
+      return students.reduce((all, {github_username, github_id, full_name}) => {
         const student = {
-          github_username: s.github_username,
-          full_name: `${s.first_name} ${s.last_name}`
+          github_id,
+          github_username,
+          full_name
         };
         all[student.full_name] = student;
         return all;
       }, {});
-    }).then(students => {
-      return Object.keys(students)
-        .reduce((promise, full_name) => {
-          const student = students[full_name];
-          return promise.then(() => {
-            if(!student.github_username || !student.github_username.trim()) {
-              student.github_id = undefined;
-              return;
-            }
-            return getGithubUser(student.github_username)
-              .then(user => {
-                student.github_id = user.id;
-              });
-          });
-        }, Promise.resolve())
-        .then(() => {
-          return students;
-        });
     });
 }
 
 function getInstructorInfo(cohort_id) {
-  const staffingURL = `${learnURL}cohorts/${cohort_id}/staffings`;
-
-  return fetchText(staffingURL, getAuthHeader())
-    .then(getInstructorsFromBody);
-}
-
-function getStudentsFromBody(body) {
-  const $ = cheerio.load(body);
-
-  const rows = $('table.table tbody tr');
-
-  const studentsByName = {};
-
-  rows.each(function() {
-    const columns = $(this).find('td');
-    const student = {
-      full_name: $(columns[0]).text(),
-      github_username: $(columns[3]).text().toLowerCase()
-    };
-
-    studentsByName[student.full_name] = student;
-  });
-
-  return studentsByName;
-}
-
-function getInstructorsFromBody(body) {
-  const $ = cheerio.load(body);
-
-  const rows = $('table.table tbody tr');
-  const instructor_ids = [];
-
-  rows.each(function() {
-    const columns = $(this).find('td');
-    const id = $(columns[0].children[0]).attr('href').split('/users/')[1];
-    instructor_ids.push(isNaN(id) ? id : Number(id));
-  });
-
-  return Promise.all(instructor_ids.map(getLearnUser));
-}
-
-function getGithubUser(github_username) {
-  if(!github_username || github_username == 'Unknown') return Promise.resolve({});
-  return Github
-    .find(github_username)
-    .then(user => {
-      if(user) {
-        console.log('exists', github_username);
-        return user;
-      } else {
-        return fetchJSON(`https://api.github.com/users/${github_username}?access_token=${process.env.GITHUB_TOKEN}`)
-          .then(user => {
-            if(user.id) {
-              user.id = user.id.toString();
-            }
-            return Github.insert(user);
-          }).catch(() => {
-            console.log('github user', github_username, 'not found');
-            return {};
-          });
-      }
-    });
+  return queries.getInstructors(cohort_id);
 }
 
 function getLearnUser(id) {
-  const userURL = `${learnURL}users/${id}`;
-  return fetchText(userURL, getAuthHeader())
-    .then(getUserFromBody)
-    .then(user => {
-      user.id = id;
-      return user;
-    });
+  return queries.getUserWithCohorts(id);
 }
 
 function getLearnUserByEmail(email) {
-  const searchURL = `${learnURL}users?q=${email}`;
-  return fetchText(searchURL, getAuthHeader())
-    .then(body => {
-      const $ = cheerio.load(body);
-      const id = $($('div.container table td a')[0]).attr('href').split('/users/')[1];
-      return id;
-    }).then(getLearnUser);
-}
-
-function getUserFromBody(body) {
-  const $ = cheerio.load(body);
-  const full_name = $($('div.page-header h1')[0]).text().replace('(active)', '').trim();
-  const github_username = $($('dl.dl-horizontal dd')[1]).text();
-  const image = $($('div.col-md-3 img')[0]).attr('src');
-  const cohorts = [];
-
-  $('div.container ul li a[href*="/cohorts/"]').each(function() {
-    const cohort_id = $(this).attr('href').replace('/dashboard', '').split('/cohorts/')[1];
-    cohorts.push(cohort_id);
-  });
-
-  const admin = $($('dd')[3]).text() == 'admin';
-
-  const user = {
-    full_name,
-    image,
-    cohorts,
-    admin
-  };
-
-  if(github_username && github_username.trim() && github_username != 'Unknown') {
-    return getGithubUser(github_username)
-      .then(githubUser => {
-        user.github_id = githubUser.id;
-        return user;
-      });
-  } else {
-    return Promise.resolve(user);
-  }
+  return queries.getUserByEmail(email);
 }
 
 function getPerformances(cohort_id) {
@@ -214,7 +93,7 @@ function getUserPerformances(cohort_id, user_id) {
   return fetchJSON(`${learnURL}cohorts/${cohort_id}/users/${user_id}/performances.json`, getAuthHeader())
     .then(data => {
       return data.standards.reduce((performances, standard) => {
-        standard.performances.forEach(s => performances[s.id] = s.score);
+        standard.performances.forEach(s => performances[s.standard_id] = s.score);
         return performances;
       }, {});
     });
@@ -233,17 +112,16 @@ function setUserPerformance(cohort_id, user_id, standard_id, score) {
 }
 
 function fetchCohortInfo(cohort_id) {
-  return fetchJSON(`${learnURL}api/v1/cohorts/${cohort_id}`, getAuthHeader())
-          .then(json => {
-            const cohort_info = {
-              cohort_id,
-              name: json.data.attributes.name,
-              label: json.data.attributes.label,
-              curriculum_id: json.data.relationships.curriculum.data.id
-            };
-
-            return cohort_info;
-          });
+  return queries
+    .getCohort(cohort_id)
+    .then(({name, label, curriculum_id}) => {
+      return {
+        cohort_id,
+        name,
+        label,
+        curriculum_id
+      }
+    });
 }
 
 function fetchCohortData(cohort_id) {
@@ -278,8 +156,6 @@ function formatCohortData(data) {
       .then(students => {
         data.students.forEach(student => {
           student.github_id = students[student.full_name].github_id;
-          delete student.performance_path;
-          delete student.view_performance;
         });
       }),
     getInstructorInfo(data.cohort_id)
@@ -389,6 +265,5 @@ module.exports = {
   getLearnUserByEmail,
   getStudentImages,
   getStudentInfo,
-  getInstructorsFromBody,
   getInstructorInfo
 };

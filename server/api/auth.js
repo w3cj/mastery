@@ -2,7 +2,7 @@ const ezc = require('express-zero-config');
 const jwt = require('jsonwebtoken');
 
 const {Instructor, Student} = require('../models');
-const {getLearnUserByEmail} = require('../lib/learn/learnInterface');
+const {getLearnUser, getLearnUserByEmail} = require('../lib/learn/learnInterface');
 
 function resUserToken(res, user) {
   const authConfig = require('../auth-github.config');
@@ -23,7 +23,7 @@ const routes = {
     console.log('exchanging user:', user);
     Promise.all([
       Instructor
-        .find(req.user.github_id, 'id'),
+        .find(req.user.github_id),
       Student
         .find(req.user.github_id, 'id')
     ]).then(users => {
@@ -36,13 +36,18 @@ const routes = {
         user.learn_id = learn_id;
         user.isInstructor = instructor ? true : false;
 
-        resUserToken(res, user);
+        getLearnUser(learn_id)
+          .then(learnUser => {
+            user.auth_token = learnUser.auth_token;
+            resUserToken(res, user);
+          });
       } else {
         console.log('learn user not found, finding by email:', user.email);
         getLearnUserByEmail(user.email)
           .then(learnUser => {
             user.learn_id = learnUser.id;
             user.isInstructor = learnUser.admin;
+            user.auth_token = learnUser.auth_token;
 
             resUserToken(res, user);
           });

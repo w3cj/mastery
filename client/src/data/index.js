@@ -70,6 +70,7 @@ const methods = {
       })
 
       data.resources = resources;
+      console.log(data.cohort);
     });
   },
   setCohorts(student_id) {
