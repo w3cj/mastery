@@ -35,7 +35,7 @@ export default {
 			const input = $('input.autocomplete');
 			if(input.autocomplete) {
 				const data = this.cohorts.reduce((data, cohort) => {
-					data[cohort.name] = null;
+					data[`${cohort.name} - ${cohort.label}`] = null;
 					return data;
 				}, {});
 				$('input.autocomplete').autocomplete({
@@ -47,7 +47,7 @@ export default {
       const cohort_search = document.querySelector('#cohort_search').value.trim();
 
       if(cohort_search) {
-        const findCohort = this.cohorts.filter(c => c.name.startsWith(cohort_search));
+        const findCohort = this.cohorts.filter(c => `${c.name} - ${c.label}`.startsWith(cohort_search));
 
         if(findCohort.length > 0) {
           const {cohort_id} = findCohort[0];

@@ -182,7 +182,6 @@ export default {
 
       Promise.all(promises).then(() => {
         this.loading = false;
-        console.log(this.data.performances);
       })
     },
     loadUser(user_id) {

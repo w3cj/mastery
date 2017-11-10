@@ -126,6 +126,7 @@ const methods = {
           data.performances = performances;
         }),
     ]).catch((error) => {
+      /* eslint-disable */
       console.error(error);
       router.go('/');
     });
