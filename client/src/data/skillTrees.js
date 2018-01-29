@@ -3,6 +3,13 @@ export default [
   { id: 184 },
   { id: 246 },
   {
+    id: 239,
+    skillsTreeBranch: 'buckets',
+    sections: [
+      { name: 'Buckets', file: 'buckets' }
+    ]
+  },
+  {
     id: 296,
     skillsTreeBranch: '17-03-WD-SEA',
     sections: [

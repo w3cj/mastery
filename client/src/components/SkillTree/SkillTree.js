@@ -93,6 +93,7 @@ var SkillTree = function(svg, nodes, edges){
 
     // listen for resize
     window.onresize = function(){thisGraph.updateWindow(svg);};
+    thisGraph.updateWindow(svg);
   };
 
   SkillTree.prototype.loadGraph = function(jsonObj) {
@@ -248,7 +249,7 @@ var SkillTree = function(svg, nodes, edges){
         bodyEl = document.getElementsByTagName('body')[0];
     var x = window.innerWidth || docEl.clientWidth || bodyEl.clientWidth;
     var y = window.innerHeight|| docEl.clientHeight|| bodyEl.clientHeight;
-    svg.attr("width", x).attr("height", y);
+    svg.attr("width", x).attr("height", y/2);
   };
 
   SkillTree.prototype.setColors = function(performances) {

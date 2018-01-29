@@ -179,7 +179,7 @@ export default {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  background-color: rgb(52, 54, 51)
+  background-color: rgb(52, 54, 51);
 }
 
 #graph p{

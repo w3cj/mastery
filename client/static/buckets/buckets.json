@@ -1,0 +1,394 @@
+{
+  "nodes": [{
+    "title": "git",
+    "id": 0,
+    "x": 205.00001525878906,
+    "y": 253.53359985351562,
+		"standards": [13993, 13994]
+  }, {
+    "title": "Command Line",
+    "id": 1,
+    "x": 204,
+    "y": 108,
+		"standards": [13992]
+  }, {
+    "id": 2,
+    "title": "Multipage Website",
+    "x": 209.86416625976562,
+    "y": 422.5184631347656,
+		"standards": []
+  }, {
+    "id": 3,
+    "title": "Deploy Static Websites",
+    "x": 46.867207527160645,
+    "y": 423.5401153564453,
+		"standards": [13961]
+  }, {
+    "id": 5,
+    "title": "Reading Comprehension",
+    "x": 767.3309936523438,
+    "y": 417.87926483154297,
+		"standards": []
+  }, {
+    "id": 6,
+    "title": "Learn to Learn",
+    "x": 507.04010009765625,
+    "y": 235.76748657226562,
+		"standards": []
+  }, {
+    "id": 7,
+    "title": "Setting Short term Goals",
+    "x": 507.01507568359375,
+    "y": 392.2831573486328,
+		"standards": []
+  }, {
+    "id": 8,
+    "title": "Meetups",
+    "x": 631.9266967773438,
+    "y": 393.0663146972656,
+		"standards": []
+  }, {
+    "id": 9,
+    "title": "Programming (gMoney)",
+    "x": 369.4598388671875,
+    "y": 387.3407440185547,
+		"standards": [14002, 14108]
+  }, {
+    "id": 10,
+    "title": "Map, Filter, Reduce (CandyShop)",
+    "x": 594.9259796142578,
+    "y": 714.5634765625,
+		"standards": [14013]
+  }, {
+    "id": 11,
+    "title": "DOM",
+    "x": 327.7848815917969,
+    "y": 723.2740173339844,
+		"standards": [14104, 13976]
+  }, {
+    "id": 12,
+    "title": "AJAX requests (gTelephone)",
+    "x": 252.96568298339844,
+    "y": 850.4187927246094,
+		"standards": [13975]
+  }, {
+    "id": 13,
+    "title": "End to End Testing (gSafety)",
+    "x": 428.2541198730469,
+    "y": 835.5758514404297,
+		"standards": []
+  }, {
+    "id": 14,
+    "title": "Frontend Frameworks (gDinosaurs)",
+    "x": 260.7955627441406,
+    "y": 1003.718505859375,
+		"standards": [14348, 14349]
+  }, {
+    "id": 16,
+    "title": "Database (gMemory)",
+    "x": 117.8514633178711,
+    "y": 1133.9602508544922,
+		"standards": [14132, 14022, 14154]
+  }, {
+    "id": 17,
+    "title": "Deploy Full Stack Applications (Doughnuts)",
+    "x": -78.48041343688965,
+    "y": 1140.788818359375,
+		"standards": [13962, 13966]
+  }, {
+    "id": 18,
+    "title": "3rd Party Libraries",
+    "x": -66.47915649414062,
+    "y": 1286.7398071289062,
+		"standards": []
+  }, {
+    "id": 19,
+    "title": "Agile",
+    "x": 202.0278778076172,
+    "y": 1369.2752075195312,
+		"standards": [13946, 13948]
+  }, {
+    "id": 20,
+    "title": "Project Proposal",
+    "x": 265.38584899902344,
+    "y": 1617.9527587890625,
+		"standards": []
+  }, {
+    "id": 21,
+    "title": "Present Projects",
+    "x": 355.7663116455078,
+    "y": 1704.0935668945312,
+		"standards": []
+  }, {
+    "id": 22,
+    "title": "Document User Needs",
+    "x": 327.6979064941406,
+    "y": 1363.6860961914062,
+		"standards": [14022]
+  }, {
+    "id": 23,
+    "title": "Pair Programming",
+    "x": 518.8243064880371,
+    "y": 1478.0701293945312,
+		"standards": []
+  }, {
+    "id": 24,
+    "title": "Find Relevant Information",
+    "x": 78.56290435791016,
+    "y": 1372.2799072265625,
+		"standards": []
+  }, {
+    "id": 25,
+    "title": "Identify Technical Solutions",
+    "x": 107.81653594970703,
+    "y": 1523.8538818359375,
+		"standards": []
+  }, {
+    "id": 26,
+    "title": "Facilitate equal meetings",
+    "x": 440.2149772644043,
+    "y": 1392.593505859375,
+		"standards": []
+  }, {
+    "id": 27,
+    "title": "Git Collaboration",
+    "x": -435.54844665527344,
+    "y": 1647.695556640625,
+		"standards": [13995]
+  }, {
+    "id": 28,
+    "title": "Phone Interviews",
+    "x": 463.42504501342773,
+    "y": 1864.0565185546875,
+		"standards": []
+  }, {
+    "id": 29,
+    "title": "Posting Code Publicly",
+    "x": 703.0755038261414,
+    "y": 1848.342041015625,
+		"standards": []
+  }, {
+    "id": 30,
+    "title": "Problem Solving Strategy",
+    "x": 583.5127067565918,
+    "y": 1855.0103759765625,
+		"standards": []
+  }, {
+    "id": 31,
+    "title": "Diagram Web Requests",
+    "x": 378.9766845703125,
+    "y": 2096.482177734375,
+		"standards": [13977]
+  }, {
+    "id": 32,
+    "title": "Identify Components of Software System",
+    "x": -205.19891357421875,
+    "y": 1783.27392578125,
+		"standards": []
+  }, {
+    "id": 33,
+    "title": "Stacks and Queues",
+    "x": 225.2503662109375,
+    "y": 2190.71142578125,
+		"standards": [14358]
+  }, {
+    "id": 34,
+    "title": "Arrays and Linked Lists",
+    "x": 229.22504472732544,
+    "y": 2340.8038330078125,
+		"standards": [14360]
+  }, {
+    "id": 35,
+    "title": "Sorting Algorithms",
+    "x": 423.49234771728516,
+    "y": 2250.91064453125,
+		"standards": [14363]
+  }, {
+    "id": 36,
+    "title": "HTML/CSS",
+    "x": 42.35691452026367,
+    "y": 255.35000610351562,
+		"standards": [13970, 13971]
+  }, {
+    "id": 38,
+    "title": "Bucket 1 Project",
+    "x": 864.3082580566406,
+    "y": 642.2579956054688,
+		"standards": []
+  }, {
+    "id": 39,
+    "title": "Bucket 2 Project",
+    "x": 872.3014221191406,
+    "y": 928.3971557617188,
+		"standards": []
+  }, {
+    "id": 41,
+    "title": "Server Side Applications",
+    "x": 36.63320553302765,
+    "y": 974.521728515625,
+		"standards": [14131, 14154]
+  }, {
+    "id": 42,
+    "title": "Bucket 3 Project",
+    "x": 867.8519592285156,
+    "y": 1216.09130859375,
+		"standards": []
+  }, {
+    "id": 43,
+    "title": "Bucket 4 Project",
+    "x": 877.164306640625,
+    "y": 1618.816650390625,
+		"standards": []
+  }, {
+    "id": 44,
+    "title": "Social Profiles",
+    "x": 337.0371551513672,
+    "y": 1875.2213134765625,
+		"standards": [13949]
+  }, {
+    "id": 45,
+    "title": "Bucket 5 Project",
+    "x": 901.99853515625,
+    "y": 2166.934326171875,
+		"standards": []
+  }],
+  "edges": [{
+    "source": 1,
+    "target": 0
+  }, {
+    "source": 6,
+    "target": 7
+  }, {
+    "source": 11,
+    "target": 12
+  }, {
+    "source": 11,
+    "target": 13
+  }, {
+    "source": 12,
+    "target": 14
+  }, {
+    "source": 17,
+    "target": 18
+  }, {
+    "source": 24,
+    "target": 25
+  }, {
+    "source": 33,
+    "target": 35
+  }, {
+    "source": 34,
+    "target": 35
+  }, {
+    "source": 36,
+    "target": 3
+  }, {
+    "source": 36,
+    "target": 2
+  }, {
+    "source": 3,
+    "target": 38
+  }, {
+    "source": 2,
+    "target": 38
+  }, {
+    "source": 5,
+    "target": 38
+  }, {
+    "source": 7,
+    "target": 38
+  }, {
+    "source": 8,
+    "target": 38
+  }, {
+    "source": 9,
+    "target": 38
+  }, {
+    "source": 0,
+    "target": 2
+  }, {
+    "source": 0,
+    "target": 3
+  }, {
+    "source": 9,
+    "target": 10
+  }, {
+    "source": 9,
+    "target": 11
+  }, {
+    "source": 14,
+    "target": 39
+  }, {
+    "source": 13,
+    "target": 39
+  }, {
+    "source": 10,
+    "target": 39
+  }, {
+    "source": 41,
+    "target": 17
+  }, {
+    "source": 41,
+    "target": 16
+  }, {
+    "source": 18,
+    "target": 42
+  }, {
+    "source": 16,
+    "target": 42
+  }, {
+    "source": 9,
+    "target": 41
+  }, {
+    "source": 0,
+    "target": 27
+  }, {
+    "source": 19,
+    "target": 20
+  }, {
+    "source": 22,
+    "target": 20
+  }, {
+    "source": 26,
+    "target": 20
+  }, {
+    "source": 23,
+    "target": 20
+  }, {
+    "source": 20,
+    "target": 43
+  }, {
+    "source": 27,
+    "target": 20
+  }, {
+    "source": 25,
+    "target": 20
+  }, {
+    "source": 43,
+    "target": 21
+  }, {
+    "source": 9,
+    "target": 32
+  }, {
+    "source": 32,
+    "target": 45
+  }, {
+    "source": 35,
+    "target": 45
+  }, {
+    "source": 31,
+    "target": 45
+  }, {
+    "source": 44,
+    "target": 45
+  }, {
+    "source": 28,
+    "target": 45
+  }, {
+    "source": 30,
+    "target": 45
+  }, {
+    "source": 29,
+    "target": 45
+  }]
+}
